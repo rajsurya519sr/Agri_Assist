@@ -1,0 +1,815 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-24 11:13+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:40
+msgid "Please log in to access this page."
+msgstr ""
+
+#: app.py:393 templates/farms.html:88
+msgid "Farm Name"
+msgstr ""
+
+#: app.py:394 templates/farms.html:92
+msgid "Location"
+msgstr ""
+
+#: app.py:395
+msgid "Latitude"
+msgstr ""
+
+#: app.py:396
+msgid "Longitude"
+msgstr ""
+
+#: app.py:397
+msgid "Save Farm"
+msgstr ""
+
+#: app.py:400 app.py:406 templates/login.html:19
+msgid "Username"
+msgstr ""
+
+#: app.py:401 app.py:410 templates/login.html:31
+msgid "Password"
+msgstr ""
+
+#: app.py:402
+msgid "Remember Me"
+msgstr ""
+
+#: app.py:403 app.py:508
+msgid "Sign In"
+msgstr ""
+
+#: app.py:407
+msgid "Email"
+msgstr ""
+
+#: app.py:408
+msgid "First Name"
+msgstr ""
+
+#: app.py:409
+msgid "Last Name"
+msgstr ""
+
+#: app.py:411
+msgid "Repeat Password"
+msgstr ""
+
+#: app.py:411
+msgid "Passwords must match."
+msgstr ""
+
+#: app.py:412 app.py:524 templates/base.html:65
+msgid "Register"
+msgstr ""
+
+#: app.py:414
+msgid "Please use a different username."
+msgstr ""
+
+#: app.py:416
+msgid "Please use a different email address."
+msgstr ""
+
+#: app.py:419 templates/dashboard.html:234
+msgid "Crop Name"
+msgstr ""
+
+#: app.py:420 templates/dashboard.html:241
+msgid "Season"
+msgstr ""
+
+#: app.py:421 templates/dashboard.html:248
+msgid "State"
+msgstr ""
+
+#: app.py:422
+msgid "Area (in Hectares)"
+msgstr ""
+
+#: app.py:423
+msgid "Annual Rainfall (in mm)"
+msgstr ""
+
+#: app.py:424
+msgid "Fertilizer Usage (in kg/Hectare)"
+msgstr ""
+
+#: app.py:425
+msgid "Pesticide Usage (in Litres/Hectare)"
+msgstr ""
+
+#: app.py:426 templates/dashboard.html:121
+msgid "Predict Yield"
+msgstr ""
+
+#: app.py:432 templates/base.html:25
+msgid "Home"
+msgstr ""
+
+#: app.py:446 templates/base.html:29 templates/dashboard.html:3
+#: templates/dashboard.html:8
+msgid "Dashboard"
+msgstr ""
+
+#: app.py:458 templates/farms.html:3 templates/farms.html:16
+msgid "My Farms"
+msgstr ""
+
+#: app.py:487 templates/base.html:32
+msgid "Advisories"
+msgstr ""
+
+#: app.py:507
+msgid "Invalid username or password"
+msgstr ""
+
+#: app.py:522
+msgid "Registration successful. Please log in."
+msgstr ""
+
+#: app.py:600
+msgid "Farm added successfully!"
+msgstr ""
+
+#: app.py:608
+msgid "Farm deleted successfully."
+msgstr ""
+
+#: app.py:684
+msgid "Selected advisories deleted successfully."
+msgstr ""
+
+#: app.py:696
+msgid "All advisories have been deleted successfully."
+msgstr ""
+
+#: app.py:708
+msgid "Advisory deleted successfully."
+msgstr ""
+
+#: templates/base.html:6 templates/base.html:17
+msgid "AgriAssist"
+msgstr ""
+
+#: templates/base.html:55
+msgid "Profile"
+msgstr ""
+
+#: templates/base.html:57
+msgid "Logout"
+msgstr ""
+
+#: templates/base.html:62 templates/home.html:17 templates/home.html:124
+msgid "Login"
+msgstr ""
+
+#: templates/base.html:93
+msgid "All rights reserved."
+msgstr ""
+
+#: templates/dashboard.html:17
+msgid "Select Farm"
+msgstr ""
+
+#: templates/dashboard.html:22
+msgid "Select a farm to see details..."
+msgstr ""
+
+#: templates/dashboard.html:32
+msgid "No farms available. Please add a farm first."
+msgstr ""
+
+#: templates/dashboard.html:48
+msgid "Total Farms"
+msgstr ""
+
+#: templates/dashboard.html:55
+msgid "View all farms"
+msgstr ""
+
+#: templates/dashboard.html:64
+msgid "Unread Advisories"
+msgstr ""
+
+#: templates/dashboard.html:73
+msgid "View all advisories"
+msgstr ""
+
+#: templates/dashboard.html:82
+msgid "Weather"
+msgstr ""
+
+#: templates/dashboard.html:84 templates/dashboard.html:363
+#: templates/dashboard.html:691
+msgid "Select a farm"
+msgstr ""
+
+#: templates/dashboard.html:92
+msgid "Updated:"
+msgstr ""
+
+#: templates/dashboard.html:102
+msgid "Quick Actions"
+msgstr ""
+
+#: templates/dashboard.html:111 templates/dashboard.html:136
+msgid "Manage Farms"
+msgstr ""
+
+#: templates/dashboard.html:135
+msgid "My Farms Map"
+msgstr ""
+
+#: templates/dashboard.html:145
+msgid "Recent Advisories"
+msgstr ""
+
+#: templates/dashboard.html:165
+msgid "For:"
+msgstr ""
+
+#: templates/dashboard.html:170
+msgid "Mark as read"
+msgstr ""
+
+#: templates/dashboard.html:183
+msgid "No recent advisories."
+msgstr ""
+
+#: templates/dashboard.html:188
+msgid "View All Advisories"
+msgstr ""
+
+#: templates/dashboard.html:205
+msgid "For Farm:"
+msgstr ""
+
+#: templates/dashboard.html:206
+msgid "Issued on:"
+msgstr ""
+
+#: templates/dashboard.html:214 templates/dashboard.html:278
+#: templates/farms.html:167
+msgid "Close"
+msgstr ""
+
+#: templates/dashboard.html:225
+msgid "Crop Yield Potential"
+msgstr ""
+
+#: templates/dashboard.html:229
+msgid ""
+"Select a farm from the dropdown above, then fill in your inputs to get a "
+"yield estimate and personalized advice."
+msgstr ""
+
+#: templates/dashboard.html:236 templates/farms.html:134
+msgid "Select a crop..."
+msgstr ""
+
+#: templates/dashboard.html:243
+msgid "Select a season..."
+msgstr ""
+
+#: templates/dashboard.html:250 templates/dashboard.html:668
+msgid "Auto-filled..."
+msgstr ""
+
+#: templates/dashboard.html:253
+msgid "Detected from selected farm."
+msgstr ""
+
+#: templates/dashboard.html:256
+msgid "Area (Hectares)"
+msgstr ""
+
+#: templates/dashboard.html:257
+msgid "e.g., 10.5"
+msgstr ""
+
+#: templates/dashboard.html:258
+msgid "Set from farm, can be edited."
+msgstr ""
+
+#: templates/dashboard.html:261
+msgid "Annual Rainfall (mm)"
+msgstr ""
+
+#: templates/dashboard.html:262 templates/dashboard.html:431
+#: templates/dashboard.html:669
+msgid "Fetching..."
+msgstr ""
+
+#: templates/dashboard.html:263
+msgid "Avg. for farm location."
+msgstr ""
+
+#: templates/dashboard.html:266
+msgid "Fertilizer (kg/Hectare)"
+msgstr ""
+
+#: templates/dashboard.html:270
+msgid "Pesticide (L/Hectare)"
+msgstr ""
+
+#: templates/dashboard.html:279
+msgid "Predict"
+msgstr ""
+
+#: templates/dashboard.html:333
+msgid "Clear sky"
+msgstr ""
+
+#: templates/dashboard.html:333
+msgid "Mainly clear"
+msgstr ""
+
+#: templates/dashboard.html:334
+msgid "Partly cloudy"
+msgstr ""
+
+#: templates/dashboard.html:334
+msgid "Overcast"
+msgstr ""
+
+#: templates/dashboard.html:335
+msgid "Fog"
+msgstr ""
+
+#: templates/dashboard.html:335
+msgid "Slight rain"
+msgstr ""
+
+#: templates/dashboard.html:336
+msgid "Moderate rain"
+msgstr ""
+
+#: templates/dashboard.html:336
+msgid "Slight rain showers"
+msgstr ""
+
+#: templates/dashboard.html:337
+msgid "Thunderstorm"
+msgstr ""
+
+#: templates/dashboard.html:339
+msgid "Unknown"
+msgstr ""
+
+#: templates/dashboard.html:356
+msgid "Could not load"
+msgstr ""
+
+#: templates/dashboard.html:370
+msgid "Server error:"
+msgstr ""
+
+#: templates/dashboard.html:417
+msgid "Detecting..."
+msgstr ""
+
+#: templates/dashboard.html:424
+msgid "State not found"
+msgstr ""
+
+#: templates/dashboard.html:426
+msgid "Detection failed"
+msgstr ""
+
+#: templates/dashboard.html:439
+msgid "Not available"
+msgstr ""
+
+#: templates/dashboard.html:441
+msgid "Error fetching data"
+msgstr ""
+
+#: templates/dashboard.html:448
+msgid "Calculating..."
+msgstr ""
+
+#: templates/dashboard.html:465
+msgid "Predicted Yield"
+msgstr ""
+
+#: templates/dashboard.html:469
+msgid "Total Estimated Harvest"
+msgstr ""
+
+#: templates/dashboard.html:475
+msgid "Yield Comparison (vs. Last 4 Years)"
+msgstr ""
+
+#: templates/dashboard.html:481
+msgid "Personalized Advice"
+msgstr ""
+
+#: templates/dashboard.html:484
+msgid "Rainfall"
+msgstr ""
+
+#: templates/dashboard.html:488
+msgid "Fertilizer"
+msgstr ""
+
+#: templates/dashboard.html:492
+msgid "Pesticide"
+msgstr ""
+
+#: templates/dashboard.html:500
+msgid "An unknown error occurred."
+msgstr ""
+
+#: templates/dashboard.html:509
+msgid "Request failed. Please check your connection."
+msgstr ""
+
+#: templates/dashboard.html:522
+msgid "Predicted"
+msgstr ""
+
+#: templates/dashboard.html:537
+msgid "Yield (Tons/Hectare)"
+msgstr ""
+
+#: templates/dashboard.html:547
+msgid "Tons / Hectare"
+msgstr ""
+
+#: templates/dashboard.html:584
+msgid "Could not mark as read. Please try again."
+msgstr ""
+
+#: templates/dashboard.html:589
+msgid "An error occurred. Please check your connection."
+msgstr ""
+
+#: templates/dashboard.html:645
+msgid "Please select a farm from the dashboard first!"
+msgstr ""
+
+#: templates/farms.html:19 templates/farms.html:113 templates/farms.html:358
+msgid "Add Farm"
+msgstr ""
+
+#: templates/farms.html:59 templates/farms.html:168 templates/farms.html:462
+msgid "Get Advisory"
+msgstr ""
+
+#: templates/farms.html:69
+msgid "No Farms Added Yet"
+msgstr ""
+
+#: templates/farms.html:70
+msgid "Get started by adding your first farm to receive personalized advisories."
+msgstr ""
+
+#: templates/farms.html:72
+msgid "Add Your First Farm"
+msgstr ""
+
+#: templates/farms.html:82
+msgid "Add New Farm"
+msgstr ""
+
+#: templates/farms.html:94
+msgid "Search for a location..."
+msgstr ""
+
+#: templates/farms.html:96
+msgid "Search for an address, then draw your farm boundary on the map below."
+msgstr ""
+
+#: templates/farms.html:100
+msgid "Estimated Area"
+msgstr ""
+
+#: templates/farms.html:112
+msgid "Cancel"
+msgstr ""
+
+#: templates/farms.html:124
+msgid "Get Farm Advisory"
+msgstr ""
+
+#: templates/farms.html:132
+msgid "Crop Type"
+msgstr ""
+
+#: templates/farms.html:140
+msgid "Soil Type"
+msgstr ""
+
+#: templates/farms.html:142
+msgid "Select soil type..."
+msgstr ""
+
+#: templates/farms.html:143
+msgid "Clay"
+msgstr ""
+
+#: templates/farms.html:144
+msgid "Sandy"
+msgstr ""
+
+#: templates/farms.html:145
+msgid "Loamy"
+msgstr ""
+
+#: templates/farms.html:146
+msgid "Silty"
+msgstr ""
+
+#: templates/farms.html:147
+msgid "Peaty"
+msgstr ""
+
+#: templates/farms.html:148
+msgid "Chalky"
+msgstr ""
+
+#: templates/farms.html:152
+msgid "Crop Growth Stage"
+msgstr ""
+
+#: templates/farms.html:154
+msgid "Select growth stage..."
+msgstr ""
+
+#: templates/farms.html:155
+msgid "Pre-planting"
+msgstr ""
+
+#: templates/farms.html:156
+msgid "Germination"
+msgstr ""
+
+#: templates/farms.html:157
+msgid "Seedling"
+msgstr ""
+
+#: templates/farms.html:158
+msgid "Vegetative"
+msgstr ""
+
+#: templates/farms.html:159
+msgid "Flowering"
+msgstr ""
+
+#: templates/farms.html:160
+msgid "Fruiting"
+msgstr ""
+
+#: templates/farms.html:161
+msgid "Maturity"
+msgstr ""
+
+#: templates/farms.html:162
+msgid "Harvest"
+msgstr ""
+
+#: templates/home.html:3
+msgid "AgriAssist - AI-Powered Farming Assistance"
+msgstr ""
+
+#: templates/home.html:10
+msgid "Smart Farming with AI"
+msgstr ""
+
+#: templates/home.html:11
+msgid ""
+"Get personalized farming advisories, weather forecasts, and crop "
+"recommendations powered by artificial intelligence."
+msgstr ""
+
+#: templates/home.html:14 templates/home.html:121
+msgid "Go to Dashboard"
+msgstr ""
+
+#: templates/home.html:16
+msgid "Get Started"
+msgstr ""
+
+#: templates/home.html:29
+msgid "How It Works"
+msgstr ""
+
+#: templates/home.html:37
+msgid "1. Add Your Farm"
+msgstr ""
+
+#: templates/home.html:38
+msgid ""
+"Mark your farm location on the map and provide basic information about "
+"your crops."
+msgstr ""
+
+#: templates/home.html:48
+msgid "2. Get AI Analysis"
+msgstr ""
+
+#: templates/home.html:49
+msgid ""
+"Our AI analyzes weather, soil conditions, and crop data to provide "
+"personalized recommendations."
+msgstr ""
+
+#: templates/home.html:59
+msgid "3. Improve Yields"
+msgstr ""
+
+#: templates/home.html:60
+msgid ""
+"Follow our advisories to optimize your farming practices and increase "
+"productivity."
+msgstr ""
+
+#: templates/home.html:71
+msgid "Interactive Farm Management"
+msgstr ""
+
+#: templates/home.html:72
+msgid ""
+"Visualize your farms on an interactive map with real-time weather and "
+"soil data."
+msgstr ""
+
+#: templates/home.html:74
+msgid "Monitor multiple farm locations"
+msgstr ""
+
+#: templates/home.html:75
+msgid "Get weather alerts and forecasts"
+msgstr ""
+
+#: templates/home.html:76
+msgid "Track crop health and growth"
+msgstr ""
+
+#: templates/home.html:79
+msgid "Start Managing Your Farms"
+msgstr ""
+
+#: templates/home.html:93
+msgid "Voice-Enabled Assistant"
+msgstr ""
+
+#: templates/home.html:94
+msgid ""
+"Get hands-free access to farming advice using voice commands in multiple "
+"languages."
+msgstr ""
+
+#: templates/home.html:99 templates/home.html:199
+msgid "Click to speak"
+msgstr ""
+
+#: templates/home.html:102
+msgid "Try saying:"
+msgstr ""
+
+#: templates/home.html:104
+msgid "What's the weather forecast?"
+msgstr ""
+
+#: templates/home.html:105
+msgid "Give me farming tips for rice"
+msgstr ""
+
+#: templates/home.html:106
+msgid "Show me my farms"
+msgstr ""
+
+#: templates/home.html:118
+msgid "Ready to Transform Your Farming?"
+msgstr ""
+
+#: templates/home.html:119
+msgid ""
+"Join thousands of farmers using AI to improve their yields and reduce "
+"risks."
+msgstr ""
+
+#: templates/home.html:123
+msgid "Sign Up Free"
+msgstr ""
+
+#: templates/home.html:166 templates/home.html:192
+msgid "Error:"
+msgstr ""
+
+#: templates/home.html:171 templates/home.html:198
+msgid "Listening..."
+msgstr ""
+
+#: templates/home.html:178
+msgid "You said:"
+msgstr ""
+
+#: templates/home.html:182
+msgid "Weather information would be displayed here."
+msgstr ""
+
+#: templates/home.html:184
+msgid "Here are some farming tips..."
+msgstr ""
+
+#: templates/home.html:186
+msgid "Command received:"
+msgstr ""
+
+#: templates/home.html:204
+msgid "Voice recognition not supported in this browser."
+msgstr ""
+
+#: templates/login.html:11
+msgid "Welcome Back"
+msgstr ""
+
+#: templates/login.html:12
+msgid "Sign in to access your account"
+msgstr ""
+
+#: templates/login.html:22
+msgid "Enter your username"
+msgstr ""
+
+#: templates/login.html:32
+msgid "Forgot password?"
+msgstr ""
+
+#: templates/login.html:36
+msgid "Enter your password"
+msgstr ""
+
+#: templates/login.html:56
+msgid "Don't have an account?"
+msgstr ""
+
+#: templates/login.html:57
+msgid "Sign up"
+msgstr ""
+
+#: templates/register.html:3
+msgid "Register - AgriAssist"
+msgstr ""
+
+#: templates/register.html:11
+msgid "Create Your Account"
+msgstr ""
+
+#: templates/register.html:12
+msgid "Join our farming community today"
+msgstr ""
+
+#: templates/register.html:23
+msgid "Enter first name"
+msgstr ""
+
+#: templates/register.html:34
+msgid "Enter last name"
+msgstr ""
+
+#: templates/register.html:46
+msgid "Choose a username"
+msgstr ""
+
+#: templates/register.html:57
+msgid "Enter your email"
+msgstr ""
+
+#: templates/register.html:69
+msgid "Create password"
+msgstr ""
+
+#: templates/register.html:80
+msgid "Confirm password"
+msgstr ""
+
+#: templates/register.html:93
+msgid "Already have an account?"
+msgstr ""
+
+#: templates/register.html:94
+msgid "Sign in"
+msgstr ""
+

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Register') }} - {{ _('AgriAssist') }}{% endblock %}
+
+{% block content %}
+<style>
+    /* ... (all your existing CSS styles remain unchanged) ... */
+    body { background-image: url('{{ url_for('static', filename='images/login8.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; color: white; }
+    .auth-container { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0; }
+    .auth-card { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); border-radius: 1rem; }
+    .auth-card .card-header { background: transparent; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+    .auth-card .card-header h4, .auth-card .card-header p { text-shadow: 1px 1px 4px rgba(0,0,0,0.4); }
+    .form-control.glass-input, .input-group-text.glass-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; }
+    .form-control.glass-input:focus { background: rgba(255, 255, 255, 0.2); color: white; border-color: rgba(255, 255, 255, 0.5); box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25); }
+    .form-control::placeholder { color: rgba(255, 255, 255, 0.7); opacity: 1; }
+    .input-group-text.glass-input { border-right: none; }
+    .input-group-text.glass-input.toggle-password { border-right: 1px solid rgba(255, 255, 255, 0.3); border-left: none; }
+    .form-label { color: rgba(255, 255, 255, 0.9); }
+    .auth-card a { color: #90CAF9; transition: color 0.2s ease-in-out; }
+    .auth-card a:hover { color: #c8e6c9; }
+    .btn-theme-primary { background-color: #1B5E20; border-color: #1B5E20; color: white; font-weight: bold; transition: all 0.3s ease-in-out; box-shadow: 0 4px 6px rgba(0,0,0,0.8); }
+    .btn-theme-primary:hover { background-color: #2E7D32; border-color: #2E7D32; transform: scale(1.02); }
+    .toggle-password { cursor: pointer; }
+</style>
+
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <div class="card auth-card text-white">
+                    <div class="card-header text-center py-4">
+                        <h4 class="my-0" style="font-size: 200%;">{{ _('Create Your Account') }}</h4>
+                        <p class="mb-0 small">{{ _('Join our farming community today') }}</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form method="POST" action="{{ url_for('register') }}" novalidate>
+                            {{ form.hidden_tag() }}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    {{ form.first_name.label(class="form-label") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text glass-input"><i class="fas fa-user"></i></span>
+                                        {{ form.first_name(class="form-control form-control-lg glass-input", placeholder=_("Enter first name")) }}
+                                    </div>
+                                    {% for error in form.first_name.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    {{ form.last_name.label(class="form-label") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text glass-input"><i class="fas fa-user"></i></span>
+                                        {{ form.last_name(class="form-control form-control-lg glass-input", placeholder=_("Enter last name")) }}
+                                    </div>
+                                    {% for error in form.last_name.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.username.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text glass-input"><i class="fas fa-at"></i></span>
+                                    {{ form.username(class="form-control form-control-lg glass-input", placeholder=_("Choose a username")) }}
+                                </div>
+                                {% for error in form.username.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text glass-input"><i class="fas fa-envelope"></i></span>
+                                    {{ form.email(class="form-control form-control-lg glass-input", placeholder=_("Enter your email")) }}
+                                </div>
+                                {% for error in form.email.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    {{ form.password.label(class="form-label") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text glass-input"><i class="fas fa-lock"></i></span>
+                                        {{ form.password(class="form-control form-control-lg glass-input", placeholder=_("Create password"), id="password") }}
+                                        <span class="input-group-text glass-input toggle-password"><i class="fas fa-eye"></i></span>
+                                    </div>
+                                    {% for error in form.password.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    {{ form.password2.label(class="form-label") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text glass-input"><i class="fas fa-lock"></i></span>
+                                        {{ form.password2(class="form-control form-control-lg glass-input", placeholder=_("Confirm password"), id="password2") }}
+                                        <span class="input-group-text glass-input toggle-password"><i class="fas fa-eye"></i></span>
+                                    </div>
+                                    {% for error in form.password2.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                                                            
+                            <div class="d-grid gap-2 mt-4" id="creatButton">
+                                {{ form.submit(class="btn btn-theme-primary btn-lg", value=_('Create Account & Verify')) }}
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <p class="mb-0 small">{{ _('Already have an account?') }} 
+                                    <a href="{{ url_for('login') }}" class="text-decoration-none fw-bold">{{ _('Sign In') }}</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+    togglePasswordIcons.forEach(toggleIcon => {
+        toggleIcon.addEventListener('click', function() {
+            const passwordInput = this.parentElement.querySelector('input');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    });
+});
+</script>
+{% endblock %}

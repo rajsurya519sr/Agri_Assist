@@ -1,0 +1,1194 @@
+# Hindi translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-24 11:13+0530\n"
+"PO-Revision-Date: 2025-09-24 11:16+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: hi\n"
+"Language-Team: hi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:40
+msgid "Please log in to access this page."
+msgstr "कृपया इस पृष्ठ तक पहुँचने के लिए लॉगिन करें।"
+
+#: app.py:393 templates/farms.html:88
+msgid "Farm Name"
+msgstr "फार्म का नाम"
+
+#: app.py:394 templates/farms.html:92
+msgid "Location"
+msgstr "स्थान"
+
+#: app.py:395
+msgid "Latitude"
+msgstr "अक्षांश"
+
+#: app.py:396
+msgid "Longitude"
+msgstr "देशांतर"
+
+#: app.py:397
+msgid "Save Farm"
+msgstr "फार्म सहेजें"
+
+#: app.py:400 app.py:406 templates/login.html:19
+msgid "Username"
+msgstr "उपयोगकर्ता नाम"
+
+#: app.py:401 app.py:410 templates/login.html:31
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: app.py:402
+msgid "Remember Me"
+msgstr "मुझे याद रखें"
+
+#: app.py:403 app.py:508
+msgid "Sign In"
+msgstr "साइन इन करें"
+
+#: app.py:407
+msgid "Email"
+msgstr "ईमेल"
+
+#: app.py:408
+msgid "First Name"
+msgstr "पहला नाम"
+
+#: app.py:409
+msgid "Last Name"
+msgstr "अंतिम नाम"
+
+#: app.py:411
+msgid "Repeat Password"
+msgstr "पासवर्ड दोहराएँ"
+
+#: app.py:411
+msgid "Passwords must match."
+msgstr "पासवर्ड मेल खाने चाहिए।"
+
+#: app.py:412 app.py:524 templates/base.html:65
+msgid "Register"
+msgstr "रजिस्टर करें"
+
+msgid "This field is required."
+msgstr "यह फ़ील्ड आवश्यक है।"
+
+#: app.py:414
+msgid "Please use a different username."
+msgstr "कृपया कोई दूसरा उपयोगकर्ता नाम इस्तेमाल करें।"
+
+#: app.py:416
+msgid "Please use a different email address."
+msgstr "कृपया कोई दूसरा ईमेल पता इस्तेमाल करें।"
+
+#: app.py:419 templates/dashboard.html:234
+msgid "Crop Name"
+msgstr "फसल का नाम"
+
+#: app.py:420 templates/dashboard.html:241
+msgid "Season"
+msgstr "मौसम"
+
+#: app.py:421 templates/dashboard.html:248
+msgid "State"
+msgstr "राज्य"
+
+#: app.py:422
+msgid "Area (in Hectares)"
+msgstr "क्षेत्रफल (हेक्टेयर में)"
+
+#: app.py:423
+msgid "Annual Rainfall (in mm)"
+msgstr "वार्षिक वर्षा (मिमी में)"
+
+#: app.py:424
+msgid "Fertilizer Usage (in kg/Hectare)"
+msgstr "उर्वरक उपयोग (किग्रा/हेक्टेयर)"
+
+#: app.py:425
+msgid "Pesticide Usage (in Litres/Hectare)"
+msgstr "कीटनाशक उपयोग (लीटर/हेक्टेयर)"
+
+#: app.py:426 templates/dashboard.html:121
+msgid "Predict Yield"
+msgstr "उत्पादन का पूर्वानुमान करें"
+
+#: app.py:432 templates/base.html:25
+msgid "Home"
+msgstr "होम"
+
+#: app.py:446 templates/base.html:29 templates/dashboard.html:3
+#: templates/dashboard.html:8
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+#: app.py:458 templates/farms.html:3 templates/farms.html:16
+msgid "My Farms"
+msgstr "मेरे फार्म"
+
+#: app.py:487 templates/base.html:32
+msgid "Advisories"
+msgstr "सलाहें"
+
+#: app.py:507
+msgid "Invalid username or password"
+msgstr "गलत उपयोगकर्ता नाम या पासवर्ड"
+
+#: app.py:522
+msgid "Registration successful. Please log in."
+msgstr "पंजीकरण सफल हुआ। कृपया लॉगिन करें।"
+
+#: app.py:600
+msgid "Farm added successfully!"
+msgstr "फार्म सफलतापूर्वक जोड़ा गया!"
+
+#: app.py:608
+msgid "Farm deleted successfully."
+msgstr "फार्म सफलतापूर्वक हटाया गया।"
+
+#: app.py:684
+msgid "Selected advisories deleted successfully."
+msgstr "चयनित सलाहें सफलतापूर्वक हटाई गईं।"
+
+#: app.py:696
+msgid "All advisories have been deleted successfully."
+msgstr "सभी सलाहें सफलतापूर्वक हटाई गईं।"
+
+#: app.py:708
+msgid "Advisory deleted successfully."
+msgstr "सलाह सफलतापूर्वक हटाई गई।"
+
+#: templates/base.html:6 templates/base.html:17
+msgid "AgriAssist"
+msgstr "एग्रीअसिस्ट"
+
+#: templates/base.html:55
+msgid "Profile"
+msgstr "प्रोफ़ाइल"
+
+#: templates/base.html:57
+msgid "Logout"
+msgstr "लॉगआउट"
+
+#: templates/base.html:62 templates/home.html:17 templates/home.html:124
+msgid "Login"
+msgstr "लॉगिन"
+
+#: templates/base.html:93
+msgid "All rights reserved."
+msgstr "सर्वाधिकार सुरक्षित।"
+
+#: templates/dashboard.html:17
+msgid "Select Farm"
+msgstr "फार्म चुनें"
+
+#: templates/dashboard.html:22
+msgid "Select a farm to see details..."
+msgstr "विवरण देखने के लिए फार्म चुनें..."
+
+#: templates/dashboard.html:32
+msgid "No farms available. Please add a farm first."
+msgstr "कोई फार्म उपलब्ध नहीं। कृपया पहले एक फार्म जोड़ें।"
+
+#: templates/dashboard.html:48
+msgid "Total Farms"
+msgstr "कुल फार्म"
+
+#: templates/dashboard.html:55
+msgid "View all farms"
+msgstr "सभी फार्म देखें"
+
+#: templates/dashboard.html:64
+msgid "Unread Advisories"
+msgstr "अपठित सलाहें"
+
+#: templates/dashboard.html:73
+msgid "View all advisories"
+msgstr "सभी सलाहें देखें"
+
+#: templates/dashboard.html:82
+msgid "Weather"
+msgstr "मौसम"
+
+#: templates/dashboard.html:84 templates/dashboard.html:363
+#: templates/dashboard.html:691
+msgid "Select a farm"
+msgstr "एक फार्म चुनें"
+
+#: templates/dashboard.html:92
+msgid "Updated:"
+msgstr "अद्यतन:"
+
+#: templates/dashboard.html:102
+msgid "Quick Actions"
+msgstr "त्वरित क्रियाएँ"
+
+#: templates/dashboard.html:111 templates/dashboard.html:136
+msgid "Manage Farms"
+msgstr "फार्म प्रबंधन"
+
+#: templates/dashboard.html:135
+msgid "My Farms Map"
+msgstr "मेरे फार्म का नक्शा"
+
+#: templates/dashboard.html:145
+msgid "Recent Advisories"
+msgstr "हाल की सलाहें"
+
+#: templates/dashboard.html:165
+msgid "For:"
+msgstr "के लिए:"
+
+#: templates/dashboard.html:170
+msgid "Mark as read"
+msgstr "पढ़ा हुआ चिह्नित करें"
+
+#: templates/dashboard.html:183
+msgid "No recent advisories."
+msgstr "कोई हाल की सलाह नहीं।"
+
+#: templates/dashboard.html:188
+msgid "View All Advisories"
+msgstr "सभी सलाहें देखें"
+
+#: templates/dashboard.html:205
+msgid "For Farm:"
+msgstr "फार्म के लिए:"
+
+#: templates/dashboard.html:206
+msgid "Issued on:"
+msgstr "जारी किया गया:"
+
+#: templates/dashboard.html:214 templates/dashboard.html:278
+#: templates/farms.html:167
+msgid "Close"
+msgstr "बंद करें"
+
+#: templates/dashboard.html:225
+msgid "Crop Yield Potential"
+msgstr "फसल उत्पादन क्षमता"
+
+#: templates/dashboard.html:229
+msgid ""
+"Select a farm from the dropdown above, then fill in your inputs to get a "
+"yield estimate and personalized advice."
+msgstr "ऊपर दिए गए ड्रॉपडाउन से फार्म चुनें, फिर अपने इनपुट भरें ताकि उत्पादन का अनुमान और व्यक्तिगत सलाह प्राप्त हो सके।"
+
+#: templates/dashboard.html:236 templates/farms.html:134
+msgid "Select a crop..."
+msgstr "फसल चुनें..."
+
+#: templates/dashboard.html:243
+msgid "Select a season..."
+msgstr "मौसम चुनें..."
+
+#: templates/dashboard.html:250 templates/dashboard.html:668
+msgid "Auto-filled..."
+msgstr "स्वतः भरा गया..."
+
+#: templates/dashboard.html:253
+msgid "Detected from selected farm."
+msgstr "चुने गए फार्म से पता चला।"
+
+#: templates/dashboard.html:256
+msgid "Area (Hectares)"
+msgstr "क्षेत्रफल (हेक्टेयर)"
+
+#: templates/dashboard.html:257
+msgid "e.g., 10.5"
+msgstr "जैसे, 10.5"
+
+#: templates/dashboard.html:258
+msgid "Set from farm, can be edited."
+msgstr "फार्म से लिया गया, संपादित किया जा सकता है।"
+
+#: templates/dashboard.html:261
+msgid "Annual Rainfall (mm)"
+msgstr "वार्षिक वर्षा (मिमी)"
+
+#: templates/dashboard.html:262 templates/dashboard.html:431
+#: templates/dashboard.html:669
+msgid "Fetching..."
+msgstr "प्राप्त किया जा रहा है..."
+
+#: templates/dashboard.html:263
+msgid "Avg. for farm location."
+msgstr "फार्म स्थान के लिए औसत।"
+
+#: templates/dashboard.html:266
+msgid "Fertilizer (kg/Hectare)"
+msgstr "उर्वरक (किग्रा/हेक्टेयर)"
+
+#: templates/dashboard.html:270
+msgid "Pesticide (L/Hectare)"
+msgstr "कीटनाशक (ली/हेक्टेयर)"
+
+#: templates/dashboard.html:279
+msgid "Predict"
+msgstr "पूर्वानुमान करें"
+
+#: templates/dashboard.html:333
+msgid "Clear sky"
+msgstr "स्वच्छ आकाश"
+
+#: templates/dashboard.html:333
+msgid "Mainly clear"
+msgstr "मुख्यतः साफ"
+
+#: templates/dashboard.html:334
+msgid "Partly cloudy"
+msgstr "आंशिक रूप से बादल"
+
+#: templates/dashboard.html:334
+msgid "Overcast"
+msgstr "बादल छाया हुआ"
+
+#: templates/dashboard.html:335
+msgid "Fog"
+msgstr "कोहरा"
+
+#: templates/dashboard.html:335
+msgid "Slight rain"
+msgstr "हल्की बारिश"
+
+#: templates/dashboard.html:336
+msgid "Moderate rain"
+msgstr "मध्यम बारिश"
+
+#: templates/dashboard.html:336
+msgid "Slight rain showers"
+msgstr "हल्की वर्षा"
+
+#: templates/dashboard.html:337
+msgid "Thunderstorm"
+msgstr "आंधी-तूफ़ान"
+
+#: templates/dashboard.html:339
+msgid "Unknown"
+msgstr "अज्ञात"
+
+#: templates/dashboard.html:356
+msgid "Could not load"
+msgstr "लोड नहीं हो सका"
+
+#: templates/dashboard.html:370
+msgid "Server error:"
+msgstr "सर्वर त्रुटि:"
+
+#: templates/dashboard.html:417
+msgid "Detecting..."
+msgstr "पता लगाया जा रहा है..."
+
+#: templates/dashboard.html:424
+msgid "State not found"
+msgstr "राज्य नहीं मिला"
+
+#: templates/dashboard.html:426
+msgid "Detection failed"
+msgstr "पता लगाने में विफल"
+
+#: templates/dashboard.html:439
+msgid "Not available"
+msgstr "उपलब्ध नहीं"
+
+#: templates/dashboard.html:441
+msgid "Error fetching data"
+msgstr "डेटा प्राप्त करने में त्रुटि"
+
+#: templates/dashboard.html:448
+msgid "Calculating..."
+msgstr "गणना की जा रही है..."
+
+#: templates/dashboard.html:465
+msgid "Predicted Yield"
+msgstr "अनुमानित उत्पादन"
+
+#: templates/dashboard.html:469
+msgid "Total Estimated Harvest"
+msgstr "कुल अनुमानित फसल"
+
+#: templates/dashboard.html:475
+msgid "Yield Comparison (vs. Last 4 Years)"
+msgstr "उत्पादन तुलना (पिछले 4 वर्षों की तुलना में)"
+
+#: templates/dashboard.html:481
+msgid "Personalized Advice"
+msgstr "व्यक्तिगत सलाह"
+
+#: templates/dashboard.html:484
+msgid "Rainfall"
+msgstr "वर्षा"
+
+#: templates/dashboard.html:488
+msgid "Fertilizer"
+msgstr "उर्वरक"
+
+#: templates/dashboard.html:492
+msgid "Pesticide"
+msgstr "कीटनाशक"
+
+#: templates/dashboard.html:500
+msgid "An unknown error occurred."
+msgstr "एक अज्ञात त्रुटि हुई।"
+
+#: templates/dashboard.html:509
+msgid "Request failed. Please check your connection."
+msgstr "अनुरोध विफल हुआ। कृपया अपना कनेक्शन जांचें।"
+
+#: templates/dashboard.html:522
+msgid "Predicted"
+msgstr "अनुमानित"
+
+#: templates/dashboard.html:537
+msgid "Yield (Tons/Hectare)"
+msgstr "उत्पादन (टन/हेक्टेयर)"
+
+#: templates/dashboard.html:547
+msgid "Tons / Hectare"
+msgstr "टन / हेक्टेयर"
+
+#: templates/dashboard.html:584
+msgid "Could not mark as read. Please try again."
+msgstr "पढ़ा हुआ चिह्नित नहीं कर सके। कृपया पुनः प्रयास करें।"
+
+#: templates/dashboard.html:589
+msgid "An error occurred. Please check your connection."
+msgstr "एक त्रुटि हुई। कृपया अपना कनेक्शन जांचें।"
+
+#: templates/dashboard.html:645
+msgid "Please select a farm from the dashboard first!"
+msgstr "कृपया पहले डैशबोर्ड से एक फार्म चुनें!"
+
+#: templates/farms.html:19 templates/farms.html:113 templates/farms.html:358
+msgid "Add Farm"
+msgstr "फार्म जोड़ें"
+
+#: templates/farms.html:59 templates/farms.html:168 templates/farms.html:462
+msgid "Get Advisory"
+msgstr "सलाह प्राप्त करें"
+
+#: templates/farms.html:69
+msgid "No Farms Added Yet"
+msgstr "अभी तक कोई फार्म नहीं जोड़ा गया"
+
+#: templates/farms.html:70
+msgid "Get started by adding your first farm to receive personalized advisories."
+msgstr "व्यक्तिगत सलाह प्राप्त करने के लिए अपना पहला फार्म जोड़कर प्रारंभ करें।"
+
+#: templates/farms.html:72
+msgid "Add Your First Farm"
+msgstr "अपना पहला फार्म जोड़ें"
+
+#: templates/farms.html:82
+msgid "Add New Farm"
+msgstr "नया फार्म जोड़ें"
+
+#: templates/farms.html:94
+msgid "Search for a location..."
+msgstr "स्थान खोजें..."
+
+#: templates/farms.html:96
+msgid "Search for an address, then draw your farm boundary on the map below."
+msgstr "पता खोजें, फिर नीचे दिए गए नक्शे पर अपने फार्म की सीमा बनाएं।"
+
+#: templates/farms.html:100
+msgid "Estimated Area"
+msgstr "अनुमानित क्षेत्रफल"
+
+#: templates/farms.html:112
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: templates/farms.html:124
+msgid "Get Farm Advisory"
+msgstr "फार्म सलाह प्राप्त करें"
+
+#: templates/farms.html:132
+msgid "Crop Type"
+msgstr "फसल का प्रकार"
+
+#: templates/farms.html:140
+msgid "Soil Type"
+msgstr "मिट्टी का प्रकार"
+
+#: templates/farms.html:142
+msgid "Select soil type"
+msgstr "मिट्टी का प्रकार चुनें"
+
+#: templates/farms.html:143
+msgid "Clay"
+msgstr "चिकनी मिट्टी"
+
+#: templates/farms.html:144
+msgid "Sandy"
+msgstr "बालूदार"
+
+#: templates/farms.html:145
+msgid "Loamy"
+msgstr "दोमट"
+
+#: templates/farms.html:146
+msgid "Silty"
+msgstr "गादयुक्त"
+
+#: templates/farms.html:147
+msgid "Peaty"
+msgstr "पीटी"
+
+#: templates/farms.html:148
+msgid "Chalky"
+msgstr "चूना-पत्थरी"
+
+#: templates/farms.html:152
+msgid "Crop Growth Stage"
+msgstr "फसल विकास अवस्था"
+
+#: templates/farms.html:154
+msgid "Select growth stage"
+msgstr "विकास अवस्था चुनें"
+
+#: templates/farms.html:155
+msgid "Pre-Planting"
+msgstr "रोपण से पहले"
+
+#: templates/farms.html:156
+msgid "Germination"
+msgstr "अंकुरण"
+
+#: templates/farms.html:157
+msgid "Seedling"
+msgstr "नवपौधा"
+
+#: templates/farms.html:158
+msgid "Vegetative"
+msgstr "वनस्पति अवस्था"
+
+#: templates/farms.html:159
+msgid "Flowering"
+msgstr "फूल आने की अवस्था"
+
+#: templates/farms.html:160
+msgid "Fruiting"
+msgstr "फल लगने की अवस्था"
+
+#: templates/farms.html:161
+msgid "Maturity"
+msgstr "परिपक्वता"
+
+#: templates/farms.html:162
+msgid "Harvest"
+msgstr "कटाई"
+
+#: templates/home.html:3
+msgid "AgriAssist - AI-Powered Farming Assistance"
+msgstr "एग्रीअसिस्ट - एआई-संचालित खेती सहायता"
+
+#: templates/home.html:10
+msgid "Smart Farming with AI"
+msgstr "एआई के साथ स्मार्ट खेती"
+
+#: templates/home.html:11
+msgid ""
+"Get personalized farming advisories, weather forecasts, and crop "
+"recommendations powered by artificial intelligence."
+msgstr "कृत्रिम बुद्धिमत्ता द्वारा संचालित व्यक्तिगत खेती सलाहें, मौसम पूर्वानुमान और फसल अनुशंसाएँ प्राप्त करें।"
+
+#: templates/home.html:14 templates/home.html:121
+msgid "Go to Dashboard"
+msgstr "डैशबोर्ड पर जाएँ"
+
+#: templates/home.html:16
+msgid "Get Started"
+msgstr "शुरू करें"
+
+#: templates/home.html:29
+msgid "How It Works"
+msgstr "यह कैसे काम करता है"
+
+#: templates/home.html:37
+msgid "1. Add Your Farm"
+msgstr "1. अपना फार्म जोड़ें"
+
+#: templates/home.html:38
+msgid ""
+"Mark your farm location on the map and provide basic information about "
+"your crops."
+msgstr "अपने फार्म का स्थान नक्शे पर चिह्नित करें और अपनी फसलों के बारे में मूलभूत जानकारी दें।"
+
+#: templates/home.html:48
+msgid "2. Get AI Analysis"
+msgstr "2. एआई विश्लेषण प्राप्त करें"
+
+#: templates/home.html:49
+msgid ""
+"Our AI analyzes weather, soil conditions, and crop data to provide "
+"personalized recommendations."
+msgstr "हमारा एआई मौसम, मिट्टी की स्थिति और फसल डेटा का विश्लेषण कर व्यक्तिगत अनुशंसाएँ प्रदान करता है।"
+
+#: templates/home.html:59
+msgid "3. Improve Yields"
+msgstr "3. उत्पादन बढ़ाएँ"
+
+#: templates/home.html:60
+msgid ""
+"Follow our advisories to optimize your farming practices and increase "
+"productivity."
+msgstr "अपनी खेती की प्रथाओं को बेहतर बनाने और उत्पादकता बढ़ाने के लिए हमारी सलाहों का पालन करें।"
+
+#: templates/home.html:71
+msgid "Interactive Farm Management"
+msgstr "इंटरैक्टिव फार्म प्रबंधन"
+
+#: templates/home.html:72
+msgid ""
+"Visualize your farms on an interactive map with real-time weather and "
+"soil data."
+msgstr "रियल-टाइम मौसम और मिट्टी डेटा के साथ अपने फार्म को इंटरैक्टिव नक्शे पर देखें।"
+
+#: templates/home.html:74
+msgid "Monitor multiple farm locations"
+msgstr "कई फार्म स्थानों की निगरानी करें"
+
+#: templates/home.html:75
+msgid "Get weather alerts and forecasts"
+msgstr "मौसम चेतावनी और पूर्वानुमान प्राप्त करें"
+
+#: templates/home.html:76
+msgid "Track crop health and growth"
+msgstr "फसल की सेहत और विकास पर नज़र रखें"
+
+#: templates/home.html:79
+msgid "Start Managing Your Farms"
+msgstr "अपने फार्म का प्रबंधन शुरू करें"
+
+#: templates/home.html:93
+msgid "Voice-Enabled Assistant"
+msgstr "वॉइस-सक्षम सहायक"
+
+#: templates/home.html:94
+msgid ""
+"Get hands-free access to farming advice using voice commands in multiple "
+"languages."
+msgstr "कई भाषाओं में वॉइस कमांड का उपयोग करके खेती की सलाह तक बिना हाथ लगाए पहुँच प्राप्त करें।"
+
+#: templates/home.html:99 templates/home.html:199
+msgid "Click to speak"
+msgstr "बोलने के लिए क्लिक करें"
+
+#: templates/home.html:102
+msgid "Try saying:"
+msgstr "यह बोलकर देखें:"
+
+#: templates/home.html:104
+msgid "What's the weather forecast?"
+msgstr "मौसम का पूर्वानुमान क्या है?"
+
+#: templates/home.html:105
+msgid "Give me farming tips for rice"
+msgstr "मुझे धान की खेती के सुझाव दें"
+
+#: templates/home.html:106
+msgid "Show me my farms"
+msgstr "मुझे मेरे फार्म दिखाएँ"
+
+#: templates/home.html:118
+msgid "Ready to Transform Your Farming?"
+msgstr "क्या आप अपनी खेती बदलने के लिए तैयार हैं?"
+
+#: templates/home.html:119
+msgid ""
+"Join thousands of farmers using AI to improve their yields and reduce "
+"risks."
+msgstr "हज़ारों किसानों से जुड़ें जो एआई का उपयोग कर उत्पादन बढ़ा रहे हैं और जोखिम कम कर रहे हैं।"
+
+#: templates/home.html:123
+msgid "Sign Up Free"
+msgstr "नि:शुल्क साइन अप करें"
+
+#: templates/home.html:166 templates/home.html:192
+msgid "Error:"
+msgstr "त्रुटि:"
+
+#: templates/home.html:171 templates/home.html:198
+msgid "Listening..."
+msgstr "सुन रहे हैं..."
+
+#: templates/home.html:178
+msgid "You said:"
+msgstr "आपने कहा:"
+
+#: templates/home.html:182
+msgid "Weather information would be displayed here."
+msgstr "मौसम की जानकारी यहाँ प्रदर्शित होगी।"
+
+#: templates/home.html:184
+msgid "Here are some farming tips..."
+msgstr "यहाँ कुछ खेती के सुझाव हैं..."
+
+#: templates/home.html:186
+msgid "Command received:"
+msgstr "कमांड प्राप्त हुआ:"
+
+#: templates/home.html:204
+msgid "Voice recognition not supported in this browser."
+msgstr "इस ब्राउज़र में वॉइस रिकग्निशन समर्थित नहीं है।"
+
+#: templates/login.html:11
+msgid "Welcome Back"
+msgstr "वापसी पर स्वागत है"
+
+#: templates/login.html:12
+msgid "Sign in to access your account"
+msgstr "अपना खाता एक्सेस करने के लिए साइन इन करें"
+
+#: templates/login.html:22
+msgid "Enter your username"
+msgstr "अपना उपयोगकर्ता नाम दर्ज करें"
+
+#: templates/login.html:32
+msgid "Forgot password?"
+msgstr "पासवर्ड भूल गए?"
+
+#: templates/login.html:36
+msgid "Enter your password"
+msgstr "अपना पासवर्ड दर्ज करें"
+
+#: templates/login.html:56
+msgid "Don't have an account?"
+msgstr "क्या आपका खाता नहीं है?"
+
+#: templates/login.html:57
+msgid "Sign up"
+msgstr "साइन अप करें"
+
+#: templates/register.html:3
+msgid "Register - AgriAssist"
+msgstr "रजिस्टर करें - एग्रीअसिस्ट"
+
+#: templates/register.html:11
+msgid "Create Your Account"
+msgstr "अपना खाता बनाएँ"
+
+#: templates/register.html:12
+msgid "Join our farming community today"
+msgstr "आज ही हमारी खेती समुदाय से जुड़ें"
+
+#: templates/register.html:23
+msgid "Enter first name"
+msgstr "पहला नाम दर्ज करें"
+
+#: templates/register.html:34
+msgid "Enter last name"
+msgstr "अंतिम नाम दर्ज करें"
+
+#: templates/register.html:46
+msgid "Choose a username"
+msgstr "एक उपयोगकर्ता नाम चुनें"
+
+#: templates/register.html:57
+msgid "Enter your email"
+msgstr "अपना ईमेल दर्ज करें"
+
+#: templates/register.html:69
+msgid "Create password"
+msgstr "पासवर्ड बनाएँ"
+
+#: templates/register.html:80
+msgid "Confirm password"
+msgstr "पासवर्ड की पुष्टि करें"
+
+#: templates/register.html:93
+msgid "Already have an account?"
+msgstr "क्या आपका पहले से खाता है?"
+
+#: templates/register.html:94
+msgid "Sign in"
+msgstr "साइन इन करें"
+
+# Missing translations from app.py
+msgid "An error occurred during prediction calculation."
+msgstr "उत्पादन गणना के दौरान एक त्रुटि हुई।"
+
+msgid "Invalid input data."
+msgstr "अमान्य इनपुट डेटा।"
+
+msgid "Missing required farm data."
+msgstr "आवश्यक फार्म डेटा गायब है।"
+
+msgid "Missing required advisory data."
+msgstr "आवश्यक सलाह डेटा गायब है।"
+
+msgid "Forbidden"
+msgstr "निषिद्ध"
+
+msgid "No advisory IDs provided."
+msgstr "कोई सलाह आईडी प्रदान नहीं की गई।"
+
+msgid "No valid advisories found to delete."
+msgstr "हटाने के लिए कोई वैध सलाह नहीं मिली।"
+
+msgid "Failed to connect to geocoding service."
+msgstr "जियोकोडिंग सेवा से कनेक्ट नहीं हो सका।"
+
+msgid "State not found for this location."
+msgstr "इस स्थान के लिए राज्य नहीं मिला।"
+
+msgid "Could not retrieve weather data."
+msgstr "मौसम डेटा प्राप्त नहीं किया जा सका।"
+
+msgid "Failed to connect to the historical data service."
+msgstr "ऐतिहासिक डेटा सेवा से कनेक्ट नहीं हो सका।"
+
+# Missing translations from dashboard.html
+msgid "Tons"
+msgstr "टन"
+
+msgid "Tons/ha"
+msgstr "टन/हेक्टेयर"
+
+# Missing translations from advisories.html
+msgid "Farming Advisories"
+msgstr "खेती की सलाहें"
+
+msgid "Delete Selected"
+msgstr "चयनित हटाएँ"
+
+msgid "Delete All"
+msgstr "सभी हटाएँ"
+
+msgid "Filter"
+msgstr "फ़िल्टर करें"
+
+msgid "Generate AI Advisory"
+msgstr "एआई सलाह बनाएँ"
+
+msgid "SELECT ALL"
+msgstr "सभी चुनें"
+
+msgid "Mark as unread"
+msgstr "अपठित चिह्नित करें"
+
+msgid "No Advisories Yet"
+msgstr "अभी कोई सलाह नहीं"
+
+msgid "Generate your first AI-powered advisory to get started."
+msgstr "शुरू करने के लिए अपनी पहली एआई-संचालित सलाह बनाएँ।"
+
+msgid "Select a farm and provide crop details to get a tailored advisory based on current conditions."
+msgstr "वर्तमान परिस्थितियों के आधार पर अनुकूलित सलाह प्राप्त करने के लिए एक फार्म चुनें और फसल का जानकारी प्रदान करें।"
+
+msgid "Farm"
+msgstr "फार्म"
+
+msgid "Select a farm..."
+msgstr "एक फार्म चुनें..."
+
+msgid "Crop Stage"
+msgstr "फसल की अवस्था"
+
+msgid "Select a stage..."
+msgstr "एक अवस्था चुनें..."
+
+msgid "Soil Type"
+msgstr "मिट्टी का प्रकार"
+
+msgid "Select a soil type..."
+msgstr "मिट्टी का प्रकार चुनें।"
+
+msgid "Clay"
+msgstr "चिकनी मिट्टी"
+
+msgid "Sandy"
+msgstr "रेतीली"
+
+msgid "Loamy"
+msgstr "दोमट"
+
+msgid "Silty"
+msgstr "गाददार"
+
+msgid "Peaty"
+msgstr "पीट"
+
+msgid "Chalky"
+msgstr "चूनेदार"
+
+msgid "Cancel"
+msgstr "रद्द करें"
+
+msgid "Generate"
+msgstr "बनाएँ"
+
+msgid "Filter Advisories"
+msgstr "सलाहें फ़िल्टर करें"
+
+msgid "All Farms"
+msgstr "सभी फार्म"
+
+msgid "Status"
+msgstr "स्थिति"
+
+msgid "All"
+msgstr "सभी"
+
+msgid "Read"
+msgstr "पढ़े हुए"
+
+msgid "Unread"
+msgstr "अपठित"
+
+msgid "Priority"
+msgstr "प्राथमिकता"
+
+msgid "High"
+msgstr "उच्च"
+
+msgid "Medium"
+msgstr "मध्यम"
+
+msgid "Low"
+msgstr "निम्न"
+
+msgid "Apply Filters"
+msgstr "फ़िल्टर लागू करें"
+
+msgid "Rice"
+msgstr "चावल"
+
+msgid "Wheat"
+msgstr "गेहूँ"
+
+msgid "Maize"
+msgstr "मक्का"
+
+msgid "Cotton"
+msgstr "कपास"
+
+msgid "Sugarcane"
+msgstr "गन्ना"
+
+msgid "Groundnut"
+msgstr "मूंगफली"
+
+msgid "Coconut"
+msgstr "नारियल"
+
+msgid "Millet"
+msgstr "बाजरा"
+
+msgid "Pulses"
+msgstr "दालें"
+
+msgid "Soybean"
+msgstr "सोयाबीन"
+
+msgid "Tea"
+msgstr "चाय"
+
+msgid "Banana"
+msgstr "केला"
+
+msgid "Potato"
+msgstr "आलू"
+
+msgid "Tomato"
+msgstr "टमाटर"
+
+msgid "Onion"
+msgstr "प्याज"
+
+msgid "Kharif"
+msgstr "खरीफ"
+
+msgid "Rabi"
+msgstr "रबी"
+
+msgid "Zaid"
+msgstr "जायद"
+
+msgid "Whole Year"
+msgstr "पूरे वर्ष"
+
+msgid "Andhra Pradesh"
+msgstr "आंध्र प्रदेश"
+
+msgid "Arunachal Pradesh"
+msgstr "अरुणाचल प्रदेश"
+
+msgid "Assam"
+msgstr "असम"
+
+msgid "Bihar"
+msgstr "बिहार"
+
+msgid "Chhattisgarh"
+msgstr "छत्तीसगढ़"
+
+msgid "Goa"
+msgstr "गोवा"
+
+msgid "Gujarat"
+msgstr "गुजरात"
+
+msgid "Haryana"
+msgstr "हरियाणा"
+
+msgid "Himachal Pradesh"
+msgstr "हिमाचल प्रदेश"
+
+msgid "Jharkhand"
+msgstr "झारखंड"
+
+msgid "Karnataka"
+msgstr "कर्नाटक"
+
+msgid "Kerala"
+msgstr "केरल"
+
+msgid "Madhya Pradesh"
+msgstr "मध्य प्रदेश"
+
+msgid "Maharashtra"
+msgstr "महाराष्ट्र"
+
+msgid "Manipur"
+msgstr "मणिपुर"
+
+msgid "Meghalaya"
+msgstr "मेघालय"
+
+msgid "Mizoram"
+msgstr "मिजोरम"
+
+msgid "Nagaland"
+msgstr "नागालैंड"
+
+msgid "Odisha"
+msgstr "ओडिशा"
+
+msgid "Punjab"
+msgstr "पंजाब"
+
+msgid "Rajasthan"
+msgstr "राजस्थान"
+
+msgid "Sikkim"
+msgstr "सिक्किम"
+
+msgid "Tamil Nadu"
+msgstr "तमिलनाडु"
+
+msgid "Telangana"
+msgstr "तेलंगाना"
+
+msgid "Tripura"
+msgstr "त्रिपुरा"
+
+msgid "Uttar Pradesh"
+msgstr "उत्तर प्रदेश"
+
+msgid "Uttarakhand"
+msgstr "उत्तराखंड"
+
+msgid "West Bengal"
+msgstr "पश्चिम बंगाल"
+
+msgid "Andaman & Nicobar"
+msgstr "अंडमान और निकोबार"
+
+msgid "Chandigarh"
+msgstr "चंडीगढ़"
+
+msgid "Dadra & Nagar Haveli"
+msgstr "दादरा और नगर हवेली"
+
+msgid "Daman & Diu"
+msgstr "दमन और दीव"
+
+msgid "Delhi"
+msgstr "दिल्ली"
+
+msgid "Jammu & Kashmir"
+msgstr "जम्मू और कश्मीर"
+
+msgid "Ladakh"
+msgstr "लद्दाख"
+
+msgid "Lakshadweep"
+msgstr "लक्षद्वीप"
+
+msgid "Puducherry"
+msgstr "पुडुचेरी"
+
+msgid "default"
+msgstr "डिफ़ॉल्ट"
+
+#: templates/base.html: ...
+msgid "Hello! How can I help you?"
+msgstr "नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?"
+
+#: templates/base.html: ...
+msgid "Listening..."
+msgstr "सुन रहा हूँ..."
+
+#: templates/base.html: ...
+msgid "Sorry, I did not understand that. Please try again."
+msgstr "क्षमा करें, मुझे समझ नहीं आया। कृपया फिर से प्रयास करें।"
+
+#: templates/base.html: ...
+msgid "You can say: go to dashboard, open farms, or show advisories."
+msgstr "आप कह सकते हैं: डैशबोर्ड पर जाएं, खेत खोलें, या सलाह दिखाएं।"
+
+msgid "Designed by Surya Raj"
+msgstr "सूर्या राज द्वारा डिज़ाइन किया गया"
+
+msgid "Create Account & Verify"
+msgstr "खाता बनाएं और सत्यापित करें"
+
+msgid "Verify Your Email"
+msgstr "अपने ईमेल को सत्यापित करें"
+
+msgid "Enter the 6-digit code sent to your email."
+msgstr "अपने ईमेल पर भेजा गया 6-अंकीय कोड दर्ज करें।"
+
+msgid "Did not receive a code?"
+msgstr "कोड प्राप्त नहीं हुआ?"
+
+msgid "Start over"
+msgstr "फिर से शुरू करें"
+
+msgid "Email OTP"
+msgstr "ईमेल ओटीपी"
+
+msgid "Verify Account"
+msgstr "खाता सत्यापित करें"
+
+msgid "Session Timeout Warning"
+msgstr "सत्र समय समाप्ति की चेतावनी"
+
+msgid "You have been inactive for a while. For your security, you will be logged out in"
+msgstr "आप कुछ समय से निष्क्रिय हैं। आपकी सुरक्षा के लिए, आपको कुछ ही सेकंड में लॉग आउट कर दिया जाएगा"
+
+msgid "seconds"
+msgstr "सेकंड"
+
+msgid "Do you want to stay logged in?"
+msgstr "क्या आप लॉग इन रहना चाहते हैं?"
+
+msgid "Logout"
+msgstr "लॉग आउट"
+
+msgid "Stay Logged In"
+msgstr "लॉग इन रहें"

@@ -1,0 +1,34 @@
+fix the voice assist
+in voice assist add a basic api call in which if im asking anything it should give me the reply related to farming.
+
+------(optional)-----
+fix the admin login/ registration
+
+----TRANSLATION----
+
+-> Footer
+AgriAssist [H&K]
+-> Register Page [Hindi & Kannada]
+First Name
+Last Name
+Username
+Email
+Password
+Repeat Password
+Register
+
+This field is required.
+
+-> Login [Hindi & Kannada]
+Remember Me
+Sign In
+
+-> Dashboard 
+Crop Yield Potential [Kannada]
+Crop Name [Hindi]
+
+Auto Logout after closing the server / add a dialogue box of auto logout for inactive user for a moment
+Map size should justify the container
+Identify the (Easy, Medium and Hard) in advisory
+
+#98cc50

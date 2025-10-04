@@ -1,0 +1,1190 @@
+# Kannada translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-09-24 11:13+0530\n"
+"PO-Revision-Date: 2025-09-24 11:16+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: kn\n"
+"Language-Team: kn <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+# Core Application Strings
+#: app.py:40
+msgid "Please log in to access this page."
+msgstr "ಈ ಪುಟವನ್ನು ಪ್ರವೇಶಿಸಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಮಾಡಿ."
+
+#: app.py:432 templates/base.html:25
+msgid "Home"
+msgstr "ಮುಖಪುಟ"
+
+#: app.py:446 templates/base.html:29 templates/dashboard.html:3
+#: templates/dashboard.html:8
+msgid "Dashboard"
+msgstr "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್"
+
+#: app.py:487 templates/base.html:32
+msgid "Advisories"
+msgstr "ಸಲಹೆಗಳು"
+
+#: templates/base.html:55
+msgid "Profile"
+msgstr "ಪ್ರೊಫೈಲ್"
+
+#: templates/base.html:57
+msgid "Logout"
+msgstr "ಲಾಗ್ ಔಟ್"
+
+#: templates/base.html:93
+msgid "All rights reserved."
+msgstr "ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
+
+#: templates/base.html:6 templates/base.html:17
+msgid "AgriAssist"
+msgstr "ಅಗ್ರಿಅಸಿಸ್ಟ್"
+
+# User Management & Auth
+#: app.py:400 app.py:406 templates/login.html:19
+msgid "Username"
+msgstr "ಬಳಕೆದಾರಹೆಸರು"
+
+#: app.py:401 app.py:410 templates/login.html:31
+msgid "Password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್"
+
+#: app.py:402
+msgid "Remember Me"
+msgstr "ನನ್ನನ್ನು ನೆನಪಿಡಿ"
+
+#: app.py:403 app.py:508
+msgid "Sign In"
+msgstr "ಸೈನ್ ಇನ್ ಮಾಡಿ"
+
+#: app.py:407
+msgid "Email"
+msgstr "ಇಮೇಲ್"
+
+#: app.py:408
+msgid "First Name"
+msgstr "ಮೊದಲ ಹೆಸರು"
+
+#: app.py:409
+msgid "Last Name"
+msgstr "ಕೊನೆಯ ಹೆಸರು"
+
+#: app.py:411
+msgid "Repeat Password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ಪುನರಾವರ್ತಿಸಿ"
+
+#: app.py:411
+msgid "Passwords must match."
+msgstr "ಪಾಸ್‌ವರ್ಡ್‌ಗಳು ಹೊಂದಿಕೆಯಾಗಬೇಕು."
+
+#: app.py:412 app.py:524 templates/base.html:65
+msgid "Register"
+msgstr "ನೋಂದಾಯಿಸಿ"
+
+#: app.py:414
+msgid "Please use a different username."
+msgstr "ದಯವಿಟ್ಟು ಬೇರೆ ಬಳಕೆದಾರಹೆಸರನ್ನು ಬಳಸಿ."
+
+#: app.py:416
+msgid "Please use a different email address."
+msgstr "ದಯವಿಟ್ಟು ಬೇರೆ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಬಳಸಿ."
+
+#: app.py:507
+msgid "Invalid username or password"
+msgstr "ತಪ್ಪಾದ ಬಳಕೆದಾರಹೆಸರು ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್"
+
+#: app.py:522
+msgid "Registration successful. Please log in."
+msgstr "ನೋಂದಣಿ ಯಶಸ್ವಿಯಾಗಿದೆ. ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಮಾಡಿ."
+
+msgid "This field is required."
+msgstr "ಈ ಫೀಲ್ಡ್ ಕಡ್ಡಾಯವಾಗಿದೆ"
+
+#: templates/login.html:11
+msgid "Welcome Back"
+msgstr "ಮರಳಿ ಸ್ವಾಗತ"
+
+#: templates/login.html:12
+msgid "Sign in to access your account"
+msgstr "ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಪ್ರವೇಶಿಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ"
+
+#: templates/login.html:22
+msgid "Enter your username"
+msgstr "ನಿಮ್ಮ ಬಳಕೆದಾರಹೆಸರನ್ನು ನಮೂದಿಸಿ"
+
+#: templates/login.html:32
+msgid "Forgot password?"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿರಾ?"
+
+#: templates/login.html:36
+msgid "Enter your password"
+msgstr "ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ"
+
+#: templates/login.html:56
+msgid "Don't have an account?"
+msgstr "ಖಾತೆ ಇಲ್ಲವೇ?"
+
+#: templates/login.html:57
+msgid "Sign up"
+msgstr "ಸೈನ್ ಅಪ್ ಮಾಡಿ"
+
+msgid "Login"
+msgstr "ಲಾಗಿನ್"
+
+#: templates/register.html:3
+msgid "Register - AgriAssist"
+msgstr "ನೋಂದಾಯಿಸಿ - ಅಗ್ರಿಅಸಿಸ್ಟ್"
+
+#: templates/register.html:11
+msgid "Create Your Account"
+msgstr "ನಿಮ್ಮ ಖಾತೆಯನ್ನು ರಚಿಸಿ"
+
+#: templates/register.html:12
+msgid "Join our farming community today"
+msgstr "ಇಂದು ನಮ್ಮ ಕೃಷಿ ಸಮುದಾಯಕ್ಕೆ ಸೇರಿ"
+
+#: templates/register.html:23
+msgid "Enter first name"
+msgstr "ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
+
+#: templates/register.html:34
+msgid "Enter last name"
+msgstr "ಕೊನೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
+
+#: templates/register.html:46
+msgid "Choose a username"
+msgstr "ಬಳಕೆದಾರಹೆಸರನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+#: templates/register.html:57
+msgid "Enter your email"
+msgstr "ನಿಮ್ಮ ಇಮೇಲ್ ನಮೂದಿಸಿ"
+
+#: templates/register.html:69
+msgid "Create password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ರಚಿಸಿ"
+
+#: templates/register.html:80
+msgid "Confirm password"
+msgstr "ಪಾಸ್‌ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ"
+
+#: templates/register.html:93
+msgid "Already have an account?"
+msgstr "ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?"
+
+#: templates/register.html:94
+msgid "Sign in"
+msgstr "ಸೈನ್ ಇನ್ ಮಾಡಿ"
+
+# Farm Management
+#: app.py:393 templates/farms.html:88
+msgid "Farm Name"
+msgstr "ಜಮೀನಿನ ಹೆಸರು"
+
+#: app.py:394 templates/farms.html:92
+msgid "Location"
+msgstr "ಸ್ಥಳ"
+
+#: app.py:395
+msgid "Latitude"
+msgstr "ಅಕ್ಷಾಂಶ"
+
+#: app.py:396
+msgid "Longitude"
+msgstr "ರೇಖಾಂಶ"
+
+#: app.py:397
+msgid "Save Farm"
+msgstr "ಜಮೀನನ್ನು ಉಳಿಸಿ"
+
+#: app.py:458 templates/farms.html:3 templates/farms.html:16
+msgid "My Farms"
+msgstr "ನನ್ನ ಜಮೀನುಗಳು"
+
+#: app.py:600
+msgid "Farm added successfully!"
+msgstr "ಜಮೀನನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ!"
+
+#: app.py:608
+msgid "Farm deleted successfully."
+msgstr "ಜಮೀನನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ."
+
+#: templates/farms.html:19 templates/farms.html:113 templates/farms.html:358
+msgid "Add Farm"
+msgstr "ಜಮೀನು ಸೇರಿಸಿ"
+
+#: templates/farms.html:69
+msgid "No Farms Added Yet"
+msgstr "ಇನ್ನೂ ಯಾವುದೇ ಜಮೀನುಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ"
+
+#: templates/farms.html:70
+msgid "Get started by adding your first farm to receive personalized advisories."
+msgstr "ವೈಯಕ್ತಿಕ ಸಲಹೆಗಳನ್ನು ಪಡೆಯಲು ನಿಮ್ಮ ಮೊದಲ ಜಮೀನನ್ನು ಸೇರಿಸುವ ಮೂಲಕ ಪ್ರಾರಂಭಿಸಿ."
+
+#: templates/farms.html:72
+msgid "Add Your First Farm"
+msgstr "ನಿಮ್ಮ ಮೊದಲ ಜಮೀನನ್ನು ಸೇರಿಸಿ"
+
+#: templates/farms.html:82
+msgid "Add New Farm"
+msgstr "ಹೊಸ ಜಮೀನು ಸೇರಿಸಿ"
+
+#: templates/farms.html:94
+msgid "Search for a location..."
+msgstr "ಸ್ಥಳಕ್ಕಾಗಿ ಹುಡುಕಿ..."
+
+#: templates/farms.html:96
+msgid "Search for an address, then draw your farm boundary on the map below."
+msgstr "ವಿಳಾಸಕ್ಕಾಗಿ ಹುಡುಕಿ, ನಂತರ ಕೆಳಗಿನ ನಕ್ಷೆಯಲ್ಲಿ ನಿಮ್ಮ ಜಮೀನಿನ ಗಡಿಯನ್ನು ಎಳೆಯಿರಿ."
+
+#: templates/farms.html:100
+msgid "Estimated Area"
+msgstr "ಅಂದಾಜು ಪ್ರದೇಶ"
+
+#: templates/farms.html:112
+msgid "Cancel"
+msgstr "ರದ್ದುಮಾಡಿ"
+
+# Advisories
+#: app.py:684
+msgid "Selected advisories deleted successfully."
+msgstr "ಆಯ್ದ ಸಲಹೆಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ."
+
+#: app.py:696
+msgid "All advisories have been deleted successfully."
+msgstr "ಎಲ್ಲಾ ಸಲಹೆಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ."
+
+#: app.py:708
+msgid "Advisory deleted successfully."
+msgstr "ಸಲಹೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ."
+
+#: templates/advisories.html:5
+msgid "Farming Advisories"
+msgstr "ಕೃಷಿ ಸಲಹೆಗಳು"
+
+#: templates/advisories.html:9
+msgid "Delete Selected"
+msgstr "ಆಯ್ದ ಸಲಹೆಗಳನ್ನು ಅಳಿಸಿ"
+
+#: templates/advisories.html:12
+msgid "Delete All"
+msgstr "ಎಲ್ಲಾ ಸಲಹೆಗಳನ್ನು ಅಳಿಸಿ"
+
+#: templates/advisories.html:15
+msgid "Filter"
+msgstr "ಶೋಧಕ"
+
+#: templates/advisories.html:18
+msgid "Generate AI Advisory"
+msgstr "AI ಸಲಹೆ ರಚಿಸಿ"
+
+#: templates/advisories.html:24
+msgid "SELECT ALL"
+msgstr "ಎಲ್ಲಾ ಆಯ್ಕೆಮಾಡಿ"
+
+#: templates/advisories.html:36
+msgid "Mark as unread"
+msgstr "ಓದಿಲ್ಲವೆಂದು ಗುರುತಿಸಿ"
+
+#: templates/advisories.html:48
+msgid "No Advisories Yet"
+msgstr "ಇನ್ನೂ ಯಾವುದೇ ಸಲಹೆಗಳಿಲ್ಲ"
+
+#: templates/advisories.html:49
+msgid "Generate your first AI-powered advisory to get started."
+msgstr "ಪ್ರಾರಂಭಿಸಲು ನಿಮ್ಮ ಮೊದಲ AI-ಚಾಲಿತ ಸಲಹೆಯನ್ನು ರಚಿಸಿ."
+
+#: templates/advisories.html:55
+msgid "Select a farm and provide crop details to get a tailored advisory based on current conditions."
+msgstr "ಪ್ರಸ್ತುತ ಪರಿಸ್ಥಿತಿಗಳ ಆಧಾರದ ಮೇಲೆ ಸೂಕ್ತವಾದ ಸಲಹೆಯನ್ನು ಪಡೆಯಲು ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ಬೆಳೆಯ ವಿವರಗಳನ್ನು ಒದಗಿಸಿ."
+
+#: templates/advisories.html:61
+msgid "Farm"
+msgstr "ಜಮೀನು"
+
+#: templates/advisories.html:62
+msgid "Select a farm..."
+msgstr "ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/advisories.html:68
+msgid "Crop Type"
+msgstr "ಬೆಳೆ ಪ್ರಕಾರ"
+
+#: templates/advisories.html:69
+msgid "Select a crop..."
+msgstr "ಬೆಳೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/advisories.html:75
+msgid "Crop Stage"
+msgstr "ಬೆಳೆ ಹಂತ"
+
+#: templates/advisories.html:76
+msgid "Select a stage..."
+msgstr "ಹಂತವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/advisories.html:82
+msgid "Soil Type"
+msgstr "ಮಣ್ಣಿನ ಪ್ರಕಾರ"
+
+#: templates/advisories.html:83
+msgid "Select a soil type..."
+msgstr "ಮಣ್ಣಿನ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/advisories.html:87
+msgid "Cancel"
+msgstr "ರದ್ದುಮಾಡಿ"
+
+#: templates/advisories.html:88
+msgid "Generate"
+msgstr "ರಚಿಸಿ"
+
+#: templates/advisories.html:96
+msgid "Filter Advisories"
+msgstr "ಸಲಹೆಗಳನ್ನು ಶೋಧಿಸಿ"
+
+#: templates/advisories.html:99
+msgid "All Farms"
+msgstr "ಎಲ್ಲಾ ಜಮೀನುಗಳು"
+
+#: templates/advisories.html:105
+msgid "Status"
+msgstr "ಸ್ಥಿತಿ"
+
+#: templates/advisories.html:107
+msgid "All"
+msgstr "ಎಲ್ಲಾ"
+
+#: templates/advisories.html:108
+msgid "Read"
+msgstr "ಓದಿದ"
+
+#: templates/advisories.html:109
+msgid "Unread"
+msgstr "ಓದಿಲ್ಲ"
+
+#: templates/advisories.html:113
+msgid "Priority"
+msgstr "ಪ್ರಾಮುಖ್ಯತೆ"
+
+#: templates/advisories.html:115
+msgid "High"
+msgstr "ಹೆಚ್ಚಿನ"
+
+#: templates/advisories.html:116
+msgid "Medium"
+msgstr "ಮಧ್ಯಮ"
+
+#: templates/advisories.html:117
+msgid "Low"
+msgstr "ಕಡಿಮೆ"
+
+#: templates/advisories.html:121
+msgid "Apply Filters"
+msgstr "ಶೋಧಕಗಳನ್ನು ಅನ್ವಯಿಸಿ"
+
+# Dashboard & Prediction
+#: app.py:419 templates/dashboard.html:234
+msgid "Crop Name"
+msgstr "ಬೆಳೆಯ ಹೆಸರು"
+
+#: app.py:420 templates/dashboard.html:241
+msgid "Season"
+msgstr "ಋತು"
+
+#: app.py:421 templates/dashboard.html:248
+msgid "State"
+msgstr "ರಾಜ್ಯ"
+
+#: app.py:422
+msgid "Area (in Hectares)"
+msgstr "ಪ್ರದೇಶ (ಹೆಕ್ಟೇರ್‌ಗಳಲ್ಲಿ)"
+
+#: app.py:423
+msgid "Annual Rainfall (in mm)"
+msgstr "ವಾರ್ಷಿಕ ಮಳೆ (ಮಿ.ಮೀ.ಗಳಲ್ಲಿ)"
+
+#: app.py:424
+msgid "Fertilizer Usage (in kg/Hectare)"
+msgstr "ಗೊಬ್ಬರ ಬಳಕೆ (ಕೆ.ಜಿ./ಹೆಕ್ಟೇರ್‌)"
+
+#: app.py:425
+msgid "Pesticide Usage (in Litres/Hectare)"
+msgstr "ಕೀಟನಾಶಕ ಬಳಕೆ (ಲೀಟರ್/ಹೆಕ್ಟೇರ್‌)"
+
+#: app.py:426 templates/dashboard.html:121
+msgid "Predict Yield"
+msgstr "ಇಳುವರಿ ಮುನ್ಸೂಚಿಸಿ"
+
+#: app.py:426 templates/farms.html:59 templates/farms.html:168 templates/farms.html:462
+msgid "Get Advisory"
+msgstr "ಸಲಹೆ ಪಡೆಯಿರಿ"
+
+#: templates/dashboard.html:17
+msgid "Select Farm"
+msgstr "ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+#: templates/dashboard.html:22
+msgid "Select a farm to see details..."
+msgstr "ವಿವರಗಳನ್ನು ನೋಡಲು ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/dashboard.html:32
+msgid "No farms available. Please add a farm first."
+msgstr "ಯಾವುದೇ ಜಮೀನುಗಳು ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಮೊದಲು ಜಮೀನನ್ನು ಸೇರಿಸಿ."
+
+#: templates/dashboard.html:48
+msgid "Total Farms"
+msgstr "ಒಟ್ಟು ಜಮೀನುಗಳು"
+
+#: templates/dashboard.html:55
+msgid "View all farms"
+msgstr "ಎಲ್ಲಾ ಜಮೀನುಗಳನ್ನು ವೀಕ್ಷಿಸಿ"
+
+#: templates/dashboard.html:64
+msgid "Unread Advisories"
+msgstr "ಓದದ ಸಲಹೆಗಳು"
+
+#: templates/dashboard.html:73
+msgid "View all advisories"
+msgstr "ಎಲ್ಲಾ ಸಲಹೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ"
+
+#: templates/dashboard.html:82
+msgid "Weather"
+msgstr "ಹವಾಮಾನ"
+
+#: templates/dashboard.html:84 templates/dashboard.html:363
+#: templates/dashboard.html:691
+msgid "Select a farm"
+msgstr "ಒಂದು ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+#: templates/dashboard.html:92
+msgid "Updated:"
+msgstr "ನವೀಕರಿಸಲಾಗಿದೆ:"
+
+#: templates/dashboard.html:102
+msgid "Quick Actions"
+msgstr "ತ್ವರಿತ ಕ್ರಮಗಳು"
+
+#: templates/dashboard.html:111 templates/dashboard.html:136
+msgid "Manage Farms"
+msgstr "ಜಮೀನುಗಳನ್ನು ನಿರ್ವಹಿಸಿ"
+
+#: templates/dashboard.html:135
+msgid "My Farms Map"
+msgstr "ನನ್ನ ಜಮೀನುಗಳ ನಕ್ಷೆ"
+
+#: templates/dashboard.html:145
+msgid "Recent Advisories"
+msgstr "ಇತ್ತೀಚಿನ ಸಲಹೆಗಳು"
+
+#: templates/dashboard.html:165
+msgid "For:"
+msgstr "ಇದಕ್ಕಾಗಿ:"
+
+#: templates/dashboard.html:170
+msgid "Mark as read"
+msgstr "ಓದಿದೆ ಎಂದು ಗುರುತಿಸಿ"
+
+#: templates/dashboard.html:183
+msgid "No recent advisories."
+msgstr "ಇತ್ತೀಚಿನ ಸಲಹೆಗಳಿಲ್ಲ."
+
+#: templates/dashboard.html:188
+msgid "View All Advisories"
+msgstr "ಎಲ್ಲಾ ಸಲಹೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ"
+
+#: templates/dashboard.html:205
+msgid "For Farm:"
+msgstr "ಜಮೀನಿಗಾಗಿ:"
+
+#: templates/dashboard.html:206
+msgid "Issued on:"
+msgstr "ನೀಡಿದ ದಿನಾಂಕ:"
+
+#: templates/dashboard.html:214 templates/dashboard.html:278
+#: templates/farms.html:167
+msgid "Close"
+msgstr "ಮುಚ್ಚಿ"
+
+#: templates/dashboard.html:225
+msgid "Crop Yield Potential"
+msgstr "ಬೆಳೆ ಇಳುವರಿ ಸಾಮರ್ಥ್ಯ"
+
+#: templates/dashboard.html:229
+msgid ""
+"Select a farm from the dropdown above, then fill in your inputs to get a "
+"yield estimate and personalized advice."
+msgstr "ಮೇಲಿನ ಡ್ರಾಪ್‌ಡೌನ್‌ನಿಂದ ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ, ನಂತರ ಇಳುವರಿ ಅಂದಾಜು ಮತ್ತು ವೈಯಕ್ತಿಕ ಸಲಹೆ ಪಡೆಯಲು ನಿಮ್ಮ ಇನ್‌ಪುಟ್‌ಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ."
+
+#: templates/dashboard.html:236 templates/farms.html:134
+msgid "Select a crop..."
+msgstr "ಒಂದು ಬೆಳೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/dashboard.html:243
+msgid "Select a season..."
+msgstr "ಒಂದು ಋತುವನ್ನು ಆಯ್ಕೆಮಾಡಿ..."
+
+#: templates/dashboard.html:250 templates/dashboard.html:668
+msgid "Auto-filled..."
+msgstr "ಸ್ವಯಂ-ಭರ್ತಿಯಾಗಿದೆ..."
+
+#: templates/dashboard.html:253
+msgid "Detected from selected farm."
+msgstr "ಆಯ್ದ ಜಮೀನಿನಿಂದ ಪತ್ತೆಹಚ್ಚಲಾಗಿದೆ."
+
+#: templates/dashboard.html:256
+msgid "Area (Hectares)"
+msgstr "ಪ್ರದೇಶ (ಹೆಕ್ಟೇರ್‌ಗಳು)"
+
+#: templates/dashboard.html:257
+msgid "e.g., 10.5"
+msgstr "ಉದಾ., 10.5"
+
+#: templates/dashboard.html:258
+msgid "Set from farm, can be edited."
+msgstr "ಜಮೀನಿನಿಂದ ಹೊಂದಿಸಲಾಗಿದೆ, ಸಂಪಾದಿಸಬಹುದು."
+
+#: templates/dashboard.html:261
+msgid "Annual Rainfall (mm)"
+msgstr "ವಾರ್ಷಿಕ ಮಳೆ (ಮಿ.ಮೀ.)"
+
+#: templates/dashboard.html:262 templates/dashboard.html:431
+#: templates/dashboard.html:669
+msgid "Fetching..."
+msgstr "ಪಡೆಯಲಾಗುತ್ತಿದೆ..."
+
+#: templates/dashboard.html:263
+msgid "Avg. for farm location."
+msgstr "ಜಮೀನಿನ ಸ್ಥಳದ ಸರಾಸರಿ."
+
+#: templates/dashboard.html:266
+msgid "Fertilizer (kg/Hectare)"
+msgstr "ಗೊಬ್ಬರ (ಕೆ.ಜಿ./ಹೆಕ್ಟೇರ್‌)"
+
+#: templates/dashboard.html:270
+msgid "Pesticide (L/Hectare)"
+msgstr "ಕೀಟನಾಶಕ (ಲೀ./ಹೆಕ್ಟೇರ್‌)"
+
+#: templates/dashboard.html:279
+msgid "Predict"
+msgstr "ಮುನ್ಸೂಚಿಸಿ"
+
+#: templates/dashboard.html:333
+msgid "Clear sky"
+msgstr "ಸ್ವಚ್ಛ ಆಕಾಶ"
+
+#: templates/dashboard.html:333
+msgid "Mainly clear"
+msgstr "ಮುಖ್ಯವಾಗಿ ಸ್ವಚ್ಛ"
+
+#: templates/dashboard.html:334
+msgid "Partly cloudy"
+msgstr "ಭಾಗಶಃ ಮೋಡ"
+
+#: templates/dashboard.html:334
+msgid "Overcast"
+msgstr "ಮೋಡ ಕವಿದಿದೆ"
+
+#: templates/dashboard.html:335
+msgid "Fog"
+msgstr "ಮಂಜು"
+
+#: templates/dashboard.html:335
+msgid "Slight rain"
+msgstr "ಸ್ವಲ್ಪ ಮಳೆ"
+
+#: templates/dashboard.html:336
+msgid "Moderate rain"
+msgstr "ಮಧ್ಯಮ ಮಳೆ"
+
+#: templates/dashboard.html:336
+msgid "Slight rain showers"
+msgstr "ಸ್ವಲ್ಪ ಮಳೆ ತುಂತುರು"
+
+#: templates/dashboard.html:337
+msgid "Thunderstorm"
+msgstr "ಗುಡುಗು ಸಹಿತ ಮಳೆ"
+
+#: templates/dashboard.html:339
+msgid "Unknown"
+msgstr "ಅಪರಿಚಿತ"
+
+#: templates/dashboard.html:356
+msgid "Could not load"
+msgstr "ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ"
+
+#: templates/dashboard.html:370
+msgid "Server error:"
+msgstr "ಸರ್ವರ್ ದೋಷ:"
+
+#: templates/dashboard.html:417
+msgid "Detecting..."
+msgstr "ಪತ್ತೆಹಚ್ಚಲಾಗುತ್ತಿದೆ..."
+
+#: templates/dashboard.html:424
+msgid "State not found"
+msgstr "ರಾಜ್ಯ ಕಂಡುಬಂದಿಲ್ಲ"
+
+#: templates/dashboard.html:426
+msgid "Detection failed"
+msgstr "ಪತ್ತೆಹಚ್ಚುವಿಕೆ ವಿಫಲವಾಯಿತು"
+
+#: templates/dashboard.html:439
+msgid "Not available"
+msgstr "ಲಭ್ಯವಿಲ್ಲ"
+
+#: templates/dashboard.html:441
+msgid "Error fetching data"
+msgstr "ಡೇಟಾ ಪಡೆಯುವಲ್ಲಿ ದೋಷ"
+
+#: templates/dashboard.html:448
+msgid "Calculating..."
+msgstr "ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ..."
+
+#: templates/dashboard.html:465
+msgid "Predicted Yield"
+msgstr "ಮುನ್ಸೂಚಿಸಿದ ಇಳುವರಿ"
+
+#: templates/dashboard.html:469
+msgid "Total Estimated Harvest"
+msgstr "ಒಟ್ಟು ಅಂದಾಜು ಸುಗ್ಗಿ"
+
+#: templates/dashboard.html:475
+msgid "Yield Comparison (vs. Last 4 Years)"
+msgstr "ಇಳುವರಿ ಹೋಲಿಕೆ (ಕಳೆದ 4 ವರ್ಷಗಳಿಗೆ ಹೋಲಿಸಿದರೆ)"
+
+#: templates/dashboard.html:481
+msgid "Personalized Advice"
+msgstr "ವೈಯಕ್ತಿಕ ಸಲಹೆ"
+
+#: templates/dashboard.html:484
+msgid "Rainfall"
+msgstr "ಮಳೆ"
+
+#: templates/dashboard.html:488
+msgid "Fertilizer"
+msgstr "ಗೊಬ್ಬರ"
+
+#: templates/dashboard.html:492
+msgid "Pesticide"
+msgstr "ಕೀಟನಾಶಕ"
+
+#: templates/dashboard.html:500
+msgid "An unknown error occurred."
+msgstr "ಅಪರಿಚಿತ ದೋಷ ಸಂಭವಿಸಿದೆ."
+
+#: templates/dashboard.html:509
+msgid "Request failed. Please check your connection."
+msgstr "ವಿನಂತಿ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ."
+
+#: templates/dashboard.html:522
+msgid "Predicted"
+msgstr "ಮುನ್ಸೂಚಿಸಲಾಗಿದೆ"
+
+#: templates/dashboard.html:537
+msgid "Yield (Tons/Hectare)"
+msgstr "ಇಳುವರಿ (ಟನ್/ಹೆಕ್ಟೇರ್‌)"
+
+#: templates/dashboard.html:547
+msgid "Tons / Hectare"
+msgstr "ಟನ್‌ಗಳು / ಹೆಕ್ಟೇರ್‌"
+
+#: templates/dashboard.html:584
+msgid "Could not mark as read. Please try again."
+msgstr "ಓದಿದೆ ಎಂದು ಗುರುತಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+
+#: templates/dashboard.html:589
+msgid "An error occurred. Please check your connection."
+msgstr "ದೋಷ ಸಂಭವಿಸಿದೆ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ."
+
+#: templates/dashboard.html:645
+msgid "Please select a farm from the dashboard first!"
+msgstr "ದಯವಿಟ್ಟು ಮೊದಲು ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ನಿಂದ ಜಮೀನನ್ನು ಆಯ್ಕೆಮಾಡಿ!"
+
+# Home Page
+#: templates/home.html:3
+msgid "AgriAssist - AI-Powered Farming Assistance"
+msgstr "ಅಗ್ರಿಅಸಿಸ್ಟ್ - AI-ಚಾಲಿತ ಕೃಷಿ ನೆರವು"
+
+#: templates/home.html:10
+msgid "Smart Farming with AI"
+msgstr "AI ನೊಂದಿಗೆ ಸ್ಮಾರ್ಟ್ ಕೃಷಿ"
+
+#: templates/home.html:11
+msgid ""
+"Get personalized farming advisories, weather forecasts, and crop "
+"recommendations powered by artificial intelligence."
+msgstr "ಕೃತಕ ಬುದ್ಧಿಮತ್ತೆಯಿಂದ ಚಾಲಿತ ವೈಯಕ್ತಿಕ ಕೃಷಿ ಸಲಹೆಗಳು, ಹವಾಮಾನ ಮುನ್ಸೂಚನೆಗಳು ಮತ್ತು ಬೆಳೆ ಶಿಫಾರಸುಗಳನ್ನು ಪಡೆಯಿರಿ."
+
+#: templates/home.html:14 templates/home.html:121
+msgid "Go to Dashboard"
+msgstr "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗಿ"
+
+#: templates/home.html:16
+msgid "Get Started"
+msgstr "ಪ್ರಾರಂಭಿಸಿ"
+
+#: templates/home.html:29
+msgid "How It Works"
+msgstr "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ"
+
+#: templates/home.html:37
+msgid "1. Add Your Farm"
+msgstr "1. ನಿಮ್ಮ ಜಮೀನನ್ನು ಸೇರಿಸಿ"
+
+#: templates/home.html:38
+msgid ""
+"Mark your farm location on the map and provide basic information about "
+"your crops."
+msgstr "ನಕ್ಷೆಯಲ್ಲಿ ನಿಮ್ಮ ಜಮೀನಿನ ಸ್ಥಳವನ್ನು ಗುರುತಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಬೆಳೆಗಳ ಬಗ್ಗೆ ಮೂಲಭೂತ ಮಾಹಿತಿಯನ್ನು ಒದಗಿಸಿ."
+
+#: templates/home.html:48
+msgid "2. Get AI Analysis"
+msgstr "2. AI ವಿಶ್ಲೇಷಣೆ ಪಡೆಯಿರಿ"
+
+#: templates/home.html:49
+msgid ""
+"Our AI analyzes weather, soil conditions, and crop data to provide "
+"personalized recommendations."
+msgstr "ನಮ್ಮ AI ವೈಯಕ್ತಿಕ ಶಿಫಾರಸುಗಳನ್ನು ಒದಗಿಸಲು ಹವಾಮಾನ, ಮಣ್ಣಿನ ಪರಿಸ್ಥಿತಿಗಳು ಮತ್ತು ಬೆಳೆ ಡೇಟಾವನ್ನು ವಿಶ್ಲೇಷಿಸುತ್ತದೆ."
+
+#: templates/home.html:59
+msgid "3. Improve Yields"
+msgstr "3. ಇಳುವರಿ ಸುಧಾರಿಸಿ"
+
+#: templates/home.html:60
+msgid ""
+"Follow our advisories to optimize your farming practices and increase "
+"productivity."
+msgstr "ನಿಮ್ಮ ಕೃಷಿ ಪದ್ಧತಿಗಳನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ಮತ್ತು ಉತ್ಪಾದಕತೆಯನ್ನು ಹೆಚ್ಚಿಸಲು ನಮ್ಮ ಸಲಹೆಗಳನ್ನು ಅನುಸರಿಸಿ."
+
+#: templates/home.html:71
+msgid "Interactive Farm Management"
+msgstr "ಸಂವಾದಾತ್ಮಕ ಜಮೀನು ನಿರ್ವಹಣೆ"
+
+#: templates/home.html:72
+msgid ""
+"Visualize your farms on an interactive map with real-time weather and "
+"soil data."
+msgstr "ನೈಜ-ಸಮಯದ ಹವಾಮಾನ ಮತ್ತು ಮಣ್ಣಿನ ಡೇಟಾದೊಂದಿಗೆ ಸಂವಾದಾತ್ಮಕ ನಕ್ಷೆಯಲ್ಲಿ ನಿಮ್ಮ ಜಮೀನುಗಳನ್ನು ದೃಶ್ಯೀಕರಿಸಿ."
+
+#: templates/home.html:74
+msgid "Monitor multiple farm locations"
+msgstr "ಬಹು ಜಮೀನು ಸ್ಥಳಗಳನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಿ"
+
+#: templates/home.html:75
+msgid "Get weather alerts and forecasts"
+msgstr "ಹವಾಮಾನ ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ಮುನ್ಸೂಚನೆಗಳನ್ನು ಪಡೆಯಿರಿ"
+
+#: templates/home.html:76
+msgid "Track crop health and growth"
+msgstr "ಬೆಳೆ ಆರೋಗ್ಯ ಮತ್ತು ಬೆಳವಣಿಗೆಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ"
+
+#: templates/home.html:79
+msgid "Start Managing Your Farms"
+msgstr "ನಿಮ್ಮ ಜಮೀನುಗಳನ್ನು ನಿರ್ವಹಿಸಲು ಪ್ರಾರಂಭಿಸಿ"
+
+#: templates/home.html:93
+msgid "Voice-Enabled Assistant"
+msgstr "ಧ್ವನಿ-ಸಕ್ರಿಯ ಸಹಾಯಕ"
+
+#: templates/home.html:94
+msgid ""
+"Get hands-free access to farming advice using voice commands in multiple "
+"languages."
+msgstr "ಬಹು ಭಾಷೆಗಳಲ್ಲಿ ಧ್ವನಿ ಆದೇಶಗಳನ್ನು ಬಳಸಿ ಕೃಷಿ ಸಲಹೆಗೆ ಹ್ಯಾಂಡ್ಸ್-ಫ್ರೀ ಪ್ರವೇಶ ಪಡೆಯಿರಿ."
+
+#: templates/home.html:99 templates/home.html:199
+msgid "Click to speak"
+msgstr "ಮಾತನಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ"
+
+#: templates/home.html:102
+msgid "Try saying:"
+msgstr "ಹೀಗೆ ಹೇಳಿ ಪ್ರಯತ್ನಿಸಿ:"
+
+#: templates/home.html:104
+msgid "What's the weather forecast?"
+msgstr "ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ ಏನು?"
+
+#: templates/home.html:105
+msgid "Give me farming tips for rice"
+msgstr "ಭತ್ತಕ್ಕೆ ಕೃಷಿ ಸಲಹೆಗಳನ್ನು ನೀಡಿ"
+
+#: templates/home.html:106
+msgid "Show me my farms"
+msgstr "ನನ್ನ ಜಮೀನುಗಳನ್ನು ತೋರಿಸಿ"
+
+#: templates/home.html:118
+msgid "Ready to Transform Your Farming?"
+msgstr "ನಿಮ್ಮ ಕೃಷಿಯನ್ನು ಪರಿವರ್ತಿಸಲು ಸಿದ್ಧರಿದ್ದೀರಾ?"
+
+#: templates/home.html:119
+msgid ""
+"Join thousands of farmers using AI to improve their yields and reduce "
+"risks."
+msgstr "ತಮ್ಮ ಇಳುವರಿಯನ್ನು ಸುಧಾರಿಸಲು ಮತ್ತು ಅಪಾಯಗಳನ್ನು ಕಡಿಮೆ ಮಾಡಲು AI ಬಳಸುತ್ತಿರುವ ಸಾವಿರಾರು ರೈತರೊಂದಿಗೆ ಸೇರಿಕೊಳ್ಳಿ."
+
+#: templates/home.html:123
+msgid "Sign Up Free"
+msgstr "ಉಚಿತವಾಗಿ ಸೈನ್ ಅಪ್ ಮಾಡಿ"
+
+#: templates/home.html:166 templates/home.html:192
+msgid "Error:"
+msgstr "ದೋಷ:"
+
+#: templates/home.html:171 templates/home.html:198
+msgid "Listening..."
+msgstr "ಕೇಳಲಾಗುತ್ತಿದೆ..."
+
+#: templates/home.html:178
+msgid "You said:"
+msgstr "ನೀವು ಹೇಳಿದ್ದು:"
+
+#: templates/home.html:182
+msgid "Weather information would be displayed here."
+msgstr "ಹವಾಮಾನ ಮಾಹಿತಿಯನ್ನು ಇಲ್ಲಿ ಪ್ರದರ್ಶಿಸಲಾಗುತ್ತದೆ."
+
+#: templates/home.html:184
+msgid "Here are some farming tips..."
+msgstr "ಇಲ್ಲಿ ಕೆಲವು ಕೃಷಿ ಸಲಹೆಗಳಿವೆ..."
+
+#: templates/home.html:186
+msgid "Command received:"
+msgstr "ಆದೇಶ ಸ್ವೀಕರಿಸಲಾಗಿದೆ:"
+
+#: templates/home.html:204
+msgid "Voice recognition not supported in this browser."
+msgstr "ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ."
+
+# API & Backend Strings
+msgid "An error occurred during prediction calculation."
+msgstr "ಇಳುವರಿ ಲೆಕ್ಕಾಚಾರದ ಸಮಯದಲ್ಲಿ ದೋಷ ಸಂಭವಿಸಿದೆ."
+
+msgid "Invalid input data."
+msgstr "ಅಮಾನ್ಯ ಇನ್‌ಪುಟ್ ಡೇಟಾ."
+
+msgid "Missing required farm data."
+msgstr "ಅಗತ್ಯವಿರುವ ಜಮೀನು ಡೇಟಾ ಕಾಣೆಯಾಗಿದೆ."
+
+msgid "Missing required advisory data."
+msgstr "ಅಗತ್ಯವಿರುವ ಸಲಹೆ ಡೇಟಾ ಕಾಣೆಯಾಗಿದೆ."
+
+msgid "Forbidden"
+msgstr "ನಿಷಿದ್ಧ"
+
+msgid "No advisory IDs provided."
+msgstr "ಯಾವುದೇ ಸಲಹೆ ಐಡಿಗಳನ್ನು ಒದಗಿಸಲಾಗಿಲ್ಲ."
+
+msgid "No valid advisories found to delete."
+msgstr "ಅಳಿಸಲು ಯಾವುದೇ ಮಾನ್ಯ ಸಲಹೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ."
+
+msgid "Failed to connect to geocoding service."
+msgstr "ಜಿಯೋಕೋಡಿಂಗ್ ಸೇವೆಗೆ ಸಂಪರ್ಕಿಸಲು ವಿಫಲವಾಗಿದೆ."
+
+msgid "State not found for this location."
+msgstr "ಈ ಸ್ಥಳಕ್ಕಾಗಿ ರಾಜ್ಯ ಕಂಡುಬಂದಿಲ್ಲ."
+
+msgid "Could not retrieve weather data."
+msgstr "ಹವಾಮಾನ ಡೇಟಾವನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+
+msgid "Failed to connect to the historical data service."
+msgstr "ಐತಿಹಾಸಿಕ ಡೇಟಾ ಸೇವೆಗೆ ಸಂಪರ್ಕಿಸಲು ವಿಫಲವಾಗಿದೆ."
+
+msgid "Tons"
+msgstr "ಟನ್‌ಗಳು"
+
+msgid "Tons/ha"
+msgstr "ಟನ್‌ಗಳು/ಹೆಕ್ಟೇರ್‌"
+
+msgid "Rice"
+msgstr "ಅಕ್ಕಿ"
+
+msgid "Wheat"
+msgstr "ಗೋಧಿ"
+
+msgid "Maize"
+msgstr "ಮೆಕ್ಕೆ ಜೋಳ"
+
+msgid "Cotton"
+msgstr "ಹತ್ತಿ"
+
+msgid "Sugarcane"
+msgstr "ಕಬ್ಬು"
+
+msgid "Groundnut"
+msgstr "ನೆಲಗಡಲೆ"
+
+msgid "Coconut"
+msgstr "ತೆಂಗಿನಕಾಯಿ"
+
+msgid "Millet"
+msgstr "ಸಿರಿಧಾನ್ಯ"
+
+msgid "Pulses"
+msgstr "ಬೇಳೆಕಾಳುಗಳು"
+
+msgid "Soybean"
+msgstr "ಸೋಯಾಬೀನ್"
+
+msgid "Tea"
+msgstr "ಚಹಾ"
+
+msgid "Banana"
+msgstr "ಬಾಳೆಹಣ್ಣು"
+
+msgid "Potato"
+msgstr "ಆಲೂಗಡ್ಡೆ"
+
+msgid "Tomato"
+msgstr "ಟೊಮಾಟೊ"
+
+msgid "Onion"
+msgstr "ಈರುಳ್ಳಿ"
+
+msgid "Kharif"
+msgstr "ಖಾರಿಫ್"
+
+msgid "Rabi"
+msgstr "ರಬಿ"
+
+msgid "Zaid"
+msgstr "ಜಾಯಿದ್"
+
+msgid "Whole Year"
+msgstr "ಇಡೀ ವರ್ಷ"
+
+msgid "Andhra Pradesh"
+msgstr "ಆಂಧ್ರ ಪ್ರದೇಶ"
+
+msgid "Arunachal Pradesh"
+msgstr "ಅರುಣಾಚಲ ಪ್ರದೇಶ"
+
+msgid "Assam"
+msgstr "ಅಸ್ಸಾಂ"
+
+msgid "Bihar"
+msgstr "ಬಿಹಾರ"
+
+msgid "Chhattisgarh"
+msgstr "ಛತ್ತೀಸ್‌ಗಢ"
+
+msgid "Goa"
+msgstr "ಗೋವಾ"
+
+msgid "Gujarat"
+msgstr "ಗುಜರಾತ್"
+
+msgid "Haryana"
+msgstr "ಹರಿಯಾಣ"
+
+msgid "Himachal Pradesh"
+msgstr "ಹಿಮಾಚಲ ಪ್ರದೇಶ"
+
+msgid "Jharkhand"
+msgstr "ಜಾರ್ಖಂಡ್"
+
+msgid "Karnataka"
+msgstr "ಕರ್ನಾಟಕ"
+
+msgid "Kerala"
+msgstr "ಕೇರಳ"
+
+msgid "Madhya Pradesh"
+msgstr "ಮಧ್ಯ ಪ್ರದೇಶ"
+
+msgid "Maharashtra"
+msgstr "ಮಹಾರಾಷ್ಟ್ರ"
+
+msgid "Manipur"
+msgstr "ಮಣಿಪುರ"
+
+msgid "Meghalaya"
+msgstr "ಮೇಘಾಲಯ"
+
+msgid "Mizoram"
+msgstr "ಮಿಜೋರಾಂ"
+
+msgid "Nagaland"
+msgstr "ನಾಗಾಲ್ಯಾಂಡ್"
+
+msgid "Odisha"
+msgstr "ಒಡಿಶಾ"
+
+msgid "Punjab"
+msgstr "ಪಂಜಾಬ್"
+
+msgid "Rajasthan"
+msgstr "ರಾಜಸ್ಥಾನ"
+
+msgid "Sikkim"
+msgstr "ಸಿಕ್ಕಿಂ"
+
+msgid "Tamil Nadu"
+msgstr "ತಮಿಳುನಾಡು"
+
+msgid "Telangana"
+msgstr "ತೆಲಂಗಾಣ"
+
+msgid "Tripura"
+msgstr "ತ್ರಿಪುರಾ"
+
+msgid "Uttar Pradesh"
+msgstr "ಉತ್ತರ ಪ್ರದೇಶ"
+
+msgid "Uttarakhand"
+msgstr "ಉತ್ತರಾಖಂಡ್"
+
+msgid "West Bengal"
+msgstr "ಪಶ್ಚಿಮ ಬಂಗಾಳ"
+
+msgid "Andaman & Nicobar"
+msgstr "ಅಂಡಮಾನ್ ಮತ್ತು ನಿಕೋಬಾರ್"
+
+msgid "Chandigarh"
+msgstr "ಚಂಡೀಗಢ"
+
+msgid "Dadra & Nagar Haveli"
+msgstr "ದಾದ್ರಾ ಮತ್ತು ನಗರ ಹವೇಲಿ"
+
+msgid "Daman & Diu"
+msgstr "ದಮನ್ ಮತ್ತು ದಿಯು"
+
+msgid "Delhi"
+msgstr "ದೆಹಲಿ"
+
+msgid "Jammu & Kashmir"
+msgstr "ಜಮ್ಮು ಮತ್ತು ಕಾಶ್ಮೀರ"
+
+msgid "Ladakh"
+msgstr "ಲಡಾಖ್"
+
+msgid "Lakshadweep"
+msgstr "ಲಕ್ಷದ್ವೀಪ"
+
+msgid "Puducherry"
+msgstr "ಪುದುಚೇರಿ"
+
+msgid "Sandy"
+msgstr "ಮರಳುಭೂಮಿ"
+
+msgid "Clay"
+msgstr "ಜೇಡಿ"
+
+msgid "Loamy"
+msgstr "ಲೋಮಿ"
+
+msgid "Silty"
+msgstr "ಮೆಕ್ಕಲು"
+
+msgid "Peaty"
+msgstr "ಪೀಟಿ"
+
+msgid "Chalky"
+msgstr "ಸುಣ್ಣದಂಶ"
+
+msgid "Pre-Planting"
+msgstr "ಪೂರ್ವ-ನಾಟಿ"
+
+msgid "Harvest"
+msgstr "ಸುಗ್ಗಿ"
+
+msgid "Fruiting"
+msgstr "ಹಣ್ಣು ಬಿಡುವುದು"
+
+msgid "Germination"
+msgstr "ಮೊಳಕೆ ಒಡೆಯುವುದು"
+
+msgid "Flowering"
+msgstr "ಹೂಬಿಡುವುದು"
+
+msgid "Vegetative"
+msgstr "ಸಸ್ಯಕ"
+
+msgid "Seedling"
+msgstr "ಸಸಿ"
+
+msgid "Maturity"
+msgstr "ಪಕ್ವತೆ"
+
+msgid "default"
+msgstr "ಡೀಫಾಲ್ಟ್"
+
+msgid "Get Farm Advisory"
+msgstr "ಕೃಷಿ ಸಲಹೆ ಪಡೆಯಿರಿ"
+
+msgid "Crop Growth Stage"
+msgstr "ಬೆಳೆ ಬೆಳವಣಿಗೆಯ ಹಂತ"
+
+msgid "Select soil type"
+msgstr "ಮಣ್ಣಿನ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
+
+msgid "Select growth stage"
+msgstr "ಬೆಳವಣಿಗೆಯ ಹಂತವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+
+#: templates/base.html: ...
+msgid "Hello! How can I help you?"
+msgstr "ನಮಸ್ಕಾರ! ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಲಿ?"
+
+#: templates/base.html: ...
+msgid "Listening..."
+msgstr "ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇನೆ..."
+
+#: templates/base.html: ...
+msgid "Sorry, I did not understand that. Please try again."
+msgstr "ಕ್ಷಮಿಸಿ, ನನಗೆ ಅರ್ಥವಾಗಲಿಲ್ಲ। ದಯವಿಟ್ಟು ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ।"
+
+#: templates/base.html: ...
+msgid "You can say: go to dashboard, open farms, or show advisories."
+msgstr "ನೀವು ಹೀಗೆ ಹೇಳಬಹುದು: ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗಿ, ಫಾರ್ಮ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ, ಅಥವಾ ಸಲಹೆಗಳನ್ನು ತೋರಿಸಿ।"
+
+msgid "Designed by Surya Raj"
+msgstr "ಸೂರ್ಯ ರಾಜ್ ಅವರಿಂದ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ"
+
+msgid "Create Account & Verify"
+msgstr "ಖಾತೆ ರಚಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ"
+
+msgid "Verify Your Email"
+msgstr "ನಿಮ್ಮ ಇಮೇಲ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ"
+
+msgid "Enter the 6-digit code sent to your email."
+msgstr "ನಿಮ್ಮ ಇಮೇಲ್‌ಗೆ ಕಳುಹಿಸಲಾದ 6-ಅಂಕಿಯ ಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಿ."
+
+msgid "Did not receive a code?"
+msgstr "ಕೋಡ್ ಸ್ವೀಕರಿಸಿಲ್ಲವೇ?"
+
+msgid "Start over"
+msgstr "ಮತ್ತೆ ಪ್ರಾರಂಭಿಸಿ"
+
+msgid "Email OTP"
+msgstr "ಇಮೇಲ್ OTP"
+
+msgid "Verify Account"
+msgstr "ಖಾತೆ ಪರಿಶೀಲಿಸಿ"
+
+msgid "Session Timeout Warning"
+msgstr "ಸೆಷನ್ ಸಮಯ ಮೀರಿದೆ ಎಚ್ಚರಿಕೆ"
+
+msgid "You have been inactive for a while. For your security, you will be logged out in"
+msgstr "ನೀವು ಸ್ವಲ್ಪ ಸಮಯದಿಂದ ನಿಷ್ಕ್ರಿಯರಾಗಿದ್ದೀರಿ. ನಿಮ್ಮ ಸುರಕ್ಷತೆಗಾಗಿ, ನಿಮ್ಮನ್ನು ಕೆಲವು ಸೆಕೆಂಡುಗಳಲ್ಲಿ ಲಾಗ್ ಔಟ್ ಮಾಡಲಾಗುತ್ತದೆ"
+
+msgid "seconds"
+msgstr "ಸೆಕೆಂಡುಗಳು"
+
+msgid "Do you want to stay logged in?"
+msgstr "ನೀವು ಲಾಗ್ ಇನ್ ಆಗಿರಲು ಬಯಸುತ್ತೀರಾ?"
+
+msgid "Logout"
+msgstr "ಲಾಗ್ ಔಟ್"
+
+msgid "Stay Logged In"
+msgstr "ಲಾಗ್ ಇನ್ ಆಗಿರಿ"

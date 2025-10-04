@@ -1,0 +1,705 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('AgriAssist - AI-Powered Farming Assistance') }}{% endblock %}
+
+{% block content %}
+<style>
+    /* General Styles & Resets */
+    :root {
+        --brand-green: #2E7D32;
+        --dark-green: #1b5e20;
+        --light-gray-bg: #f8f9fa;
+        --dark-text: #212529;
+    }
+
+    body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .content-wrapper {
+        width: 100%;
+        max-width: 1140px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-sizing: border-box;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    /* Helper Classes for Color (replaces inline styles) */
+    .bg-light { }
+    .text-dark { color: var(--dark-text); }
+    .text-green { color: var(--brand-green); }
+
+
+    /* Hero Section */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+        color: #fff;
+        height: 90vh;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin-top: -4.4px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .hero-section h1 {
+        color: var(--brand-green);
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .hero-section p {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255,0.01);
+        z-index: 1;
+    }
+    .hero-content {
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        z-index: 2;
+    }
+    .hero-text-block {
+        max-width: 60%;
+        text-align: right;
+    }
+    .hero-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    /* Section Styles */
+    .section {
+        padding: 4rem 0;
+    }
+    
+    .section h2 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: var(--brand-green);
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+
+    /* === START: UPDATED "How It Works" Cards === */
+
+    /* This new section style adds a subtle background for the glass effect */
+    .how-it-works-section {
+        background-image: url('{{ url_for('static', filename='images/farm.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; /* Keeps the background static while scrolling */
+    }
+
+    .how-it-works-card {
+        flex: 1 1 30%;
+        min-width: 280px;
+        
+        /* The Glassmorphism Effect */
+        background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background */
+        backdrop-filter: blur(10px) saturate(120%); /* The essential blur and saturation */
+        -webkit-backdrop-filter: blur(10px) saturate(120%); /* For Safari support */
+        
+        /* Premium Border and Accent */
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        /* border-top: 1px solid rgba(255, 255, 255, 0.7); A subtle edge to catch the light */
+        border-top: 5px solid transparent; /* Make space for the gradient accent */
+        border-image: linear-gradient(to right, var(--brand-green), var(--dark-green)) 1 stretch;
+        border-image-slice: 1;
+        
+        /* Other Styles */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* A soft shadow to lift the card */
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Kept your desired transition */
+    }
+
+    /* The hover effect you love is preserved and enhanced */
+    .how-it-works-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 12px 32px rgba(46, 125, 50, 0.15);
+        background: rgba(255, 255, 255, 0.75); /* Becomes slightly more opaque on hover */
+    }
+
+    .feature-icon-container {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--dark-green), var(--brand-green));
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .how-it-works-card:hover .feature-icon-container {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .how-it-works-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+        color: var(--dark-green);
+        font-weight: 600;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .how-it-works-card p {
+        color: #343a40; /* Darker text for better readability on the glass background */
+        line-height: 1.6;
+        flex-grow: 1;
+    }
+
+    /* === END: UPDATED Styles === */
+
+
+    /* Feature Sections (2-column layouts) */
+    .feature-column {
+        flex: 1 1 45%;
+        min-width: 300px;
+    }
+    .flex-container.align-center {
+        align-items: center;
+    }
+    .feature-column ul {
+        list-style: none;
+        padding: 0;
+    }
+     .feature-column ul li {
+        margin-bottom: 0.5rem;
+     }
+    .feature-column img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background-image: url('{{ url_for('static', filename='images/footer.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    .cta-section .content-wrapper {
+        position: relative;
+        z-index: 2;
+    }
+
+    .cta-section h2 {
+        color: #fff; 
+        margin-top: -30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-section p {
+        color: #fff;
+        margin-top: -30px;
+        margin-bottom: 2rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Button Styles */
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border-radius: 0.3rem;
+        
+        /* ✨ UPDATED: Transition for all properties including new hover effects */
+        transition: all 0.3s ease-in-out;
+        
+        /* Required for ripple effect */
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    /* ✨ NEW: Hover animation for ALL buttons */
+    .btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-lg {
+        padding: 0.8rem 1.75rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    .btn-custom-green {
+        background-color: var(--dark-green);
+        border-color: var(--dark-green);
+        color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+        /* ✨ NEW: Applying the continuous pulse animation */
+        animation: pulse-effect 2.5s infinite;
+    }
+    .btn-custom-green:hover {
+        background-color: white;
+        border-color: var(--dark-green);
+        color: var(--dark-green);
+    }
+    .btn-outline-custom-green {
+        border-color: var(--brand-green);
+        color: #fff;
+    }
+    .btn-outline-custom-green:hover {
+        background-color: var(--brand-green);
+        border-color: var(--brand-green);
+        color: #fff;
+    }
+    #start-listening {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border-color: var(--brand-green);
+        color: var(--brand-green);
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .btn-light {
+        background-color: #f8f9fa;
+        border-color: #f8f9fa;
+        color: #212529;
+    }
+    .btn-outline-light {
+        border-color: #f8f9fa;
+        color: #f8f9fa;
+    }
+    .btn-outline-light:hover {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+
+    /* Ripple Animation Styles */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple-effect 0.7s linear;
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes ripple-effect {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
+    /* ✨ NEW: Keyframes for the continuous pulse animation */
+    @keyframes pulse-effect {
+        0% {
+            box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+        }
+    }
+
+
+    /* Map & Voice Assistant */
+    #map-preview {
+        height: 400px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--brand-green);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .ol-zoom {
+        top: 1.5rem;
+        left: 0.8rem;
+    }
+    .ol-control button {
+        background-color: white;
+        color: rgb(0, 0, 0);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .ol-control button:hover {
+        background-color: var(--brand-green);
+        color: white;
+    }
+    .ol-control button:focus {
+        outline: none;
+    }
+    .ol-zoom-in {
+        margin-bottom: 0.5rem;
+    }
+
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-text-block {
+            max-width: 100%;
+            text-align: center;
+        }
+        .hero-content {
+            justify-content: center;
+        }
+        .hero-buttons {
+            justify-content: center;
+        }
+        .flex-container.align-center {
+            align-items: initial;
+        }
+        .section h2 {
+            font-size: 1.8rem;
+        }
+    }
+
+    /* === Animated Leaf Styles === */
+    #animated-leaf {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        pointer-events: none;
+        width: 90px;
+        height: auto;
+        opacity: 0; /* : Start invisible to prevent flash */
+        transition: transform 0.2s linear, opacity 0.5s ease-in-out; /* : Add opacity to transition */
+    }
+</style>
+
+<div id="hero-main" class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="content-wrapper hero-content">
+        <div class="hero-text-block">
+            <h1>{{ _('Smart Farming with AI') }}</h1>
+            <p class="text-dark">{{ _('Get personalized farming advisories, weather forecasts, and crop recommendations powered by artificial intelligence.') }}</p>
+            <div class="hero-buttons" >
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-custom-green btn-lg">{{ _('Go to Dashboard') }}</a>
+                {% else %}
+                    <a href="{{ url_for('register') }}" class="btn btn-custom-green btn-lg">
+                        {{ _('Get Started') }}&nbsp;<i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-custom-green btn-lg">{{ _('Login') }}&nbsp;<i class="fas fa-arrow-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<img src="{{ url_for('static', filename='images/leaf.png') }}" alt="Floating Leaf" id="animated-leaf">
+
+<div class="section bg-light">
+    <div class="content-wrapper">
+        <div class="flex-container align-center">
+            <div class="feature-column">
+                <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">{{ _('Interactive Farm Management') }}</h2>
+                <p>{{ _('Visualize your farms on an interactive map with real-time weather and soil data.') }}</p>
+                <ul>
+                    <li><i class="fas fa-check-circle text-green"></i> {{ _('Monitor multiple farm locations') }}</li>
+                    <li><i class="fas fa-check-circle text-green"></i> {{ _('Get weather alerts and forecasts') }}</li>
+                    <li><i class="fas fa-check-circle text-green"></i> {{ _('Track crop health and growth') }}</li>
+                </ul>
+                {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('register') }}" class="btn btn-custom-green">{{ _('Start Managing Your Farms') }}</a>
+                {% endif %}
+            </div>
+            <div class="feature-column">
+                <div id="map-preview"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section how-it-works-section">
+    <div class="content-wrapper">
+        <h2 class="section-title" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">{{ _('How It Works') }}</h2>
+        <div class="flex-container">
+            <div class="how-it-works-card">
+                <div class="feature-icon-container">
+                    <i class="fas fa-map-marked-alt fa-3x"></i>
+                </div>
+                <h4>{{ _('1. Add Your Farm') }}</h4>
+                <p>{{ _('Mark your farm location on the map and provide basic information about your crops.') }}</p>
+            </div>
+            <div class="how-it-works-card">
+                <div class="feature-icon-container">
+                    <i class="fas fa-robot fa-3x"></i>
+                </div>
+                <h4>{{ _('2. Get AI Analysis') }}</h4>
+                <p>{{ _('Our AI analyzes weather, soil conditions, and crop data to provide personalized recommendations.') }}</p>
+            </div>
+            <div class="how-it-works-card">
+                <div class="feature-icon-container">
+                    <i class="fas fa-chart-line fa-3x"></i>
+                </div>
+                <h4>{{ _('3. Improve Yields') }}</h4>
+                <p>{{ _('Follow our advisories to optimize your farming practices and increase productivity.') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="content-wrapper">
+        <div class="flex-container align-center">
+            <div class="feature-column">
+                <img src="{{ url_for('static', filename='images/voice.png') }}" style="width: 80%; height: 80%;" alt="Voice Assistant">
+            </div>
+            <div class="feature-column">
+                <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">{{ _('Voice-Enabled Assistant') }}</h2>
+                <p>{{ _('Get hands-free access to farming advice using voice commands in multiple languages.') }}</p>
+                <div>
+                    <button id="start-listening" class="btn">
+                        <i class="fas fa-microphone fa-2x"></i>
+                    </button>
+                    <span id="voice-status">{{ _('Click to speak') }}</span>
+                </div>
+                <div>
+                    <p>{{ _('Try saying:') }}</p>
+                    <ul>
+                        <li>"{{ _("What's the weather forecast?") }}"</li>
+                        <li>"{{ _('Give me farming tips for rice') }}"</li>
+                        <li>"{{ _('Show me my farms') }}"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section cta-section">
+    <div class="cta-overlay"></div>
+    <div class="content-wrapper">
+        <h2>{{ _('Ready to Transform Your Farming?') }}</h2>
+        <p>{{ _('Join thousands of farmers using AI to improve their yields and reduce risks.') }}</p>
+        <div>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-custom-green">{{ _('Go to Dashboard') }}</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-custom-green">{{ _('Sign Up Free') }}</a>
+                <a href="{{ url_for('login') }}" class="btn btn-custom-green">{{ _('Login') }}</a>
+            {% endif %}
+            </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script>
+// CONSOLIDATED SCRIPT BLOCK
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // --- Hero Background Image ---
+    const hero = document.getElementById('hero-main');
+    if (hero) {
+        hero.style.backgroundImage = `url('{{ url_for('static', filename='images/home_hero.png') }}')`;
+    }
+
+    // --- Button Ripple Animation on Click ---
+    const allButtons = document.querySelectorAll('.btn');
+    allButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            // Remove any existing ripples to prevent clutter
+            const existingRipple = button.querySelector(".ripple");
+            if (existingRipple) {
+                existingRipple.remove();
+            }
+
+            const rect = button.getBoundingClientRect();
+            // Calculate the size of the ripple based on the button's diagonal
+            const size = Math.max(rect.width, rect.height);
+            const ripple = document.createElement('span');
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            // Position the ripple's center at the click location
+            ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+            ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+            ripple.classList.add('ripple');
+
+            this.appendChild(ripple);
+
+            // Clean up the ripple element after the animation is done
+            setTimeout(() => {
+                ripple.remove();
+            }, 700); // Corresponds to animation duration in CSS
+        });
+    });
+
+    // --- OpenLayers Map ---
+    if (document.getElementById('map-preview')) {
+        const map = new ol.Map({
+            target: 'map-preview',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([78.9629, 20.5937]), // Center of India
+                zoom: 4.5
+            })
+        });
+    }
+
+    // --- Voice Recognition ---
+    const startButton = document.getElementById('start-listening');
+    const voiceStatus = document.getElementById('voice-status');
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition && startButton) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = document.documentElement.lang.startsWith('hi') ? 'hi-IN' : 'en-US';
+
+        startButton.addEventListener('click', () => {
+            try {
+                recognition.start();
+            } catch (e) {
+                console.error('Error starting voice recognition:', e);
+                if(voiceStatus) voiceStatus.textContent = `{{ _('Error:') }} ${e.message}`;
+            }
+        });
+
+        recognition.onstart = () => {
+            if(voiceStatus) voiceStatus.textContent = `{{ _('Listening...') }}`;
+            startButton.style.borderColor = 'red';
+            startButton.style.color = 'red';
+        };
+
+        recognition.onresult = (event) => {
+            const command = event.results[0][0].transcript;
+            if(voiceStatus) voiceStatus.textContent = `{{ _('You said:') }} "${command}"`;
+
+            fetch('/api/voice-command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ transcript: command })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.speak) {
+                    const utterance = new SpeechSynthesisUtterance(data.speak);
+                    utterance.lang = recognition.lang;
+                    window.speechSynthesis.speak(utterance);
+                }
+                if (data.action && data.action.type === 'navigate') {
+                    window.location.href = data.action.url;
+                }
+            })
+            .catch(error => console.error('Error processing voice command:', error));
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error', event.error);
+            if(voiceStatus) voiceStatus.textContent = `{{ _('Error:') }} ${event.error}`;
+        };
+
+        recognition.onend = () => {
+             startButton.style.borderColor = 'var(--brand-green)';
+             startButton.style.color = 'var(--brand-green)';
+            if (voiceStatus && voiceStatus.textContent === `{{ _('Listening...') }}`) {
+                voiceStatus.textContent = `{{ _('Click to speak') }}`;
+            }
+        };
+    } else {
+        if(startButton) startButton.disabled = true;
+        if(voiceStatus) voiceStatus.textContent = "{{ _('Voice recognition not supported.') }}";
+    }
+
+    // --- Leaf Scroll Animation ---
+    const leaf = document.getElementById('animated-leaf');
+    if (leaf) {
+        const updateLeafPosition = () => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const radiusX = (window.innerWidth / 2) - 80;
+            const radiusY = (window.innerHeight / 2) - 80;
+            const angle = window.scrollY * 0.004;
+            const xPos = centerX + Math.cos(angle) * radiusX;
+            const yPos = centerY + Math.sin(angle) * radiusY;
+            const rotation = window.scrollY * 0.4;
+            leaf.style.transform = `translate(${xPos}px, ${yPos}px) rotate(${rotation}deg)`;
+        };
+
+        window.addEventListener('scroll', updateLeafPosition);
+        window.addEventListener('resize', updateLeafPosition);
+        
+        // Set initial position while the leaf is still invisible
+        updateLeafPosition(); 
+        
+        // : Fade the leaf in now that it's in the correct starting position
+        leaf.style.opacity = '1';
+    }
+});
+</script>
+{% endblock %}

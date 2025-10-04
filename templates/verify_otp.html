@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Verify Account') }} - {{ _('AgriAssist') }}{% endblock %}
+
+{% block content %}
+<style>
+    /* ... (Your existing auth page styles remain the same) ... */
+    body { background-image: url('{{ url_for('static', filename='images/login8.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; color: white; }
+    .auth-container { position: relative; z-index: 2; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 0; }
+    .auth-card { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); border-radius: 1rem; }
+    .auth-card .card-header { background: transparent; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+    .auth-card .card-header h4, .auth-card .card-header p { text-shadow: 1px 1px 4px rgba(0,0,0,0.4); }
+    .form-control.glass-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; }
+    .form-control.glass-input:focus { background: rgba(255, 255, 255, 0.2); color: white; border-color: rgba(255, 255, 255, 0.5); box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25); }
+    .form-label { color: rgba(255, 255, 255, 0.9); }
+    .btn-theme-primary { background-color: #1B5E20; border-color: #1B5E20; color: white; font-weight: bold; transition: all 0.3s ease-in-out; box-shadow: 0 4px 6px rgba(0,0,0,0.8); }
+    .btn-theme-primary:hover { background-color: #2E7D32; border-color: #2E7D32; transform: scale(1.02); }
+    .auth-card a { color: #90CAF9; transition: color 0.2s ease-in-out; }
+    .auth-card a:hover { color: #c8e6c9; }
+    
+    /* 👈 New styles for the OTP boxes */
+    .otp-input-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    .otp-input {
+        width: 45px;
+        height: 50px;
+        font-size: 1.5rem;
+        text-align: center;
+        border-radius: 0.5rem;
+        caret-color: #1B5E20; /* Cursor color */
+    }
+    .otp-input::-webkit-inner-spin-button,
+    .otp-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card auth-card text-white">
+                    <div class="card-header text-center py-4">
+                        <h4 class="my-0" style="font-size: 200%;">{{ _('Verify Your Email') }}</h4>
+                        <p class="mb-0 small">{{ _('Enter the 6-digit code sent to your email.') }}</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form method="POST" action="{{ url_for('verify_otp') }}" novalidate id="otpForm">
+                            {{ form.hidden_tag() }}
+                            
+                            {{ form.otp(class="d-none") }}
+
+                            <div class="mb-4">
+                                <label class="form-label text-center d-block">{{ form.otp.label }}</label>
+                                <div class="otp-input-container" id="otpContainer">
+                                    <input type="text" class="form-control glass-input otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+                                    <input type="text" class="form-control glass-input otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+                                    <input type="text" class="form-control glass-input otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+                                    <input type="text" class="form-control glass-input otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+                                    <input type="text" class="form-control glass-input otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+                                    <input type="text" class="form-control glass-input otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+                                </div>
+                                {% for error in form.otp.errors %}
+                                    <div class="invalid-feedback d-block text-center mt-2">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                {{ form.submit(class="btn btn-theme-primary btn-lg") }}
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <p class="mb-0 small">{{ _('Did not receive a code?') }} 
+                                    <a href="{{ url_for('register') }}" class="text-decoration-none fw-bold">{{ _('Start over') }}</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const otpContainer = document.getElementById('otpContainer');
+    const inputs = [...otpContainer.children];
+    const hiddenOtpInput = document.getElementById('otp');
+    const otpForm = document.getElementById('otpForm');
+
+    // Function to update the hidden input with the combined OTP
+    const updateHiddenInput = () => {
+        hiddenOtpInput.value = inputs.map(input => input.value).join('');
+    };
+
+    inputs.forEach((input, index) => {
+        // Auto-focus the first input on page load
+        if (index === 0) {
+            input.focus();
+        }
+
+        // Handle single digit input
+        input.addEventListener('input', () => {
+            // Move to the next input if a digit is entered
+            if (input.value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+            updateHiddenInput();
+        });
+
+        // Handle navigation with arrow keys and backspace
+        input.addEventListener('keydown', (e) => {
+            if (e.key === "Backspace" && !input.value && index > 0) {
+                // On backspace in an empty field, move to the previous input
+                inputs[index - 1].focus();
+            } else if (e.key === "ArrowLeft" && index > 0) {
+                // Move focus left
+                inputs[index - 1].focus();
+            } else if (e.key === "ArrowRight" && index < inputs.length - 1) {
+                // Move focus right
+                inputs[index + 1].focus();
+            }
+        });
+
+        // Handle pasting the code
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pasteData = e.clipboardData.getData('text').trim().slice(0, 6);
+            
+            // Distribute the pasted data across the input boxes
+            pasteData.split('').forEach((char, i) => {
+                if (inputs[index + i]) {
+                    inputs[index + i].value = char;
+                }
+            });
+
+            // Focus the next empty input or the last input
+            const nextEmptyIndex = inputs.findIndex(inp => !inp.value);
+            const focusIndex = nextEmptyIndex !== -1 ? nextEmptyIndex : inputs.length - 1;
+            inputs[focusIndex].focus();
+            
+            updateHiddenInput();
+        });
+    });
+
+    // Before submitting, ensure the hidden input is up-to-date
+    otpForm.addEventListener('submit', () => {
+        updateHiddenInput();
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback - FarmAdvisor{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Share Your Feedback</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">
+                        We value your feedback! Please let us know how we can improve our service.
+                        Your input helps us provide better farming advisories and features.
+                    </p>
+                    
+                    <form id="feedbackForm" method="post">
+                        <div class="mb-3">
+                            <label for="feedbackType" class="form-label">Feedback Type</label>
+                            <select class="form-select" id="feedbackType" name="feedback_type" required>
+                                <option value="" selected disabled>Select feedback type</option>
+                                <option value="suggestion">Suggestion</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="feedbackContent" class="form-label">Your Feedback</label>
+                            <textarea class="form-control" id="feedbackContent" name="content" rows="5" 
+                                      placeholder="Please provide detailed feedback..." required></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">How would you rate your experience?</label>
+                            <div class="rating-stars">
+                                <div class="d-flex justify-content-center">
+                                    {% for i in range(5, 0, -1) %}
+                                        <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" 
+                                               class="d-none" {% if i == 5 %}checked{% endif %}>
+                                        <label for="star{{ i }}" class="star-label">
+                                            <i class="far fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                <div class="text-center mt-1">
+                                    <small class="text-muted" id="ratingText">Excellent</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i> Submit Feedback
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-4 pt-3 border-top">
+                        <h5>Recent Feedback</h5>
+                        {% if feedbacks %}
+                            <div class="list-group list-group-flush">
+                                {% for feedback in feedbacks %}
+                                    <div class="list-group-item">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">
+                                                {{ feedback.feedback_type|title }}
+                                                <span class="badge bg-{{ 'success' if feedback.rating >= 4 else 'warning' if feedback.rating >= 3 else 'danger' }}">
+                                                    {{ feedback.rating }}/5
+                                                </span>
+                                            </h6>
+                                            <small class="text-muted">{{ feedback.created_at.strftime('%b %d, %Y') }}</small>
+                                        </div>
+                                        <p class="mb-1">{{ feedback.content|truncate(150) }}</p>
+                                        {% if feedback.response %}
+                                            <div class="alert alert-light mt-2 p-2 small">
+                                                <strong>Admin Response:</strong> {{ feedback.response }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-comment-dots fa-2x text-muted mb-3"></i>
+                                <p class="text-muted">No feedback submitted yet. Be the first to share your thoughts!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .rating-stars {
+        direction: rtl;
+        unicode-bidi: bidi-override;
+        text-align: center;
+    }
+    
+    .star-label {
+        color: #ddd;
+        font-size: 2rem;
+        padding: 0 5px;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .star-label:hover,
+    .star-label:hover ~ .star-label,
+    input[type="radio"]:checked ~ .star-label {
+        color: #ffc107;
+    }
+    
+    .star-label .fa-star {
+        transition: all 0.2s;
+    }
+    
+    .star-label .fa-star.fas {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #ffc107;
+    }
+    
+    input[type="radio"]:checked ~ .star-label .fa-star.fas,
+    .star-label:hover .fa-star.fas,
+    .star-label:hover ~ .star-label .fa-star.fas {
+        display: inline-block;
+    }
+    
+    input[type="radio"]:checked ~ .star-label .fa-star.far {
+        display: none;
+    }
+    
+    .list-group-item {
+        transition: transform 0.2s;
+    }
+    
+    .list-group-item:hover {
+        transform: translateX(5px);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle star rating
+        const stars = document.querySelectorAll('.star-label');
+        const ratingText = document.getElementById('ratingText');
+        const ratingTexts = {
+            1: 'Poor',
+            2: 'Fair',
+            3: 'Good',
+            4: 'Very Good',
+            5: 'Excellent'
+        };
+        
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function() {
+                const rating = this.getAttribute('for').replace('star', '');
+                ratingText.textContent = ratingTexts[rating];
+            });
+            
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('for').replace('star', '');
+                ratingText.textContent = ratingTexts[rating];
+            });
+        });
+        
+        // Handle form submission
+        const form = document.getElementById('feedbackForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = {
+                    feedback_type: formData.get('feedback_type'),
+                    content: formData.get('content'),
+                    rating: parseInt(formData.get('rating'))
+                };
+                
+                // Here you would typically make an AJAX call to your backend
+                fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Show success message
+                    alert('Thank you for your feedback!');
+                    // Reset form
+                    form.reset();
+                    // Reload to show the new feedback
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting your feedback. Please try again.');
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

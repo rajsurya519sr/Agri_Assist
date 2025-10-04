@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='images/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>{% block title %}{{ _('AgriAssist') }}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        body {
+            padding-top: 70px;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- "BACKGROUND SWEEP" EFFECT --- */
+        
+        @keyframes sweep {
+            0% {
+                transform: translateX(-100%) skewX(-15deg);
+            }
+            40% {
+                transform: translateX(100%) skewX(-15deg);
+            }
+            100% {
+                transform: translateX(100%) skewX(-15deg);
+            }
+        }
+
+        .navbar-dark .navbar-brand {
+            color: white !important;
+        }
+
+        /* Base style for all links */
+        .navbar-dark .navbar-nav .nav-link {
+            color: white !important;
+            position: relative;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1;
+            transition: background-color 0.3s ease;
+        }
+
+        /* The shine pseudo-element, starts hidden off-screen */
+        .navbar-dark .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent
+            );
+            transform: translateX(-100%) skewX(-15deg);
+            z-index: -1;
+        }
+        
+        /* On HOVER or ACTIVE, add a subtle background and trigger the animation */
+        .navbar-dark .navbar-nav .nav-link:hover,
+        .navbar-dark .navbar-nav .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover::before {
+            animation: sweep 1s ease-out 1; /* Play once on hover */
+        }
+        
+        .navbar-dark .navbar-nav .nav-link.active::before {
+            animation: sweep 3s infinite ease-out; /* Repeat for active link */
+        }
+
+        /* --- Voice Assistant Button Styles --- */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(25, 135, 84, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(25, 135, 84, 0);
+            }
+        }
+
+        /* START: Continuous Breathing Animation */
+        @keyframes gentlePulse {
+            0% {
+                transform: scale(1.0);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1.0);
+            }
+        }
+        /* END: Continuous Breathing Animation */
+
+
+        #voice-assistant-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            z-index: 1050;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+            transition: transform 0.2s ease-in-out, background-color 0.2s;
+            background-color: #1B5E20; /* Bootstrap's success green */
+            border-color: #1B5E20;
+            overflow: hidden;
+            /* ADDED: Continuous animation to the default state */
+            animation: gentlePulse 3s ease-in-out infinite;
+        }
+
+        #voice-assistant-btn:hover {
+            /* This transform overrides the animation, stopping the pulse and scaling up */
+            transform: scale(1.1);
+            /* We also remove the animation property on hover for smoother control */
+            animation: none;
+        }
+        
+        #voice-assistant-btn.listening {
+            /* The 'pulse' animation will run instead of 'gentlePulse' when listening */
+            animation: pulse 2s infinite;
+            background-color: #dc3545; /* Change color to red when listening */
+            border-color: #dc3545;
+        }
+
+        /* --- Interactive Ripple Animation --- */
+        #voice-assistant-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20, 20) translate(-50%);
+                opacity: 0;
+            }
+        }
+
+        #voice-assistant-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+
+        /* --- Voice Assistant Modal Styles --- */
+        .voice-modal-container {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 350px;
+            max-width: 90%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1040;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .voice-modal-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .voice-modal-content {
+            padding: 20px;
+            font-size: 0.95rem;
+        }
+
+        .voice-transcript p, .voice-response p {
+            margin: 0.25rem 0 0 0;
+            font-style: italic;
+            color: #333;
+        }
+        
+        .voice-transcript small, .voice-response small {
+            color: #6c757d;
+            font-weight: bold;
+        }
+
+        .voice-loader {
+            display: none;
+            margin: 1rem auto 0;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #198754;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- START: Themed Inactivity Modal --- */
+        #inactivityModal .modal-content {
+            background: rgba(30, 40, 30, 0.7); /* Dark semi-transparent green */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            color: white;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        #inactivityModal .modal-header,
+        #inactivityModal .modal-footer {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        #inactivityModal .modal-body p {
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+        
+        /* --- Modal Button Styles --- */
+        #inactivityModal #stayLoggedInBtn {
+            background-color: #1B5E20;
+            border-color: #1B5E20;
+            color: white;
+            font-weight: bold;
+            opacity: 1; /* Ensures button is fully visible */
+            visibility: visible; /* Ensures button is not hidden */
+            transition: all 0.3s ease-in-out;
+        }
+
+        #inactivityModal #stayLoggedInBtn:hover {
+            background-color: #2E7D32;
+            border-color: #2E7D32;
+            transform: scale(1.02);
+        }
+        
+        #inactivityModal #logoutBtn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            opacity: 1; /* Ensures button is fully visible */
+            visibility: visible; /* Ensures button is not hidden */
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #inactivityModal #logoutBtn:hover {
+             background-color: rgba(255, 255, 255, 0.3);
+        }
+        /* --- END: Themed Inactivity Modal --- */
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top navbar-glassy" style="background-color: #1B5E20;">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">
+                    <i class="fas fa-leaf me-2"></i>{{ _('AgriAssist') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">{{ _('Home') }}</a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">{{ _('Dashboard') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'farms' %}active{% endif %}" href="{{ url_for('farms') }}">{{ _('My Farms') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'advisories' %}active{% endif %}" href="{{ url_for('advisories') }}">{{ _('Advisories') }}</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-globe me-1"></i> {{ LANGUAGES[get_locale()] }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                {% for lang_code, lang_name in LANGUAGES.items() %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('change_language', language=lang_code) }}">{{ lang_name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-1"></i>{{ current_user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">{{ _('Profile') }}</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">{{ _('Logout') }}</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">{{ _('Login') }}</a>
+                        </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="btn btn-light ms-2" href="{{ url_for('register') }}">{{ _('Register') }}</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+        <div id="voice-modal" class="voice-modal-container">
+            <div class="voice-modal-content">
+                <div id="voice-transcript" class="voice-transcript">
+                    <small>{{ _('You said:') }}</small>
+                    <p>"..."</p>
+                </div>
+                <hr>
+                <div id="voice-response" class="voice-response">
+                    <small>{{ _('AgriAssist says:') }}</small>
+                    <p>"..."</p>
+                </div>
+                <div class="voice-loader" id="voice-loader"></div>
+            </div>
+        </div>
+
+        {% if current_user.is_authenticated %}
+            <button id="voice-assistant-btn" class="btn btn-success" 
+                    title="{{ _('Voice Assistant') }}"
+                    data-lang="{{ get_locale() }}"
+                    data-url-command-processor="{{ url_for('process_voice_command') }}"
+                    data-speak-listening="{{ _('Listening...') }}"
+                    data-speak-error="{{ _('Sorry, an error occurred. Please try again.') }}">
+                <i class="fas fa-microphone"></i>
+            </button>
+        {% endif %}
+        
+        {% if current_user.is_authenticated %}
+        <div class="modal fade" id="inactivityModal" tabindex="-1" aria-labelledby="inactivityModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="inactivityModalLabel">{{ _('Session Timeout Warning') }}</h5>
+              </div>
+              <div class="modal-body">
+                <p>{{ _('You have been inactive for a while. For your security, you will be logged out in') }} <span id="countdownTimer" class="fw-bold">10</span> {{ _('seconds') }}.</p>
+                <p>{{ _('Do you want to stay logged in?') }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="logoutBtn">{{ _('Logout') }}</button>
+                <button type="button" class="btn btn-primary" id="stayLoggedInBtn">{{ _('Stay Logged In') }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer class="bg-transparent text-center text-lg-start mt-auto py-4">
+        <div class="container">
+            <p class="text-center text-muted">&copy; 2025 {{ _('AgriAssist') }}. {{ _('All rights reserved.') }} <br>{{ _('Designed by Surya Raj') }}</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+    
+    {% block extra_js %}
+        {% if current_user.is_authenticated %}
+            <script src="{{ url_for('static', filename='js/voice-assistant.js') }}"></script>
+
+            <script>
+            (function() {
+                let inactivityTimer;
+                let countdownInterval;
+                const inactivityDuration = 60 * 1000; // 1 minute in milliseconds
+                const countdownStartValue = 10; // 10 seconds to react
+
+                const modalElement = document.getElementById('inactivityModal');
+                if (!modalElement) return; // Exit if modal is not on the page
+
+                const inactivityModal = new bootstrap.Modal(modalElement);
+                const countdownDisplay = document.getElementById('countdownTimer');
+                const logoutButton = document.getElementById('logoutBtn');
+                const stayLoggedInButton = document.getElementById('stayLoggedInBtn');
+
+                // Function to redirect to the logout page
+                const logoutUser = () => {
+                    window.location.href = "{{ url_for('logout') }}";
+                };
+
+                // Function to start the 10-second countdown in the modal
+                const startCountdown = () => {
+                    let count = countdownStartValue;
+                    countdownDisplay.textContent = count;
+
+                    countdownInterval = setInterval(() => {
+                        count--;
+                        countdownDisplay.textContent = count;
+                        if (count <= 0) {
+                            clearInterval(countdownInterval);
+                            logoutUser(); // Auto-logout if timer reaches zero
+                        }
+                    }, 1000);
+                };
+
+                // Function to show the modal
+                const showInactivityModal = () => {
+                    inactivityModal.show();
+                    startCountdown();
+                };
+
+                // Function to reset the main 1-minute inactivity timer
+                const resetInactivityTimer = () => {
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(showInactivityModal, inactivityDuration);
+                };
+
+                // Function for the "Stay Logged In" button
+                const stayLoggedIn = () => {
+                    inactivityModal.hide();
+                    clearInterval(countdownInterval);
+                    resetInactivityTimer();
+
+                    // Ping the server to refresh the session cookie
+                    fetch("{{ url_for('session_ping') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    }).catch(err => console.error("Session ping failed:", err));
+                };
+
+                // List of events that indicate user activity
+                const activityEvents = [
+                    'mousemove', 'mousedown', 'keypress', 
+                    'scroll', 'touchstart', 'load'
+                ];
+
+                // Attach event listeners to reset the timer on any activity
+                activityEvents.forEach(event => {
+                    document.addEventListener(event, resetInactivityTimer);
+                });
+
+                // Attach listeners for the modal buttons
+                logoutButton.addEventListener('click', logoutUser);
+                stayLoggedInButton.addEventListener('click', stayLoggedIn);
+
+            })();
+            </script>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
