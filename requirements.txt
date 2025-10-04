@@ -12,3 +12,4 @@ Flask-Mail
 requests
 python-dotenv
 email-validator # Required by Flask-WTF for the Email() validator
+gunicorn
