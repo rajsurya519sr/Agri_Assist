@@ -1,15 +1,25 @@
-# Web Framework and Extensions
-Flask
-Flask-SQLAlchemy
-Flask-Login
-Flask-Bcrypt
-Flask-WTF
-Flask-Babel
-Flask-Session
-Flask-Mail
+# Flask and Web Framework Core
+Flask==3.0.0
+gunicorn==21.2.0
+
+# Database
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.22
+psycopg2-binary==2.9.9
+
+# User Authentication & Security
+Flask-Login==0.6.3
+Flask-Bcrypt==1.0.1
+Flask-WTF==1.2.1
+email-validator==2.1.0.post1
+
+# Internationalization (i18n)
+Flask-Babel==3.1.0
+
+# Server-Side Sessions & Email
+Flask-Session==0.5.0
+Flask-Mail==0.9.1
 
 # Utilities
-requests
-python-dotenv
-email-validator # Required by Flask-WTF for the Email() validator
-gunicorn
+requests==2.31.0
+python-dotenv==1.0.0
