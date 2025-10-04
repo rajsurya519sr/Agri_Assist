@@ -1,0 +1,14 @@
+# Web Framework and Extensions
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Flask-Bcrypt
+Flask-WTF
+Flask-Babel
+Flask-Session
+Flask-Mail
+
+# Utilities
+requests
+python-dotenv
+email-validator # Required by Flask-WTF for the Email() validator
