@@ -436,7 +436,6 @@ class RegistrationForm(FlaskForm):
         if User.query.filter_by(username=username.data).first():
             raise ValidationError(_('This username is already taken.'))
 
-    # 👈 **CORRECTED VALIDATION LOGIC**
     def validate_email(self, email):
         # This validator correctly checks only for VERIFIED users.
         # An unverified user with the same email can be overwritten by a new registration attempt.
@@ -549,7 +548,6 @@ def send_otp_email(recipient, otp):
     try:
         current_year = datetime.now().year
 
-        # 👈 Define the new, beautiful HTML body for the email
         html_body = f"""
         <!DOCTYPE html>
         <html lang="en">
@@ -618,6 +616,77 @@ def send_otp_email(recipient, otp):
         return True
     except Exception as e:
         print(f"Error sending email to {recipient}: {e}")
+        return False
+
+# 👈 **NEW FUNCTION ADDED**
+def send_welcome_email(recipient, first_name):
+    """Sends a beautiful welcome email to a newly registered user."""
+    try:
+        current_year = datetime.now().year
+
+        # Define the beautiful HTML body for the welcome email
+        html_body = f"""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+            </style>
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #f4f4f7; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <div style="display: none; font-size: 1px; color: #f4f4f7; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+                Welcome to AgriAssist! Your account is ready.
+            </div>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td align="center" style="padding: 20px 0;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="600" style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 0 auto;">
+                            <tr>
+                                <td align="center" style="padding: 40px 0 20px 0; border-bottom: 1px solid #eeeeee;">
+                                    <h1 style="color: #1a431a; font-size: 32px; font-weight: 700; margin: 0;">AgriAssist</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 40px 30px;">
+                                    <h2 style="color: #333333; font-size: 24px; font-weight: 600; margin-top: 0;">Welcome Aboard, {first_name}!</h2>
+                                    <p style="font-size: 16px; color: #555555; line-height: 1.6;">
+                                        Thank you for joining AgriAssist. Your account has been successfully created. We're excited to help you manage your farm more effectively.
+                                    </p>
+                                    <p style="font-size: 16px; color: #555555; line-height: 1.6; margin-top: 20px;">
+                                        You can now log in to add your farms, get personalized AI-driven advisories, and predict crop yields.
+                                    </p>
+                                    <a href="{url_for('login', _external=True)}" style="background-color: #2e7d32; color: #ffffff; display: inline-block; padding: 14px 28px; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 8px; margin-top: 30px;">
+                                        Go to Your Dashboard
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 30px; background-color: #f9f9f9; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+                                    <p style="font-size: 12px; color: #999999; margin: 5px 0 0 0;">
+                                        &copy; {current_year} AgriAssist. All rights reserved.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>
+        """
+
+        msg = Message(
+            subject=_("Welcome to AgriAssist!"),
+            sender=('AgriAssist Team', app.config['MAIL_DEFAULT_SENDER']),
+            recipients=[recipient],
+            html=html_body
+        )
+        mail.send(msg)
+        return True
+    except Exception as e:
+        print(f"Error sending welcome email to {recipient}: {e}")
         return False
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -711,6 +780,9 @@ def verify_otp():
             )
             db.session.add(user)
             db.session.commit()
+            
+            # 👈 **NEW CODE: Send the welcome email**
+            send_welcome_email(user.email, user.first_name)
             
             # Clean up session
             session.pop('registration_form', None)
