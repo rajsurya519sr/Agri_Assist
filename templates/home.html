@@ -359,12 +359,79 @@
 
 
     /* Map & Voice Assistant */
-    #map-preview {
+    #map-container {
+        position: relative;
         height: 400px;
         border-radius: 10px;
         overflow: hidden;
         border: 1px solid var(--brand-green);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    #map-preview {
+        height: 100%;
+        width: 100%;
+    }
+    #pano-preview {
+        height: 100%;
+        width: 100%;
+        background-color: #e0e0e0;
+        display: none; /* Hidden by default */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 20;
+    }
+    #pano-close-btn {
+        position: absolute;
+        top: 15px;
+        /* 👇 **CHANGED**: Moved to left to avoid overlap */
+        left: 15px;
+        z-index: 25;
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        line-height: 36px;
+        text-align: center;
+    }
+    #map-preview.street-view-active {
+        cursor: crosshair;
+    }
+
+    /* Styles for Map Layer Toggle Buttons */
+    #map-layer-controls {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .map-control-btn {
+        background-color: white;
+        color: var(--brand-green);
+        border: 1px solid rgba(0,0,0,0.2);
+        border-radius: 4px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    .map-control-btn:hover {
+        background-color: #f0f0f0;
+    }
+    .map-control-btn.active {
+        background-color: var(--brand-green);
+        color: white;
+        border-color: var(--dark-green);
     }
     
     .ol-zoom {
@@ -469,7 +536,26 @@
                 {% endif %}
             </div>
             <div class="feature-column">
-                <div id="map-preview"></div>
+                <div id="map-container">
+                    <div id="map-preview"></div>
+                    <div id="pano-preview">
+                        <button id="pano-close-btn" title="Close 360° View">&times;</button>
+                    </div>
+                    <div id="map-layer-controls">
+                        <button id="map-view-btn" class="map-control-btn active" title="{{ _('Map View') }}">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </button>
+                        <button id="satellite-view-btn" class="map-control-btn" title="{{ _('Satellite View') }}">
+                            <i class="fas fa-satellite"></i>
+                        </button>
+                        <button id="street-view-btn" class="map-control-btn" title="{{ _('360° View') }}">
+                            <i class="fas fa-street-view"></i>
+                        </button>
+                        <button id="fullscreen-btn" class="map-control-btn" title="{{ _('Fullscreen') }}">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -565,116 +651,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const allButtons = document.querySelectorAll('.btn');
     allButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            // Remove any existing ripples to prevent clutter
             const existingRipple = button.querySelector(".ripple");
             if (existingRipple) {
                 existingRipple.remove();
             }
-
             const rect = button.getBoundingClientRect();
-            // Calculate the size of the ripple based on the button's diagonal
             const size = Math.max(rect.width, rect.height);
             const ripple = document.createElement('span');
-
             ripple.style.width = ripple.style.height = size + 'px';
-            // Position the ripple's center at the click location
             ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
             ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
             ripple.classList.add('ripple');
-
             this.appendChild(ripple);
-
-            // Clean up the ripple element after the animation is done
             setTimeout(() => {
                 ripple.remove();
-            }, 700); // Corresponds to animation duration in CSS
+            }, 700);
         });
     });
-
-    // --- OpenLayers Map ---
-    if (document.getElementById('map-preview')) {
-        const map = new ol.Map({
-            target: 'map-preview',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([78.9629, 20.5937]), // Center of India
-                zoom: 4.5
-            })
-        });
-    }
-
-    // --- Voice Recognition ---
-    const startButton = document.getElementById('start-listening');
-    const voiceStatus = document.getElementById('voice-status');
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (SpeechRecognition && startButton) {
-        const recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = document.documentElement.lang.startsWith('hi') ? 'hi-IN' : 'en-US';
-
-        startButton.addEventListener('click', () => {
-            try {
-                recognition.start();
-            } catch (e) {
-                console.error('Error starting voice recognition:', e);
-                if(voiceStatus) voiceStatus.textContent = `{{ _('Error:') }} ${e.message}`;
-            }
-        });
-
-        recognition.onstart = () => {
-            if(voiceStatus) voiceStatus.textContent = `{{ _('Listening...') }}`;
-            startButton.style.borderColor = 'red';
-            startButton.style.color = 'red';
-        };
-
-        recognition.onresult = (event) => {
-            const command = event.results[0][0].transcript;
-            if(voiceStatus) voiceStatus.textContent = `{{ _('You said:') }} "${command}"`;
-
-            fetch('/api/voice-command', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ transcript: command })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.speak) {
-                    const utterance = new SpeechSynthesisUtterance(data.speak);
-                    utterance.lang = recognition.lang;
-                    window.speechSynthesis.speak(utterance);
-                }
-                if (data.action && data.action.type === 'navigate') {
-                    window.location.href = data.action.url;
-                }
-            })
-            .catch(error => console.error('Error processing voice command:', error));
-        };
-
-        recognition.onerror = (event) => {
-            console.error('Speech recognition error', event.error);
-            if(voiceStatus) voiceStatus.textContent = `{{ _('Error:') }} ${event.error}`;
-        };
-
-        recognition.onend = () => {
-             startButton.style.borderColor = 'var(--brand-green)';
-             startButton.style.color = 'var(--brand-green)';
-            if (voiceStatus && voiceStatus.textContent === `{{ _('Listening...') }}`) {
-                voiceStatus.textContent = `{{ _('Click to speak') }}`;
-            }
-        };
-    } else {
-        if(startButton) startButton.disabled = true;
-        if(voiceStatus) voiceStatus.textContent = "{{ _('Voice recognition not supported.') }}";
-    }
 
     // --- Leaf Scroll Animation ---
     const leaf = document.getElementById('animated-leaf');
@@ -700,6 +693,143 @@ document.addEventListener('DOMContentLoaded', function() {
         // : Fade the leaf in now that it's in the correct starting position
         leaf.style.opacity = '1';
     }
+
 });
 </script>
+
+<script>
+    function initMap() {
+        const mapContainer = document.getElementById('map-container'); 
+        const mapPreview = document.getElementById('map-preview');
+        if (!mapContainer || !mapPreview) return;
+
+        // --- State Management ---
+        let isStreetViewMode = false;
+
+        // --- Element Refs ---
+        const panoContainer = document.getElementById('pano-preview');
+        const panoCloseBtn = document.getElementById('pano-close-btn');
+        const mapBtn = document.getElementById('map-view-btn');
+        const satelliteBtn = document.getElementById('satellite-view-btn');
+        const streetViewBtn = document.getElementById('street-view-btn');
+        const fullscreenBtn = document.getElementById('fullscreen-btn'); // New fullscreen button
+
+        // --- 1. OpenLayers Map Setup ---
+        const osmLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
+        const satelliteLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                attributions: 'Tiles &copy; Esri'
+            }),
+            visible: false
+        });
+
+        const map = new ol.Map({
+            target: 'map-preview',
+            layers: [osmLayer, satelliteLayer],
+            view: new ol.View({
+                // 👇 **CHANGED**: Center on India and adjust zoom
+                center: ol.proj.fromLonLat([78.9629, 20.5937]), // Center of India
+                zoom: 5
+            })
+        });
+
+        // --- 2. Google Street View Setup ---
+        const streetViewService = new google.maps.StreetViewService();
+        const panorama = new google.maps.StreetViewPanorama(panoContainer);
+
+        // --- 3. Event Listeners & Logic ---
+
+        // Helper to manage active button state
+        const setActiveButton = (activeBtn) => {
+            [mapBtn, satelliteBtn, streetViewBtn].forEach(btn => btn.classList.remove('active'));
+            if(activeBtn) activeBtn.classList.add('active');
+        };
+
+        // Switch to Map View
+        mapBtn.addEventListener('click', () => {
+            isStreetViewMode = false;
+            osmLayer.setVisible(true);
+            satelliteLayer.setVisible(false);
+            mapPreview.classList.remove('street-view-active');
+            setActiveButton(mapBtn);
+        });
+
+        // Switch to Satellite View
+        satelliteBtn.addEventListener('click', () => {
+            isStreetViewMode = false;
+            osmLayer.setVisible(false);
+            satelliteLayer.setVisible(true);
+            mapPreview.classList.remove('street-view-active');
+            setActiveButton(satelliteBtn);
+        });
+
+        // Toggle 360° View Mode
+        streetViewBtn.addEventListener('click', () => {
+            isStreetViewMode = !isStreetViewMode;
+            if (isStreetViewMode) {
+                mapPreview.classList.add('street-view-active');
+                setActiveButton(streetViewBtn);
+                alert("360° View is active. Click on a road in the map to open the view.");
+            } else {
+                mapPreview.classList.remove('street-view-active');
+                setActiveButton(mapBtn); // Default back to map view button
+            }
+        });
+
+        // Handle clicks on the OpenLayers map
+        map.on('click', (event) => {
+            if (!isStreetViewMode) return;
+
+            const coords = ol.proj.toLonLat(event.coordinate);
+            const location = { lat: coords[1], lng: coords[0] };
+
+            streetViewService.getPanorama({ location: location, radius: 50 }, (data, status) => {
+                if (status === 'OK') {
+                    panorama.setPosition(data.location.latLng);
+                    panorama.setVisible(true);
+                    panoContainer.style.display = 'block';
+                } else {
+                    alert('No 360° view available for this location.');
+                }
+            });
+        });
+        
+        // Close the panorama view
+        panoCloseBtn.addEventListener('click', () => {
+            panoContainer.style.display = 'none';
+            isStreetViewMode = false;
+            mapPreview.classList.remove('street-view-active');
+            setActiveButton(mapBtn);
+        });
+
+        // 👇 **NEW**: Fullscreen logic
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                mapContainer.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // 👇 **NEW**: Update fullscreen icon on change
+        document.addEventListener('fullscreenchange', () => {
+            const icon = fullscreenBtn.querySelector('i');
+            if (document.fullscreenElement) {
+                icon.classList.remove('fa-expand');
+                icon.classList.add('fa-compress');
+                fullscreenBtn.title = "{{ _('Exit Fullscreen') }}";
+            } else {
+                icon.classList.remove('fa-compress');
+                icon.classList.add('fa-expand');
+                fullscreenBtn.title = "{{ _('Fullscreen') }}";
+            }
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
 {% endblock %}

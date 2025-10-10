@@ -21,6 +21,8 @@ from flask_mail import Mail, Message
 load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'a-default-secret-key')
+# 👈 **NEW**: Add your Google Maps API Key to your .env file
+app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
 db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{db_path}')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -461,7 +463,9 @@ class PredictionForm(FlaskForm):
 
 @app.route('/')
 @app.route('/home')
-def home(): return render_template('home.html', title=_('Home'))
+def home():
+    # 👈 **NEW**: Pass the API key to the template
+    return render_template('home.html', title=_('Home'), google_maps_api_key=app.config['GOOGLE_MAPS_API_KEY'])
 
 @app.route('/dashboard')
 @login_required
@@ -618,7 +622,6 @@ def send_otp_email(recipient, otp):
         print(f"Error sending email to {recipient}: {e}")
         return False
 
-# 👈 **NEW FUNCTION ADDED**
 def send_welcome_email(recipient, first_name):
     """Sends a beautiful welcome email to a newly registered user."""
     try:
@@ -781,7 +784,7 @@ def verify_otp():
             db.session.add(user)
             db.session.commit()
             
-            # 👈 **NEW CODE: Send the welcome email**
+            # Send the welcome email
             send_welcome_email(user.email, user.first_name)
             
             # Clean up session
