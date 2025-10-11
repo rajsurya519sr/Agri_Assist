@@ -41,6 +41,17 @@
   .card.bg-info {
       background: linear-gradient(45deg, rgba(13, 202, 240, 0.5), rgba(20, 220, 250, 0.3));
   }
+  /* --- NEW ---: Custom gradients for new cards */
+  .card.bg-warning-custom {
+      background: linear-gradient(45deg, rgba(255, 193, 7, 0.5), rgba(255, 200, 30, 0.3));
+  }
+  .card.bg-danger-custom {
+      background: linear-gradient(45deg, rgba(220, 53, 69, 0.5), rgba(230, 70, 85, 0.3));
+  }
+  .card.bg-soil-custom {
+    background: linear-gradient(45deg, rgba(139, 69, 19, 0.5), rgba(160, 82, 45, 0.3));
+  }
+
 
   /* 4. Dynamic Icon Animation on Hover */
   .card .fa-3x {
@@ -121,6 +132,40 @@
         border: 1px solid #212121;
     }
 
+    /* --- NEW: Map Layer Controls --- */
+    #map-layer-controls {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        z-index: 401; /* Must be higher than OL's default controls */
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .map-control-btn {
+        background-color: white;
+        color: #1B5E20;
+        border: 1px solid rgba(0,0,0,0.2);
+        border-radius: 4px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .map-control-btn:hover {
+        background-color: #f0f0f0;
+    }
+    .map-control-btn.active {
+        background-color: #1B5E20;
+        color: white;
+        border-color: #1B5E20;
+    }
+
 </style>
 
 <div class="container py-4">
@@ -190,9 +235,9 @@
             </div>
         </div>
     </div>
-
-    <div class="row mb-4">
-        <div class="col-md-4 mb-3">
+    
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="card bg-primary text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -208,7 +253,25 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card bg-dark text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-0" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">{{ _('Farm Area') }}</h6>
+                            <h2 class="mt-2 mb-0" id="farmAreaDisplay">--</h2>
+                        </div>
+                        <i class="fas fa-vector-square fa-3x opacity-75"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex" style="background: transparent; border-top-color: rgba(255,255,255,0.2);">
+                    <span class="text-white">{{ _('Hectares') }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="card bg-success text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -226,7 +289,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
+        
+        <div class="col-lg-4 col-md-6 mb-4">
             <div id="weather-card" class="card bg-info text-white h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -246,6 +310,40 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div id="fertilizer-card" class="card bg-warning-custom text-dark h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-0">{{ _('Est. Fertilizer Need') }}</h6>
+                            <p class="h5 mt-2 mb-0" id="nutrientNeedsDisplay">--</p>
+                        </div>
+                        <i class="fas fa-seedling fa-3x opacity-75"></i>
+                    </div>
+                </div>
+                 <div class="card-footer d-flex" style="background: transparent; border-top-color: rgba(0,0,0,0.2);">
+                    <span class="text-dark">{{ _('AI Estimation') }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div id="pesticide-card" class="card bg-danger-custom text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-0">{{ _('Est. Pesticide Need') }}</h6>
+                            <p class="h5 mt-2 mb-0" id="pestAlertsDisplay">--</p>
+                        </div>
+                        <i class="fas fa-bug fa-3x opacity-75"></i>
+                    </div>
+                </div>
+                        <div class="card-footer d-flex" style="background: transparent; border-top-color: rgba(255,255,255,0.2);">
+                    <span class="text-white">{{ _('AI Estimation') }}</span>
+                </div>
+            </div>
+        </div>
     </div>
     
     <div class="row">
@@ -253,15 +351,24 @@
             <div class="card h-100 d-flex flex-column" style="border: 1px solid #1B5E20; border-bottom-left-radius: 0%;border-bottom-right-radius: 0%;">
                 <div class="card-header d-flex justify-content-between align-items-center" style="background: transparent; color: #1B5E20; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); border-bottom-color: rgba(255,255,255,0.2);">
                     <h5 class="mb-0">{{ _('My Farms Map') }}</h5>
-                    <div>
-                        <a href="{{ url_for('farms') }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-map-marked-alt me-1"></i> {{ _('Manage Farms') }}</a>
-                        <button id="fullscreen-map-btn" class="btn btn-sm btn-outline-secondary ms-2" title="{{ _('Toggle Fullscreen') }}">
+                    <a href="{{ url_for('farms') }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-map-marked-alt me-1"></i> {{ _('Manage Farms') }}</a>
+                </div>
+                <div class="card-body p-0 flex-grow-1 position-relative">
+                    <div id="farm-map" style="height: 100%; min-height: 450px; border-radius: 0 0 1rem 1rem;"></div>
+                    <div id="map-layer-controls">
+                        <button id="map-view-btn" class="map-control-btn active" title="{{ _('Map View') }}">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </button>
+                        <button id="satellite-view-btn" class="map-control-btn" title="{{ _('Satellite View') }}">
+                            <i class="fas fa-satellite"></i>
+                        </button>
+                        <button id="hybrid-view-btn" class="map-control-btn" title="{{ _('Hybrid View') }}">
+                            <i class="fas fa-layer-group"></i>
+                        </button>
+                        <button id="fullscreen-map-btn" class="map-control-btn" title="{{ _('Toggle Fullscreen') }}">
                             <i class="fas fa-expand"></i>
                         </button>
                     </div>
-                </div>
-                <div class="card-body p-0 flex-grow-1">
-                    <div id="farm-map" style="height: 100%; min-height: 450px; border-radius: 0 0 1rem 1rem;"></div>
                 </div>
             </div>
         </div>
@@ -344,7 +451,7 @@
 
 
 <div class="modal fade" id="predictionModal" tabindex="-1" aria-labelledby="predictionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="predictionModalLabel">{{ _('Crop Yield Potential') }}</h5>
@@ -380,7 +487,7 @@
                         <div class="col-md-4">
                             <label for="area" class="form-label">{{ _('Area (Hectares)') }}</label>
                             <input type="number" step="0.01" class="form-control" id="area" name="area" placeholder="{{ _('e.g., 10.5') }}" required readonly>
-                             <div class="form-text">{{_('Set from farm, can be edited.')}}</div>
+                                <div class="form-text">{{_('Set from farm, can be edited.')}}</div>
                         </div>
                         <div class="col-md-4">
                             <label for="annual_rainfall" class="form-label">{{ _('Annual Rainfall (mm)') }}</label>
@@ -414,462 +521,693 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css">
 <script src="https://cdn.jsdelivr.net/npm/ol@latest/ol.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script type="application/json" id="farms-data">{{ farms_data|tojson|safe }}</script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // --- UTILITY ---
-    function waitForOpenLayers(callback, tries = 60) {
-        if (typeof ol !== 'undefined') return callback();
-        if (tries <= 0) { console.error('OpenLayers did not load.'); return; }
-        setTimeout(() => waitForOpenLayers(callback, tries - 1), 100);
+// This function is the main entry point, called by the Google Maps API script when it loads.
+function initMapAndDashboard() {
+    
+    // --- ELEMENT SELECTORS ---
+    const farmSelect = document.getElementById('farmSelect');
+    const weatherCard = document.getElementById('weather-card');
+    const refreshButton = weatherCard ? weatherCard.querySelector('.refresh-weather') : null;
+    const predictionForm = document.getElementById('predictionForm');
+    const resultContainer = document.getElementById('predictionResultContainer');
+    const predictButton = document.querySelector('button[form="predictionForm"]');
+    const predictionModal = document.getElementById('predictionModal');
+    const cropSelect = document.getElementById('crop');
+    const seasonSelect = document.getElementById('season');
+    const stateInput = document.getElementById('state');
+    const areaInput = document.getElementById('area');
+    const rainfallInput = document.getElementById('annual_rainfall');
+    let farmMap = null, vectorSource = null;
+    let yieldPredictionChart = null; 
+
+    const advisoryDetailModal = document.getElementById('advisoryDetailModal');
+    const recentAdvisoriesList = document.querySelector('.list-group-flush');
+    const unreadCountEl = document.getElementById('unreadAdvisoriesCount');
+
+    // --- NEW ELEMENT SELECTORS for new cards ---
+    const farmAreaDisplay = document.getElementById('farmAreaDisplay');
+    const nutrientNeedsDisplay = document.getElementById('nutrientNeedsDisplay');
+    const pestAlertsDisplay = document.getElementById('pestAlertsDisplay');
+
+
+    // --- WEATHER LOGIC ---
+    function getWeatherDescription(code, isDay = 1) {
+        const descriptions = {
+            0: { text: "{{ _('Clear sky') }}", icon: isDay ? 'fa-sun' : 'fa-moon' }, 1: { text: "{{ _('Mainly clear') }}", icon: isDay ? 'fa-sun' : 'fa-moon' },
+            2: { text: "{{ _('Partly cloudy') }}", icon: isDay ? 'fa-cloud-sun' : 'fa-cloud-moon' }, 3: { text: "{{ _('Overcast') }}", icon: 'fa-cloud' },
+            45: { text: "{{ _('Fog') }}", icon: 'fa-smog' }, 61: { text: "{{ _('Slight rain') }}", icon: 'fa-cloud-rain' },
+            63: { text: "{{ _('Moderate rain') }}", icon: 'fa-cloud-showers-heavy' }, 80: { text: "{{ _('Slight rain showers') }}", icon: 'fa-cloud-showers-heavy' },
+            95: { text: "{{ _('Thunderstorm') }}", icon: 'fa-bolt' }
+        };
+        return descriptions[code] || { text: "{{ _('Unknown') }}", icon: 'fa-question-circle' };
     }
 
-    waitForOpenLayers(() => {
-        // --- ELEMENT SELECTORS ---
-        const farmSelect = document.getElementById('farmSelect');
-        const weatherCard = document.getElementById('weather-card');
-        const refreshButton = weatherCard ? weatherCard.querySelector('.refresh-weather') : null;
-        const predictionForm = document.getElementById('predictionForm');
-        const resultContainer = document.getElementById('predictionResultContainer');
-        const predictButton = document.querySelector('button[form="predictionForm"]');
-        const predictionModal = document.getElementById('predictionModal');
-        const cropSelect = document.getElementById('crop');
-        const seasonSelect = document.getElementById('season');
-        const stateInput = document.getElementById('state');
-        const areaInput = document.getElementById('area');
-        const rainfallInput = document.getElementById('annual_rainfall');
-        let farmMap = null, vectorSource = null;
-        let yieldPredictionChart = null; // Variable to hold the chart instance
-
-        const advisoryDetailModal = document.getElementById('advisoryDetailModal');
-        const recentAdvisoriesList = document.querySelector('.list-group-flush');
-        const unreadCountEl = document.getElementById('unreadAdvisoriesCount');
-
-        // --- WEATHER LOGIC ---
-        function getWeatherDescription(code, isDay = 1) {
-            const descriptions = {
-                0: { text: "{{ _('Clear sky') }}", icon: isDay ? 'fa-sun' : 'fa-moon' }, 1: { text: "{{ _('Mainly clear') }}", icon: isDay ? 'fa-sun' : 'fa-moon' },
-                2: { text: "{{ _('Partly cloudy') }}", icon: isDay ? 'fa-cloud-sun' : 'fa-cloud-moon' }, 3: { text: "{{ _('Overcast') }}", icon: 'fa-cloud' },
-                45: { text: "{{ _('Fog') }}", icon: 'fa-smog' }, 61: { text: "{{ _('Slight rain') }}", icon: 'fa-cloud-rain' },
-                63: { text: "{{ _('Moderate rain') }}", icon: 'fa-cloud-showers-heavy' }, 80: { text: "{{ _('Slight rain showers') }}", icon: 'fa-cloud-showers-heavy' },
-                95: { text: "{{ _('Thunderstorm') }}", icon: 'fa-bolt' }
-            };
-            return descriptions[code] || { text: "{{ _('Unknown') }}", icon: 'fa-question-circle' };
+    function updateWeatherUI(data) {
+        if (!weatherCard) return;
+        const tempEl = weatherCard.querySelector('.weather-temp');
+        const descEl = weatherCard.querySelector('.weather-desc');
+        const timeEl = weatherCard.querySelector('.update-time');
+        const iconEl = weatherCard.querySelector('.weather-icon');
+        if (data && typeof data.temperature !== 'undefined') {
+            const description = getWeatherDescription(data.weathercode, data.is_day);
+            tempEl.textContent = `${Math.round(data.temperature)}°C`;
+            descEl.textContent = description.text;
+            timeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            iconEl.className = `fas ${description.icon} fa-3x opacity-75 weather-icon`;
+        } else {
+            tempEl.textContent = '--°';
+            descEl.textContent = data?.error || '{{ _("Could not load") }}';
+            timeEl.textContent = '--';
+            iconEl.className = 'fas fa-exclamation-triangle fa-3x opacity-75 weather-icon';
         }
+    }
 
-        function updateWeatherUI(data) {
-            if (!weatherCard) return;
-            const tempEl = weatherCard.querySelector('.weather-temp');
-            const descEl = weatherCard.querySelector('.weather-desc');
-            const timeEl = weatherCard.querySelector('.update-time');
-            const iconEl = weatherCard.querySelector('.weather-icon');
-            if (data && typeof data.temperature !== 'undefined') {
-                const description = getWeatherDescription(data.weathercode, data.is_day);
-                tempEl.textContent = `${Math.round(data.temperature)}°C`;
-                descEl.textContent = description.text;
-                timeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                iconEl.className = `fas ${description.icon} fa-3x opacity-75 weather-icon`;
-            } else {
-                tempEl.textContent = '--°';
-                descEl.textContent = data?.error || '{{ _("Could not load") }}';
-                timeEl.textContent = '--';
-                iconEl.className = 'fas fa-exclamation-triangle fa-3x opacity-75 weather-icon';
+    async function fetchWeather(farmId) {
+        if (!farmId) { updateWeatherUI({ error: "{{ _('Select a farm') }}" }); return; }
+        if (!refreshButton) return;
+        const refreshIcon = refreshButton.querySelector('i');
+        refreshIcon.classList.add('fa-spin');
+        try {
+            const url = `{{ url_for("farm_weather", farm_id=999999) }}`.replace('999999', farmId);
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`{{ _('Server error:') }} ${response.status}`);
+            const data = await response.json();
+            updateWeatherUI(data);
+        } catch (err) {
+            console.error('Error fetching weather:', err);
+            updateWeatherUI({ error: err.message });
+        } finally {
+            refreshIcon.classList.remove('fa-spin');
+        }
+    }
+
+    // --- NEW DATA FETCHING LOGIC for other cards ---
+
+    function updateCardUI(element, data, key, errorMsg) {
+        if (!element) return;
+        if (data && data[key]) {
+            element.textContent = data[key];
+        } else {
+            element.textContent = data?.error || errorMsg;
+        }
+    }
+
+    async function fetchNutrientNeeds(farmId) {
+        if (!farmId) { updateCardUI(nutrientNeedsDisplay, { error: "--" }); return; }
+        updateCardUI(nutrientNeedsDisplay, { recommendation: "{{ _('Loading...') }}" }, 'recommendation');
+        try {
+            const url = `{{ url_for("get_nutrient_needs", farm_id=999999) }}`.replace('999999', farmId);
+            const response = await fetch(url);
+            const data = await response.json();
+            updateCardUI(nutrientNeedsDisplay, data, 'recommendation', "{{ _('Error') }}");
+        } catch (err) {
+            updateCardUI(nutrientNeedsDisplay, { error: "{{ _('Failed') }}" });
+        }
+    }
+    
+    async function fetchPesticideNeeds(farmId) {
+        if (!farmId) { updateCardUI(pestAlertsDisplay, { error: "--" }); return; }
+        updateCardUI(pestAlertsDisplay, { recommendation: "{{ _('Loading...') }}" }, 'recommendation');
+        try {
+            const url = `{{ url_for("get_pesticide_needs", farm_id=999999) }}`.replace('999999', farmId);
+            const response = await fetch(url);
+            const data = await response.json();
+            updateCardUI(pestAlertsDisplay, data, 'recommendation', "{{ _('Error') }}");
+        } catch (err) {
+            updateCardUI(pestAlertsDisplay, { error: "{{ _('Failed') }}" });
+        }
+    }
+
+    // --- MAP LOGIC (REWRITTEN) ---
+    function initMap() {
+        const farmsJson = JSON.parse(document.getElementById('farms-data').textContent || '[]');
+        const mapElement = document.getElementById('farm-map');
+        if (!mapElement) return;
+
+        const mapBtn = document.getElementById('map-view-btn');
+        const satelliteBtn = document.getElementById('satellite-view-btn');
+        const hybridBtn = document.getElementById('hybrid-view-btn'); 
+
+        const osmLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
+        const satelliteLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                attributions: 'Tiles &copy; Esri',
+                maxZoom: 19
+            }),
+            visible: false
+        });
+        const hybridLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+                attributions: 'Map data &copy; Google',
+                maxZoom: 20
+            }),
+            visible: false
+        });
+
+        vectorSource = new ol.source.Vector();
+        const pointStyle = new ol.style.Style({ image: new ol.style.Icon({ anchor: [0.5, 1], scale: 0.55, src: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-2x-green.png' }) });
+        
+        farmsJson.forEach(farm => {
+            if (farm.latitude && farm.longitude) {
+                const pointGeom = new ol.geom.Point(ol.proj.fromLonLat([parseFloat(farm.longitude), parseFloat(farm.latitude)]));
+                const pointFeature = new ol.Feature({ geometry: pointGeom });
+                pointFeature.setStyle(pointStyle);
+                vectorSource.addFeature(pointFeature);
             }
-        }
+        });
 
-        async function fetchWeather(farmId) {
-            if (!farmId) { updateWeatherUI({ error: "{{ _('Select a farm') }}" }); return; }
-            if (!refreshButton) return;
-            const refreshIcon = refreshButton.querySelector('i');
-            refreshIcon.classList.add('fa-spin');
-            try {
-                const url = `{{ url_for("farm_weather", farm_id=999999) }}`.replace('999999', farmId);
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`{{ _('Server error:') }} ${response.status}`);
-                const data = await response.json();
-                updateWeatherUI(data);
-            } catch (err) {
-                console.error('Error fetching weather:', err);
-                updateWeatherUI({ error: err.message });
-            } finally {
-                refreshIcon.classList.remove('fa-spin');
+        const vectorLayer = new ol.layer.Vector({ source: vectorSource });
+
+        farmMap = new ol.Map({
+            target: 'farm-map',
+            layers: [osmLayer, satelliteLayer, hybridLayer, vectorLayer], 
+            view: new ol.View({ center: ol.proj.fromLonLat([78.9629, 20.5937]), zoom: 4.5 })
+        });
+        
+        const setActiveButton = (activeBtn) => {
+            [mapBtn, satelliteBtn, hybridBtn].forEach(btn => btn.classList.remove('active')); 
+            if (activeBtn) activeBtn.classList.add('active');
+        };
+
+        mapBtn.addEventListener('click', () => {
+            osmLayer.setVisible(true);
+            satelliteLayer.setVisible(false);
+            hybridLayer.setVisible(false); 
+            setActiveButton(mapBtn);
+        });
+
+        satelliteBtn.addEventListener('click', () => {
+            osmLayer.setVisible(false);
+            satelliteLayer.setVisible(true);
+            hybridLayer.setVisible(false); 
+            setActiveButton(satelliteBtn);
+        });
+        
+        hybridBtn.addEventListener('click', () => {
+            osmLayer.setVisible(false);
+            satelliteLayer.setVisible(false);
+            hybridLayer.setVisible(true);
+            setActiveButton(hybridBtn);
+        });
+
+        setTimeout(() => {
+            try { farmMap.updateSize(); } catch (e) {}
+            if (vectorSource.getFeatures().length > 0) {
+                const extent = vectorSource.getExtent();
+                if (extent && !ol.extent.isEmpty(extent)) {
+                    farmMap.getView().fit(extent, { padding: [50, 50, 50, 50], maxZoom: 16, duration: 800 });
+                }
             }
-        }
+        }, 300);
+    }
+    
+    function setupFullscreenMap() {
+        const fullscreenBtn = document.getElementById('fullscreen-map-btn');
+        const mapCardBody = document.querySelector('.card-body.p-0.flex-grow-1.position-relative');
+        if (!fullscreenBtn || !mapCardBody) return;
 
-        // --- MAP LOGIC ---
-        function initMap() {
-            const farmsJson = JSON.parse(document.getElementById('farms-data').textContent || '[]');
-            if (!document.getElementById('farm-map')) return;
-            vectorSource = new ol.source.Vector();
-            const pointStyle = new ol.style.Style({ image: new ol.style.Icon({ anchor: [0.5, 1], scale: 0.55, src: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-2x-green.png' }) });
-            
-            farmsJson.forEach(farm => {
-                if (farm.latitude && farm.longitude) {
-                    const pointGeom = new ol.geom.Point(ol.proj.fromLonLat([parseFloat(farm.longitude), parseFloat(farm.latitude)]));
-                    const pointFeature = new ol.Feature({ geometry: pointGeom });
-                    pointFeature.setStyle(pointStyle);
-                    vectorSource.addFeature(pointFeature);
-                }
-            });
-
-            farmMap = new ol.Map({
-                target: 'farm-map',
-                layers: [ new ol.layer.Tile({ source: new ol.source.OSM() }), new ol.layer.Vector({ source: vectorSource }) ],
-                view: new ol.View({ center: ol.proj.fromLonLat([78.9629, 20.5937]), zoom: 4.5 })
-            });
-            
-            setTimeout(() => {
-                try { farmMap.updateSize(); } catch (e) {}
-                if (vectorSource.getFeatures().length > 0) {
-                    const extent = vectorSource.getExtent();
-                    if (extent && !ol.extent.isEmpty(extent)) {
-                        farmMap.getView().fit(extent, { padding: [40,40,40,40], maxZoom: 16, duration: 800 });
-                    }
-                }
-            }, 300);
-        }
-        
-        function setupFullscreenMap() {
-            const fullscreenBtn = document.getElementById('fullscreen-map-btn');
-            const mapContainer = document.getElementById('farm-map');
-            if (!fullscreenBtn || !mapContainer) return;
-
-            fullscreenBtn.addEventListener('click', () => {
-                if (!document.fullscreenElement) {
-                    mapContainer.requestFullscreen().catch(err => {
-                        alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                    });
-                } else {
-                    document.exitFullscreen();
-                }
-            });
-
-            document.addEventListener('fullscreenchange', () => {
-                const fullscreenIcon = fullscreenBtn.querySelector('i');
-                if (document.fullscreenElement) {
-                    fullscreenIcon.classList.remove('fa-expand');
-                    fullscreenIcon.classList.add('fa-compress');
-                } else {
-                    fullscreenIcon.classList.remove('fa-compress');
-                    fullscreenIcon.classList.add('fa-expand');
-                }
-                setTimeout(() => {
-                    if (farmMap) farmMap.updateSize();
-                }, 200);
-            });
-        }
-
-        // --- PREDICTION MODAL HELPERS ---
-        async function fetchAndSetState(lat, lon) {
-            if (!stateInput || !lat || !lon) return;
-            stateInput.querySelector('option[disabled]').textContent = "{{ _('Detecting...') }}";
-            try {
-                const response = await fetch(`{{ url_for('reverse_geocode') }}?lat=${lat}&lon=${lon}`);
-                const data = await response.json();
-                if (response.ok && data.state) {
-                    stateInput.value = data.state;
-                } else {
-                    stateInput.querySelector('option[disabled]').textContent = data.error || "{{ _('State not found') }}";
-                }
-            } catch (e) { stateInput.querySelector('option[disabled]').textContent = "{{ _('Detection failed') }}"; }
-        }
-
-        async function fetchAndSetRainfall(lat, lon) {
-            if (!rainfallInput || !lat || !lon) return;
-            rainfallInput.placeholder = "{{ _('Fetching...') }}";
-            rainfallInput.value = '';
-            try {
-                const response = await fetch(`{{ url_for('get_annual_rainfall') }}?lat=${lat}&lon=${lon}`);
-                const data = await response.json();
-                if (response.ok && data.annual_rainfall) {
-                    rainfallInput.value = data.annual_rainfall;
-                } else {
-                    rainfallInput.placeholder = data.error || "{{ _('Not available') }}";
-                }
-            } catch (e) { rainfallInput.placeholder = "{{ _('Error fetching data') }}"; }
-        }
-
-        // --- PREDICTION FORM SUBMISSION ---
-        if (predictionForm) {
-            predictionForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const selectedCropOption = cropSelect.options[cropSelect.selectedIndex];
-                const selectedSeasonOption = seasonSelect.options[seasonSelect.selectedIndex];
-                const selectedStateOption = stateInput.options[stateInput.selectedIndex];
-
-                if (selectedCropOption && selectedCropOption.value) {
-                    cropSelect.value = selectedCropOption.value;
-                }
-                if (selectedSeasonOption && selectedSeasonOption.value) {
-                    seasonSelect.value = selectedSeasonOption.value;
-                }
-                if (selectedStateOption && selectedStateOption.value) {
-                    stateInput.value = selectedStateOption.value;
-                }
-                
-                resultContainer.innerHTML = `<div class="text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">{{_('Calculating...')}}</p></div>`;
-                predictButton.disabled = true;
-                
-                if (yieldPredictionChart) {
-                    yieldPredictionChart.destroy();
-                    yieldPredictionChart = null;
-                }
-
-                try {
-                    const formData = new FormData(predictionForm);
-                    
-                    const response = await fetch(predictionForm.action, { 
-                        method: 'POST', 
-                        body: formData 
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        resultContainer.innerHTML = `
-                            <div class="alert alert-light border">
-                                <div class="row text-center">
-                                    <div class="col-sm-6 border-end-sm">
-                                        <h6 class="text-muted small text-uppercase mb-2">{{ _('Predicted Yield') }}</h6>
-                                        <p class="fs-3 fw-bold text-primary mb-0">${data.yield_per_ha_tons.toFixed(2)} <span class="fs-6 text-muted">Tons/ha</span></p>
-                                    </div>
-                                    <div class="col-sm-6 mt-3 mt-sm-0">
-                                        <h6 class="text-muted small text-uppercase mb-2">{{ _('Total Estimated Harvest') }}</h6>
-                                        <p class="fs-3 fw-bold text-primary mb-0">${data.total_tons.toFixed(2)} <span class="fs-6 text-muted">Tons</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <h5 class="mb-3">{{ _('Yield Comparison (vs. Last 4 Years)') }}</h5>
-                                <div class="chart-container" style="position: relative; height:250px;">
-                                    <canvas id="yieldChart"></canvas>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <h5 class="mb-3">{{ _('Personalized Advice') }}</h5>
-                                <div class="list-group">
-                                    <div class="list-group-item">
-                                        <h6 class="mb-1"><i class="fas fa-cloud-rain text-primary me-2"></i>{{ _('Rainfall') }}</h6>
-                                        <p class="mb-1 small">${data.advice.rain}</p>
-                                    </div>
-                                    <div class="list-group-item">
-                                        <h6 class="mb-1"><i class="fas fa-seedling text-success me-2"></i>{{ _('Fertilizer') }}</h6>
-                                        <p class="mb-1 small">${data.advice.fertilizer}</p>
-                                    </div>
-                                    <div class="list-group-item">
-                                        <h6 class="mb-1"><i class="fas fa-bug text-danger me-2"></i>{{ _('Pesticide') }}</h6>
-                                        <p class="mb-1 small">${data.advice.pesticide}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        renderPredictionChart(data.historical, data.yield_per_ha_tons);
-                    } else {
-                        let errorMessage = data.error || "{{ _('An unknown error occurred.') }}";
-                        if (data.details) {
-                            errorMessage += '<ul class="text-start mt-2 mb-0">';
-                            for (const field in data.details) { errorMessage += `<li>${data.details[field][0]}</li>`; }
-                            errorMessage += '</ul>';
-                        }
-                        resultContainer.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
-                    }
-                } catch (error) {
-                    resultContainer.innerHTML = `<div class="alert alert-danger">{{ _('Request failed. Please check your connection.') }}</div>`;
-                } finally {
-                    predictButton.disabled = false;
-                }
-            });
-        }
-        
-        function renderPredictionChart(historicalData, predictedYield) {
-            const chartCanvas = document.getElementById('yieldChart');
-            if (!chartCanvas) return;
-            const ctx = chartCanvas.getContext('2d');
-            
-            const currentYear = new Date().getFullYear();
-            const labels = [...historicalData.years, `${currentYear} ({{ _('Predicted') }})`];
-            const yields = [...historicalData.yields, predictedYield];
-
-            const backgroundColors = [
-                'rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 0.6)',
-                'rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 0.6)',
-                'rgba(40, 167, 69, 0.8)'
-            ];
-            const borderColors = backgroundColors.map(c => c.replace(/0\.\d+\)/, '1)'));
-
-            yieldPredictionChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: '{{ _("Yield (Tons/Hectare)") }}',
-                        data: yields,
-                        backgroundColor: backgroundColors,
-                        borderColor: borderColors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, title: { display: true, text: '{{ _("Tons / Hectare") }}' } } }
-                }
-            });
-        }
-        
-        // --- ADVISORY LOGIC ---
-        async function markAdvisoryAsRead(button) {
-            const advisoryId = button.dataset.advisoryId;
-            const url = button.dataset.url;
-            const csrfToken = document.querySelector('input[name="csrf_token"]').value;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken
-                    },
-                    body: JSON.stringify({ is_read: true })
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                mapCardBody.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                 });
+            } else {
+                document.exitFullscreen();
+            }
+        });
 
+        document.addEventListener('fullscreenchange', () => {
+            const fullscreenIcon = fullscreenBtn.querySelector('i');
+            if (document.fullscreenElement) {
+                fullscreenIcon.classList.remove('fa-expand');
+                fullscreenIcon.classList.add('fa-compress');
+            } else {
+                fullscreenIcon.classList.remove('fa-compress');
+                fullscreenIcon.classList.add('fa-expand');
+            }
+            setTimeout(() => {
+                if (farmMap) farmMap.updateSize();
+            }, 200);
+        });
+    }
+
+    // --- PDF GENERATION LOGIC ---
+    function generatePdf() {
+        const { jsPDF } = window.jspdf;
+        const pdfButton = document.getElementById('savePdfBtn');
+        const reportElement = document.getElementById('predictionReport');
+        const detailsContainer = document.getElementById('prediction-details');
+
+        if (!reportElement || !detailsContainer) {
+            console.error('Report elements not found!');
+            return;
+        }
+
+        const originalButtonText = pdfButton.innerHTML;
+        pdfButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ _('Generating...') }}`;
+        pdfButton.disabled = true;
+
+        const wasHidden = !detailsContainer.classList.contains('show');
+        if (wasHidden) {
+            detailsContainer.classList.add('show');
+        }
+
+        html2canvas(reportElement, {
+            scale: 2, 
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#ffffff'
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            const canvasAspectRatio = canvasHeight / canvasWidth;
+            let imgWidth = pdfWidth - 20;
+            let imgHeight = imgWidth * canvasAspectRatio;
+            
+            pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+            
+            const cropName = document.getElementById('crop').selectedOptions[0].text;
+            const fileName = `AgriAssist_Yield_Report_${cropName.replace(/\s+/g, '_')}.pdf`;
+            
+            pdf.save(fileName);
+
+        }).catch(err => {
+            console.error('Error generating PDF:', err);
+            alert("{{ _('Sorry, something went wrong while creating the PDF.') }}");
+        }).finally(() => {
+            if (wasHidden) {
+                detailsContainer.classList.remove('show');
+            }
+            pdfButton.innerHTML = originalButtonText;
+            pdfButton.disabled = false;
+        });
+    }
+
+    // --- PREDICTION MODAL HELPERS ---
+    async function fetchAndSetState(lat, lon) {
+        if (!stateInput || !lat || !lon) return;
+        stateInput.querySelector('option[disabled]').textContent = "{{ _('Detecting...') }}";
+        try {
+            const response = await fetch(`{{ url_for('reverse_geocode') }}?lat=${lat}&lon=${lon}`);
+            const data = await response.json();
+            if (response.ok && data.state) {
+                stateInput.value = data.state;
+            } else {
+                stateInput.querySelector('option[disabled]').textContent = data.error || "{{ _('State not found') }}";
+            }
+        } catch (e) { stateInput.querySelector('option[disabled]').textContent = "{{ _('Detection failed') }}"; }
+    }
+
+    async function fetchAndSetRainfall(lat, lon) {
+        if (!rainfallInput || !lat || !lon) return;
+        rainfallInput.placeholder = "{{ _('Fetching...') }}";
+        rainfallInput.value = '';
+        try {
+            const response = await fetch(`{{ url_for('get_annual_rainfall') }}?lat=${lat}&lon=${lon}`);
+            const data = await response.json();
+            if (response.ok && data.annual_rainfall) {
+                rainfallInput.value = data.annual_rainfall;
+            } else {
+                rainfallInput.placeholder = data.error || "{{ _('Not available') }}";
+            }
+        } catch (e) { rainfallInput.placeholder = "{{ _('Error fetching data') }}"; }
+    }
+
+    // --- PREDICTION FORM SUBMISSION (UPDATED) ---
+    if (predictionForm) {
+        predictionForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            resultContainer.innerHTML = `<div class="text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">{{_('Calculating...')}}</p></div>`;
+            predictButton.disabled = true;
+            
+            if (yieldPredictionChart) {
+                yieldPredictionChart.destroy();
+                yieldPredictionChart = null;
+            }
+
+            try {
+                const formData = new FormData(predictionForm);
+                const response = await fetch(predictionForm.action, { method: 'POST', body: formData });
                 const data = await response.json();
+                
                 if (data.success) {
-                    const advisoryItem = document.getElementById(`advisory-item-${advisoryId}`);
-                    if (advisoryItem) {
-                        advisoryItem.querySelector('.advisory-title')?.classList.remove('fw-bold');
-                    }
-                    button.parentElement.remove();
+                    const farmName = farmSelect.selectedOptions[0].text;
+                    const cropName = document.getElementById('crop').selectedOptions[0].text;
+                    const seasonName = document.getElementById('season').selectedOptions[0].text;
+                    const stateName = document.getElementById('state').selectedOptions[0].text;
+                    const areaVal = document.getElementById('area').value;
+                    const rainfallVal = document.getElementById('annual_rainfall').value;
+                    const fertilizerVal = document.getElementById('fertilizer').value;
+                    const pesticideVal = document.getElementById('pesticide').value;
 
-                    if (unreadCountEl) {
-                        let currentCount = parseInt(unreadCountEl.textContent, 10);
-                        if (!isNaN(currentCount) && currentCount > 0) {
-                            unreadCountEl.textContent = currentCount - 1;
-                        }
+                    // MODIFIED: This entire block is new for the structured report layout.
+                    resultContainer.innerHTML = `
+                        <div id="prediction-summary">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="p-3 border rounded bg-light">
+                                        <h6 class="text-muted small text-uppercase mb-2">{{ _('Predicted Yield') }}</h6>
+                                        <p class="fs-2 fw-bold text-success mb-0">${data.yield_per_ha_tons.toFixed(2)}</p>
+                                        <span class="text-muted">{{ _('Tons / Hectare') }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 border rounded bg-light">
+                                        <h6 class="text-muted small text-uppercase mb-2">{{ _('Total Estimated Harvest') }}</h6>
+                                        <p class="fs-2 fw-bold text-success mb-0">${data.total_tons.toFixed(2)}</p>
+                                        <span class="text-muted">{{ _('Total Tons') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center mt-3 gap-2">
+                                <button id="toggleDetailsBtn" class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#prediction-details" aria-expanded="false" aria-controls="prediction-details">
+                                    <i class="fas fa-chevron-down me-2"></i>{{ _('Show Details') }}
+                                </button>
+                                <button id="savePdfBtn" class="btn btn-danger"><i class="fas fa-file-pdf me-2"></i>{{ _('Save Report as PDF') }}</button>
+                            </div>
+                        </div>
+
+                        <div class="collapse" id="prediction-details">
+                            <div class="mt-3">
+                                <div id="predictionReport" class="p-4 border" style="background-color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h2 style="color: #1B5E20; font-weight: bold; margin-bottom: 0;">{{ _('AgriAssist') }}</h2>
+                                        </div>
+                                        <div class="text-end">
+                                            <h5 class="text-secondary mb-0">{{ _('Crop Yield Prediction Report') }}</h5>
+                                            <p class="text-muted mb-0">{{ _('for farm:') }} <strong>${farmName}</strong></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-4">
+                                        <h5 style="border-bottom: 2px solid #1B5E20; padding-bottom: 5px; margin-bottom: 15px;">{{ _('Input Summary') }}</h5>
+                                        <div class="row g-3" style="font-size: 0.95rem;">
+                                            <div class="col-6"><strong>{{ _('Crop') }} : </strong> <span class="float-end">${cropName}</span></div>
+                                            <div class="col-6"><strong>{{ _('Season') }} : </strong> <span class="float-end">${seasonName}</span></div>
+                                            <div class="col-6"><strong>{{ _('State') }} : </strong> <span class="float-end">${stateName}</span></div>
+                                            <div class="col-6"><strong>{{ _('Farm Area (ha)') }} : </strong> <span class="float-end">${areaVal}</span></div>
+                                            <div class="col-6"><strong>{{ _('Avg. Rainfall (mm)') }} : </strong> <span class="float-end">${rainfallVal}</span></div>
+                                            <div class="col-6"><strong>{{ _('Fertilizer (kg/ha)') }} : </strong> <span class="float-end">${fertilizerVal}</span></div>
+                                            <div class="col-6"><strong>{{ _('Pesticide (L/ha)') }} : </strong> <span class="float-end">${pesticideVal}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h5 style="border-bottom: 2px solid #1B5E20; padding-bottom: 5px; margin-bottom: 15px;">{{ _('Prediction Results') }}</h5>
+                                        <div class="row text-center">
+                                            <div class="col-6"><div class="p-3 border rounded bg-light"><h6 class="text-muted small text-uppercase mb-2">{{ _('Predicted Yield') }}</h6><p class="fs-2 fw-bold text-success mb-0">${data.yield_per_ha_tons.toFixed(2)}</p><span class="text-muted">{{ _('Tons / Hectare') }}</span></div></div>
+                                            <div class="col-6"><div class="p-3 border rounded bg-light"><h6 class="text-muted small text-uppercase mb-2">{{ _('Total Estimated Harvest') }}</h6><p class="fs-2 fw-bold text-success mb-0">${data.total_tons.toFixed(2)}</p><span class="text-muted">{{ _('Total Tons') }}</span></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h5 style="border-bottom: 2px solid #1B5E20; padding-bottom: 5px; margin-bottom: 15px;">{{ _('Yield Comparison') }}</h5>
+                                        <div class="chart-container" style="position: relative; height:250px;"><canvas id="yieldChart"></canvas></div>
+                                    </div>
+                                    <div>
+                                        <h5 style="border-bottom: 2px solid #1B5E20; padding-bottom: 5px; margin-bottom: 15px;">{{ _('Personalized Advice') }}</h5>
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item px-0"><div class="d-flex w-100"><i class="fas fa-cloud-rain fa-lg text-primary mt-1 me-3"></i><div><h6 class="mb-1">{{ _('Rainfall') }}</h6><p class="mb-1 small">${data.advice.rain}</p></div></div></div>
+                                            <div class="list-group-item px-0"><div class="d-flex w-100"><i class="fas fa-seedling fa-lg text-success mt-1 me-3"></i><div><h6 class="mb-1">{{ _('Fertilizer') }}</h6><p class="mb-1 small">${data.advice.fertilizer}</p></div></div></div>
+                                            <div class="list-group-item px-0"><div class="d-flex w-100"><i class="fas fa-bug fa-lg text-danger mt-1 me-3"></i><div><h6 class="mb-1">{{ _('Pesticide') }}</h6><p class="mb-1 small">${data.advice.pesticide}</p></div></div></div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-5">
+                                    <p class="text-center text-muted small">{{ _('Report generated by AgriAssist | ') }} ${new Date().toLocaleString()} <br><span class="fst-italic">{{ _('This is an estimate and should be used for informational purposes only.') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    renderPredictionChart(data.historical, data.yield_per_ha_tons);
+
+                    document.getElementById('savePdfBtn').addEventListener('click', generatePdf);
+                    const toggleBtn = document.getElementById('toggleDetailsBtn');
+                    const detailsCollapse = document.getElementById('prediction-details');
+                    if (toggleBtn && detailsCollapse) {
+                        detailsCollapse.addEventListener('show.bs.collapse', () => {
+                            toggleBtn.innerHTML = `<i class="fas fa-chevron-up me-2"></i>{{ _('Hide Details') }}`;
+                        });
+                        detailsCollapse.addEventListener('hide.bs.collapse', () => {
+                            toggleBtn.innerHTML = `<i class="fas fa-chevron-down me-2"></i>{{ _('Show Details') }}`;
+                        });
                     }
-                } else {
-                    console.error('Failed to mark as read:', data.error);
-                    alert('{{_("Could not mark as read. Please try again.")}}');
-                    button.disabled = false;
+
+                    // MODIFIED: Auto-scroll to the top of the results
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                } else { // Handle prediction error
+                    let errorMessage = data.error || "{{ _('An unknown error occurred.') }}";
+                    if (data.details) {
+                        errorMessage += '<ul class="text-start mt-2 mb-0">';
+                        for (const field in data.details) { errorMessage += `<li>${data.details[field][0]}</li>`; }
+                        errorMessage += '</ul>';
+                    }
+                    resultContainer.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
                 }
             } catch (error) {
-                console.error('Fetch error:', error);
-                alert('{{_("An error occurred. Please check your connection.")}}');
-                button.disabled = false;
+                resultContainer.innerHTML = `<div class="alert alert-danger">{{ _('Request failed. Please check your connection.') }}</div>`;
+            } finally {
+                predictButton.disabled = false;
             }
-        }
-
-        if (advisoryDetailModal) {
-            advisoryDetailModal.addEventListener('show.bs.modal', function (event) {
-                const link = event.relatedTarget;
-                const title = link.dataset.title;
-                const content = link.dataset.content;
-                const farm = link.dataset.farm;
-                const dateISO = link.dataset.date;
-                const priority = link.dataset.priority;
-                const advisoryDate = new Date(dateISO);
-                const options = { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric'
-                };
-                advisoryDetailModal.querySelector('.modal-title').textContent = title;
-                advisoryDetailModal.querySelector('.modal-advisory-content').textContent = content;
-                advisoryDetailModal.querySelector('.modal-farm-name').textContent = farm;
-                advisoryDetailModal.querySelector('.modal-date').textContent = advisoryDate.toLocaleString(undefined, options);
-                const badge = advisoryDetailModal.querySelector('.modal-priority-badge');
-                badge.textContent = priority;
-                let badgeClass = 'bg-secondary';
-                if (priority === 'High') badgeClass = 'bg-danger';
-                else if (priority === 'Medium') badgeClass = 'bg-warning text-dark';
-                else if (priority === 'Low') badgeClass = 'bg-info text-dark';
-                badge.className = `badge rounded-pill fs-6 modal-priority-badge ${badgeClass}`;
-            });
-        }
+        });
+    }
+    
+    function renderPredictionChart(historicalData, predictedYield) {
+        const chartCanvas = document.getElementById('yieldChart');
+        if (!chartCanvas) return;
+        const ctx = chartCanvas.getContext('2d');
         
-        if (recentAdvisoriesList) {
-            recentAdvisoriesList.addEventListener('click', function(e) {
-                const button = e.target.closest('.mark-as-read-btn');
-                if (button) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    button.disabled = true;
-                    markAdvisoryAsRead(button);
-                }
-            });
-        }
+        const currentYear = new Date().getFullYear();
+        const labels = [...historicalData.years, `${currentYear} ({{ _('Predicted') }})`];
+        const yields = [...historicalData.yields, predictedYield];
 
-        // --- MODAL EVENT LISTENERS ---
-        if (predictionModal) {
-            predictionModal.addEventListener('shown.bs.modal', function () {
-                const selectedFarm = farmSelect.options[farmSelect.selectedIndex];
-                if (!selectedFarm || !selectedFarm.value) {
-                    alert("{{_('Please select a farm from the dashboard first!')}}");
-                    bootstrap.Modal.getInstance(predictionModal).hide();
-                    return;
-                }
-                const lat = selectedFarm.dataset.lat;
-                const lon = selectedFarm.dataset.lon;
-                const rawArea = selectedFarm.dataset.area;
-                if (rawArea) {
-                    areaInput.value = parseFloat(rawArea).toFixed(2);
-                } else {
-                    areaInput.value = '';
-                }
-                fetchAndSetState(lat, lon);
-                fetchAndSetRainfall(lat, lon);
+        const backgroundColors = [
+            'rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 0.6)',
+            'rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 0.6)',
+            'rgba(40, 167, 69, 0.8)'
+        ];
+        const borderColors = backgroundColors.map(c => c.replace(/0\.\d+\)/, '1)'));
+
+        yieldPredictionChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '{{ _("Yield (Tons/Hectare)") }}',
+                    data: yields,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: '{{ _("Tons / Hectare") }}' } } }
+            }
+        });
+    }
+    
+    // --- ADVISORY LOGIC ---
+    async function markAdvisoryAsRead(button) {
+        const advisoryId = button.dataset.advisoryId;
+        const url = button.dataset.url;
+        const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+
+        try {
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ is_read: true })
             });
 
-            predictionModal.addEventListener('hidden.bs.modal', function () {
-                if (yieldPredictionChart) {
-                    yieldPredictionChart.destroy();
-                    yieldPredictionChart = null;
+            const data = await response.json();
+            if (data.success) {
+                const advisoryItem = document.getElementById(`advisory-item-${advisoryId}`);
+                if (advisoryItem) {
+                    advisoryItem.querySelector('.advisory-title')?.classList.remove('fw-bold');
                 }
-                resultContainer.innerHTML = '';
-                predictionForm.reset(); 
-                stateInput.querySelector('option[disabled]').textContent = "{{ _('Auto-filled...') }}";
-                rainfallInput.placeholder = "{{ _('Fetching...') }}";
-            });
-        }
-        
-        if (stateInput) {
-            stateInput.addEventListener('mousedown', function(e) {
-                e.preventDefault();
-                this.blur();
-                window.focus();
-            });
-        }
+                button.parentElement.remove();
 
-        // --- DASHBOARD INITIALIZATION ---
-        function initializeDashboard() {
-            initMap();
-            setupFullscreenMap();
-            
-            farmSelect.addEventListener('change', () => {
-                fetchWeather(farmSelect.value);
-                const selectedOption = farmSelect.options[farmSelect.selectedIndex];
-                if (selectedOption && selectedOption.value && farmMap) {
-                    const lat = selectedOption.dataset.lat;
-                    const lon = selectedOption.dataset.lon;
-                    if (lat && lon) {
-                        const center = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
-                        farmMap.getView().animate({ center: center, zoom: 15, duration: 1000 });
+                if (unreadCountEl) {
+                    let currentCount = parseInt(unreadCountEl.textContent, 10);
+                    if (!isNaN(currentCount) && currentCount > 0) {
+                        unreadCountEl.textContent = currentCount - 1;
                     }
                 }
-            });
+            } else {
+                console.error('Failed to mark as read:', data.error);
+                alert('{{_("Could not mark as read. Please try again.")}}');
+                button.disabled = false;
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            alert('{{_("An error occurred. Please check your connection.")}}');
+            button.disabled = false;
+        }
+    }
 
-            if (farmSelect.value) { fetchWeather(farmSelect.value); } 
-            else { updateWeatherUI({ error: "{{ _('Select a farm') }}" }); }
-            
-            if (refreshButton) {
-                refreshButton.addEventListener('click', () => { if (farmSelect.value) fetchWeather(farmSelect.value); });
+    if (advisoryDetailModal) {
+        advisoryDetailModal.addEventListener('show.bs.modal', function (event) {
+            const link = event.relatedTarget;
+            const title = link.dataset.title;
+            const content = link.dataset.content;
+            const farm = link.dataset.farm;
+            const dateISO = link.dataset.date;
+            const priority = link.dataset.priority;
+            const advisoryDate = new Date(dateISO);
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            };
+            advisoryDetailModal.querySelector('.modal-title').textContent = title;
+            advisoryDetailModal.querySelector('.modal-advisory-content').textContent = content;
+            advisoryDetailModal.querySelector('.modal-farm-name').textContent = farm;
+            advisoryDetailModal.querySelector('.modal-date').textContent = advisoryDate.toLocaleString(undefined, options);
+            const badge = advisoryDetailModal.querySelector('.modal-priority-badge');
+            badge.textContent = priority;
+            let badgeClass = 'bg-secondary';
+            if (priority === 'High') badgeClass = 'bg-danger';
+            else if (priority === 'Medium') badgeClass = 'bg-warning text-dark';
+            else if (priority === 'Low') badgeClass = 'bg-info text-dark';
+            badge.className = `badge rounded-pill fs-6 modal-priority-badge ${badgeClass}`;
+        });
+    }
+    
+    if (recentAdvisoriesList) {
+        recentAdvisoriesList.addEventListener('click', function(e) {
+            const button = e.target.closest('.mark-as-read-btn');
+            if (button) {
+                e.preventDefault();
+                e.stopPropagation();
+                button.disabled = true;
+                markAdvisoryAsRead(button);
+            }
+        });
+    }
+
+    // --- MODAL EVENT LISTENERS ---
+    if (predictionModal) {
+        predictionModal.addEventListener('shown.bs.modal', function () {
+            const selectedFarm = farmSelect.options[farmSelect.selectedIndex];
+            if (!selectedFarm || !selectedFarm.value) {
+                alert("{{_('Please select a farm from the dashboard first!')}}");
+                bootstrap.Modal.getInstance(predictionModal).hide();
+                return;
+            }
+            const lat = selectedFarm.dataset.lat;
+            const lon = selectedFarm.dataset.lon;
+            const rawArea = selectedFarm.dataset.area;
+            if (rawArea) {
+                areaInput.value = parseFloat(rawArea).toFixed(2);
+            } else {
+                areaInput.value = '';
+            }
+            fetchAndSetState(lat, lon);
+            fetchAndSetRainfall(lat, lon);
+
+            document.body.style.overflow = 'hidden';
+        });
+
+        predictionModal.addEventListener('hidden.bs.modal', function () {
+            if (yieldPredictionChart) {
+                yieldPredictionChart.destroy();
+                yieldPredictionChart = null;
+            }
+            resultContainer.innerHTML = '';
+            predictionForm.reset(); 
+            stateInput.querySelector('option[disabled]').textContent = "{{ _('Auto-filled...') }}";
+            rainfallInput.placeholder = "{{ _('Fetching...') }}";
+
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
+    if (stateInput) {
+        stateInput.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            this.blur();
+            window.focus();
+        });
+    }
+
+    // --- MODIFIED: NEW function to handle all updates when a farm is selected ---
+    function updateDashboardForFarm(selectedOption) {
+        const farmId = selectedOption ? selectedOption.value : null;
+        
+        // Fetch data for all dynamic cards
+        fetchWeather(farmId);
+        fetchNutrientNeeds(farmId);
+        fetchPesticideNeeds(farmId);
+
+        // Update Area Card directly from dropdown data
+        if (farmAreaDisplay) {
+            const area = selectedOption ? selectedOption.dataset.area : '';
+            if (area && area !== '') {
+                farmAreaDisplay.textContent = parseFloat(area).toFixed(2);
+            } else {
+                farmAreaDisplay.textContent = '--';
             }
         }
+
+        // Update Map View
+        if (selectedOption && farmMap) {
+            const lat = selectedOption.dataset.lat;
+            const lon = selectedOption.dataset.lon;
+            if (lat && lon) {
+                const center = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
+                farmMap.getView().animate({ center: center, zoom: 15, duration: 1000 });
+            }
+        }
+    }
+
+
+    // --- DASHBOARD INITIALIZATION ---
+    function initializeDashboard() {
+        initMap();
+        setupFullscreenMap();
         
-        initializeDashboard();
-    });
-});
+        farmSelect.addEventListener('change', () => {
+            updateDashboardForFarm(farmSelect.options[farmSelect.selectedIndex]);
+        });
+
+        if (farmSelect.value) {
+            // If a farm is already selected on page load, trigger the update
+            updateDashboardForFarm(farmSelect.options[farmSelect.selectedIndex]);
+        } else {
+            // Otherwise, initialize with default/empty state for all cards
+            updateDashboardForFarm(null);
+        }
+        
+        if (refreshButton) {
+            refreshButton.addEventListener('click', () => { if (farmSelect.value) fetchWeather(farmSelect.value); });
+        }
+    }
+    
+    initializeDashboard();
+}
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMapAndDashboard"></script>
+
 {% endblock %}

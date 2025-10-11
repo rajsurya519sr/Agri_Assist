@@ -154,8 +154,6 @@
         border: 1px solid #212121;
     }
         
-
-
     .map-container-fullscreenable:fullscreen .fullscreen-farm-name { display: block; }
     
     /* --- Custom OpenLayers Zoom Control Styles --- */
@@ -178,6 +176,38 @@
     .ol-zoom button::before { font-family: "Font Awesome 5 Free"; font-weight: 900; font-size: 1rem; }
     .ol-zoom-in::before { content: "\f067"; }
     .ol-zoom-out::before { content: "\f068"; }
+    
+    /* --- NEW/MODIFIED: Dashboard-style Map Controls --- */
+    .map-controls {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .map-control-btn {
+        background-color: white;
+        color: #1B5E20;
+        border: 1px solid rgba(0,0,0,0.2);
+        border-radius: 4px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .map-control-btn:hover { background-color: #f0f0f0; }
+    .map-control-btn.active {
+        background-color: #1B5E20;
+        color: white;
+        border-color: #1B5E20;
+    }
 </style>
 
 <div class="container py-4">
@@ -199,8 +229,15 @@
                      data-lon="{{ farm.longitude }}"
                      data-geojson="{{ farm.area_geojson | tojson }}">
                     <div class="card h-100">
-                        <div id="farmMap{{ farm.id }}" class="card-img-top map-container-fullscreenable" style="height: 200px; border-radius: 1rem 1rem 0 0;">
+                        <div class="card-img-top map-container-fullscreenable position-relative" style="height: 200px; border-radius: 1rem 1rem 0 0;">
+                            <div id="farmMap{{ farm.id }}" style="height: 100%; width: 100%;"></div>
                             <div class="fullscreen-farm-name">{{ farm.name }}</div>
+                            <div class="map-controls">
+                                <button type="button" class="map-control-btn map-view-btn active" data-view-type="map" title="{{ _('Map View') }}"><i class="fas fa-map"></i></button>
+                                <button type="button" class="map-control-btn map-view-btn" data-view-type="satellite" title="{{ _('Satellite View') }}"><i class="fas fa-satellite"></i></button>
+                                <button type="button" class="map-control-btn map-view-btn" data-view-type="hybrid" title="{{ _('Hybrid View') }}"><i class="fas fa-layer-group"></i></button>
+                                <button type="button" class="map-control-btn view-fullscreen-btn" title="{{ _('View Fullscreen') }}"><i class="fas fa-expand"></i></button>
+                            </div>
                         </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ farm.name }}</h5>
@@ -220,9 +257,6 @@
                                         {% endif %}
                                     </div>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary view-fullscreen-btn" title="{{ _('View Fullscreen') }}" data-target-map="#farmMap{{ farm.id }}">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
                                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteFarm('{{ farm.id }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -252,7 +286,7 @@
 </div>
 
 <div class="modal fade" id="addFarmModal" tabindex="-1" aria-labelledby="addFarmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addFarmModalLabel">{{ _('Add New Farm') }}</h5>
@@ -282,10 +316,13 @@
                     <div id="mapFullscreenArea">
                         <div id="fullscreenControls" class="p-3 rounded"></div>
                         <div class="position-relative mb-3" id="addFarmMapWrapper">
-                            <div id="addFarmMap" style="height: 250px;" class="rounded border"></div>
-                            <button type="button" id="fullscreenBtn" class="btn btn-light position-absolute" title="Toggle Fullscreen" style="top: 10px; right: 10px; z-index: 1000;">
-                                <i class="fas fa-expand"></i>
-                            </button>
+                            <div id="addFarmMap" style="height: 300px;" class="rounded border"></div>
+                            <div class="map-controls">
+                                <button type="button" class="map-control-btn map-view-btn active" data-view-type="map" title="{{ _('Map View') }}"><i class="fas fa-map"></i></button>
+                                <button type="button" class="map-control-btn map-view-btn" data-view-type="satellite" title="{{ _('Satellite View') }}"><i class="fas fa-satellite"></i></button>
+                                <button type="button" class="map-control-btn map-view-btn" data-view-type="hybrid" title="{{ _('Hybrid View') }}"><i class="fas fa-layer-group"></i></button>
+                                <button type="button" id="fullscreenBtn" class="map-control-btn" title="Toggle Fullscreen"><i class="fas fa-expand"></i></button>
+                            </div>
                         </div>
                     </div>
 
@@ -346,8 +383,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="modal fade" id="advisoryResultModal" tabindex="-1" aria-labelledby="advisoryResultModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="background-color: rgb(219, 255, 225, 0.8); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); border: 1px solid #2E7D32;">
@@ -364,6 +399,8 @@
 
 {% block extra_js %}
 {{ super() }}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}"></script>
+
 <script>
 // --- Global Helper Functions ---
 const csrfToken = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : null;
@@ -390,6 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const geojsonStr = card.dataset.geojson;
         if (isNaN(lat) || isNaN(lon)) return;
         const vectorSource = new ol.source.Vector();
+        
         let feature;
         if (geojsonStr && geojsonStr !== 'null' && geojsonStr.length > 2) {
             try {
@@ -415,17 +453,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }));
         }
         vectorSource.addFeature(feature);
+        
+        const osmLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
+        const satelliteLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                maxZoom: 19
+            }),
+            visible: false
+        });
+        const hybridLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+                maxZoom: 20
+            }),
+            visible: false
+        });
+
         const map = new ol.Map({
             target: `farmMap${farmId}`,
-            layers: [
-                new ol.layer.Tile({ source: new ol.source.OSM() }),
-                new ol.layer.Vector({ source: vectorSource })
-            ],
+            layers: [osmLayer, satelliteLayer, hybridLayer, new ol.layer.Vector({ source: vectorSource })],
             controls: [], 
             interactions: []
         });
 
-        farmMaps[farmId] = map;
+        farmMaps[farmId] = { map, osmLayer, satelliteLayer, hybridLayer };
 
         map.once('postrender', function() {
             map.getView().fit(vectorSource.getExtent(), { 
@@ -436,29 +488,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add event listeners for the new fullscreen buttons on farm cards
+    // --- CORRECTED: Fullscreen Button Logic for Farm Cards ---
     document.querySelectorAll('.view-fullscreen-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            const targetSelector = this.dataset.targetMap;
-            const mapContainer = document.querySelector(targetSelector);
-            if (mapContainer) {
+            const mapContainer = this.closest('.card').querySelector('.map-container-fullscreenable');
+            if (!mapContainer) return;
+
+            if (!document.fullscreenElement) {
                 mapContainer.requestFullscreen().catch(err => {
                     alert(`Error attempting to enable full-screen mode: ${err.message}`);
                 });
+            } else {
+                document.exitFullscreen();
             }
         });
     });
 
     // --- "Add Farm" Modal Logic ---
     const addFarmModal = document.getElementById('addFarmModal');
-    let addFarmMap, drawInteraction, addFarmVectorSource;
+    let addFarmMap, drawInteraction, addFarmVectorSource, addFarmOsmLayer, addFarmSatelliteLayer, addFarmHybridLayer;
+
     addFarmModal.addEventListener('shown.bs.modal', function() {
         if (!addFarmMap) {
             const indiaCenter = ol.proj.fromLonLat([78.9629, 20.5937]);
             addFarmVectorSource = new ol.source.Vector();
+            
+            addFarmOsmLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
+            addFarmSatelliteLayer = new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                    maxZoom: 19
+                }),
+                visible: false
+            });
+            addFarmHybridLayer = new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+                    maxZoom: 20
+                }),
+                visible: false
+            });
+
             addFarmMap = new ol.Map({
                 target: 'addFarmMap',
-                layers: [ new ol.layer.Tile({ source: new ol.source.OSM() }), new ol.layer.Vector({ source: addFarmVectorSource }) ],
+                layers: [ addFarmOsmLayer, addFarmSatelliteLayer, addFarmHybridLayer, new ol.layer.Vector({ source: addFarmVectorSource }) ],
                 view: new ol.View({ center: indiaCenter, zoom: 5 })
             });
             drawInteraction = new ol.interaction.Draw({ source: addFarmVectorSource, type: 'Polygon' });
@@ -502,19 +575,50 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Geocoding error:', error));
     }
     
-    // --- Fullscreen Logic (Both Add Farm Modal and Farm Cards) ---
+    // --- Universal Map View Switcher Logic ---
+    document.addEventListener('click', function(e) {
+        const viewBtn = e.target.closest('.map-view-btn');
+        if (!viewBtn) return;
+
+        const viewType = viewBtn.dataset.viewType;
+        const mapWrapper = viewBtn.closest('.position-relative');
+        const olMapDiv = mapWrapper.querySelector('[id^="farmMap"], [id="addFarmMap"]');
+        
+        let mapInstance, osmLayer, satelliteLayer, hybridLayer;
+
+        if (olMapDiv.id === 'addFarmMap') {
+            mapInstance = addFarmMap;
+            osmLayer = addFarmOsmLayer;
+            satelliteLayer = addFarmSatelliteLayer;
+            hybridLayer = addFarmHybridLayer;
+        } else {
+            const card = viewBtn.closest('.farm-card');
+            const farmId = card.dataset.farmId;
+            const mapData = farmMaps[farmId];
+            mapInstance = mapData.map;
+            osmLayer = mapData.osmLayer;
+            satelliteLayer = mapData.satelliteLayer;
+            hybridLayer = mapData.hybridLayer;
+        }
+
+        const controlsContainer = viewBtn.closest('.map-controls');
+        controlsContainer.querySelectorAll('.map-view-btn').forEach(btn => btn.classList.remove('active'));
+        viewBtn.classList.add('active');
+
+        osmLayer.setVisible(viewType === 'map');
+        satelliteLayer.setVisible(viewType === 'satellite');
+        hybridLayer.setVisible(viewType === 'hybrid');
+        
+        if (mapInstance) {
+            mapInstance.updateSize();
+        }
+    });
+
+    // --- Fullscreen Logic for "Add Farm" Modal ---
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     if (fullscreenBtn) {
-        const fullscreenArea = document.getElementById('mapFullscreenArea');
-        const icon = fullscreenBtn.querySelector('i');
-        
-        const farmLocationGroup = document.getElementById('farmLocation').closest('.mb-3');
-        const farmAreaGroup = document.getElementById('farmAreaDisplay').closest('p');
-
-        const formControlsContainer = document.getElementById('formControlsContainer');
-        const fullscreenControlsContainer = document.getElementById('fullscreenControls');
-
         fullscreenBtn.addEventListener('click', function() {
+            const fullscreenArea = document.getElementById('mapFullscreenArea');
             if (!document.fullscreenElement) {
                 fullscreenArea.requestFullscreen().catch(err => {
                     alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
@@ -523,30 +627,55 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.exitFullscreen();
             }
         });
-
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement === fullscreenArea) {
-                fullscreenControlsContainer.appendChild(farmLocationGroup);
-                fullscreenControlsContainer.appendChild(farmAreaGroup);
-                icon.classList.remove('fa-expand');
-                icon.classList.add('fa-compress');
-            } else {
-                if (fullscreenControlsContainer.contains(farmLocationGroup)) {
-                    formControlsContainer.appendChild(farmLocationGroup);
-                    formControlsContainer.appendChild(farmAreaGroup);
-                }
-                icon.classList.remove('fa-compress');
-                icon.classList.add('fa-expand');
-            }
-            
-            setTimeout(() => {
-                if (addFarmMap) {
-                    addFarmMap.updateSize();
-                }
-                Object.values(farmMaps).forEach(map => map.updateSize());
-            }, 100);
-        });
     }
+
+    // --- CORRECTED: Universal Fullscreen Change Handler ---
+    document.addEventListener('fullscreenchange', () => {
+        const fullscreenElement = document.fullscreenElement;
+        
+        // Reset all fullscreen button icons to 'expand' first
+        document.querySelectorAll('.view-fullscreen-btn i, #fullscreenBtn i').forEach(iconEl => {
+            if (iconEl) {
+                iconEl.classList.remove('fa-compress');
+                iconEl.classList.add('fa-expand');
+            }
+        });
+        
+        // If an element is in fullscreen, find its button and set the icon to 'compress'
+        if (fullscreenElement) {
+            const buttonIcon = fullscreenElement.querySelector('.view-fullscreen-btn i, #fullscreenBtn i');
+            if (buttonIcon) {
+                buttonIcon.classList.remove('fa-expand');
+                buttonIcon.classList.add('fa-compress');
+            }
+        }
+        
+        // Handle control repositioning specifically for the "Add Farm" modal
+        const fullscreenArea = document.getElementById('mapFullscreenArea');
+        if (fullscreenArea) {
+            const formControlsContainer = document.getElementById('formControlsContainer');
+            const fullscreenControlsContainer = document.getElementById('fullscreenControls');
+            const farmLocationGroup = document.getElementById('farmLocation')?.closest('.mb-3');
+            const farmAreaGroup = document.getElementById('farmAreaDisplay')?.closest('p');
+            
+            if (fullscreenElement === fullscreenArea) {
+                if (farmLocationGroup) fullscreenControlsContainer.appendChild(farmLocationGroup);
+                if (farmAreaGroup) fullscreenControlsContainer.appendChild(farmAreaGroup);
+            } else {
+                if (formControlsContainer && farmLocationGroup && fullscreenControlsContainer.contains(farmLocationGroup)) {
+                    formControlsContainer.insertBefore(farmLocationGroup, formControlsContainer.children[0]);
+                    if (farmAreaGroup) formControlsContainer.insertBefore(farmAreaGroup, formControlsContainer.children[1]);
+                }
+            }
+        }
+        
+        // Universal map update logic
+        setTimeout(() => {
+            if (addFarmMap) addFarmMap.updateSize();
+            Object.values(farmMaps).forEach(mapData => mapData.map.updateSize());
+        }, 100);
+    });
+
 
     // --- Form Submission and other logic ---
     document.getElementById('addFarmForm').addEventListener('submit', function(e) {
@@ -554,7 +683,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const submitBtn = this.querySelector('button[type="submit"]');
         
         if (!document.getElementById('latitude').value || !document.getElementById('longitude').value) {
-            alert('Please draw your farm boundary on the map.');
+            alert('Please draw your farm boundary on the map or search for a location to set a point.');
             return;
         }
 
@@ -566,7 +695,7 @@ document.addEventListener('DOMContentLoaded', function() {
             location: document.getElementById('farmLocation').value,
             latitude: parseFloat(document.getElementById('latitude').value),
             longitude: parseFloat(document.getElementById('longitude').value),
-            area_hectares: parseFloat(document.getElementById('areaHectares').value),
+            area_hectares: parseFloat(document.getElementById('areaHectares').value) || 0,
             area_geojson: document.getElementById('areaGeoJSON').value
         };
 

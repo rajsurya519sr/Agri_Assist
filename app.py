@@ -21,7 +21,6 @@ from flask_mail import Mail, Message
 load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'a-default-secret-key')
-# 👈 **NEW**: Add your Google Maps API Key to your .env file
 app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
 db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{db_path}')
@@ -123,7 +122,7 @@ CROP_ADVISORY_DATA = {
             "Harvest": "Begin harvesting when the haulms (stems/leaves) start to yellow. Stop irrigation about 10 days before harvesting to allow the skin to set. Cure the tubers in a cool, dark place before storage."
         }
     },
-     "Cotton": {
+    "Cotton": {
         "ideal_temp": (21, 35),
         "stages": {
             "Pre-Planting": "Ensure deep ploughing to break any hardpan in the soil. Sow high-quality, certified seeds treated with fungicide. Follow proper spacing recommendations for your region.",
@@ -439,8 +438,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError(_('This username is already taken.'))
 
     def validate_email(self, email):
-        # This validator correctly checks only for VERIFIED users.
-        # An unverified user with the same email can be overwritten by a new registration attempt.
         if User.query.filter_by(email=email.data, is_verified=True).first():
             raise ValidationError(_('This email address is already registered and verified.'))
 
@@ -464,8 +461,7 @@ class PredictionForm(FlaskForm):
 @app.route('/')
 @app.route('/home')
 def home():
-    # 👈 **NEW**: Pass the API key to the template
-    return render_template('home.html', title=_('Home'), google_maps_api_key=app.config['GOOGLE_MAPS_API_KEY'])
+    return render_template('home.html', title=_('Home'), google_maps_api_key=app.config.get('GOOGLE_MAPS_API_KEY'))
 
 @app.route('/dashboard')
 @login_required
@@ -492,7 +488,8 @@ def dashboard():
         season_options=season_options_translated,
         state_options=state_options_translated,
         crop_stages=crop_stages_options_translated,
-        soil_types=soil_types_options_translated
+        soil_types=soil_types_options_translated,
+        google_maps_api_key=app.config.get('GOOGLE_MAPS_API_KEY')
     )
 
 @app.route('/farms')
@@ -507,7 +504,8 @@ def farms():
         farms=current_user.farms,
         crop_options=crop_options_translated,
         soil_types=soil_types_options_translated,
-        crop_stages=crop_stages_options_translated
+        crop_stages=crop_stages_options_translated,
+        google_maps_api_key=app.config.get('GOOGLE_MAPS_API_KEY')
     )
 
 @app.route('/advisories')
@@ -627,7 +625,6 @@ def send_welcome_email(recipient, first_name):
     try:
         current_year = datetime.now().year
 
-        # Define the beautiful HTML body for the welcome email
         html_body = f"""
         <!DOCTYPE html>
         <html lang="en">
@@ -725,7 +722,6 @@ def register():
         return redirect(url_for('dashboard'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        # Overwrite unverified user with same email
         existing_unverified = User.query.filter_by(email=form.email.data, is_verified=False).first()
         if existing_unverified:
             db.session.delete(existing_unverified)
@@ -736,7 +732,6 @@ def register():
             flash(_('Could not send verification email. Please try again later.'), 'danger')
             return render_template('register.html', title=_('Register'), form=form)
 
-        # Store user details and OTP in session
         session['registration_form'] = {
             'username': form.username.data,
             'email': form.email.data,
@@ -763,14 +758,12 @@ def verify_otp():
     if form.validate_on_submit():
         otp_data = session['otp_data']
         
-        # Check for expiration
         if datetime.utcnow() > datetime.fromisoformat(otp_data['expires']):
             session.pop('registration_form', None)
             session.pop('otp_data', None)
             flash(_('OTP has expired. Please register again.'), 'danger')
             return redirect(url_for('register'))
         
-        # Check OTP correctness
         if bcrypt.check_password_hash(otp_data['otp_hash'], form.otp.data):
             form_data = session['registration_form']
             user = User(
@@ -784,10 +777,8 @@ def verify_otp():
             db.session.add(user)
             db.session.commit()
             
-            # Send the welcome email
             send_welcome_email(user.email, user.first_name)
             
-            # Clean up session
             session.pop('registration_form', None)
             session.pop('otp_data', None)
             
@@ -1003,6 +994,61 @@ def farm_weather(farm_id):
     weather = get_weather_for_farm(farm)
     if weather: return jsonify(weather)
     else: return jsonify({'error': _('Could not retrieve weather data.')}), 500
+
+# --- UPDATED: API Endpoints for Dashboard Cards ---
+
+@app.route('/api/farms/<int:farm_id>/nutrient_needs')
+@login_required
+def get_nutrient_needs(farm_id):
+    """Calculates an estimated fertilizer need based on default data, weather, and farm area."""
+    farm = Farm.query.filter_by(id=farm_id, user_id=current_user.id).first_or_404()
+    weather = get_weather_for_farm(farm)
+    
+    # Start with a base recommendation rate from our data (e.g., for a default crop)
+    base_fert_rate = CROP_DATA.get("default", {}).get("rec_fert", 120)
+
+    # Adjust rate based on simple weather rules
+    if weather and 'weathercode' in weather:
+        code = weather.get('weathercode')
+        # Increase recommendation slightly for heavy rain due to potential leaching
+        if code in [63, 65, 81, 82]:
+            base_fert_rate *= 1.1 
+    
+    # Calculate total quantity if area is available, otherwise show the rate
+    if farm.area_hectares and farm.area_hectares > 0:
+        total_fertilizer = base_fert_rate * farm.area_hectares
+        recommendation = f"{total_fertilizer:.1f} Kg"
+    else:
+        recommendation = f"{base_fert_rate:.1f} kg/ha"
+        
+    return jsonify({'recommendation': recommendation})
+
+@app.route('/api/farms/<int:farm_id>/pesticide_needs')
+@login_required
+def get_pesticide_needs(farm_id):
+    """Calculates an estimated pesticide need based on default data, weather, and farm area."""
+    farm = Farm.query.filter_by(id=farm_id, user_id=current_user.id).first_or_404()
+    weather = get_weather_for_farm(farm)
+    
+    # Start with a base recommendation rate
+    base_pest_rate = 2.5 # Litres/Hectare
+
+    # Adjust rate based on simple weather rules
+    if weather and 'weathercode' in weather:
+        code = weather.get('weathercode')
+        # Increase recommendation for rainy/humid conditions that favor fungal growth
+        if code in [61, 63, 65, 80, 81, 82, 95, 96, 99]:
+            base_pest_rate *= 1.25
+
+    # Calculate total quantity if area is available, otherwise show the rate
+    if farm.area_hectares and farm.area_hectares > 0:
+        total_pesticide = base_pest_rate * farm.area_hectares
+        recommendation = f"{total_pesticide:.1f} Litres"
+    else:
+        recommendation = f"{base_pest_rate:.1f} L/ha"
+
+    return jsonify({'recommendation': recommendation})
+
 
 @app.route('/api/annual_rainfall')
 @login_required

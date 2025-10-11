@@ -1,4 +1,5 @@
-save and export the yield prediction report
-export the advisory
 Voice Intent for Voice Assistant
+
+
 #98cc50
+

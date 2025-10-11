@@ -371,36 +371,6 @@
         height: 100%;
         width: 100%;
     }
-    #pano-preview {
-        height: 100%;
-        width: 100%;
-        background-color: #e0e0e0;
-        display: none; /* Hidden by default */
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 20;
-    }
-    #pano-close-btn {
-        position: absolute;
-        top: 15px;
-        /* 👇 **CHANGED**: Moved to left to avoid overlap */
-        left: 15px;
-        z-index: 25;
-        background-color: rgba(0,0,0,0.5);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        line-height: 36px;
-        text-align: center;
-    }
-    #map-preview.street-view-active {
-        cursor: crosshair;
-    }
 
     /* Styles for Map Layer Toggle Buttons */
     #map-layer-controls {
@@ -538,9 +508,6 @@
             <div class="feature-column">
                 <div id="map-container">
                     <div id="map-preview"></div>
-                    <div id="pano-preview">
-                        <button id="pano-close-btn" title="Close 360° View">&times;</button>
-                    </div>
                     <div id="map-layer-controls">
                         <button id="map-view-btn" class="map-control-btn active" title="{{ _('Map View') }}">
                             <i class="fas fa-map-marked-alt"></i>
@@ -548,8 +515,8 @@
                         <button id="satellite-view-btn" class="map-control-btn" title="{{ _('Satellite View') }}">
                             <i class="fas fa-satellite"></i>
                         </button>
-                        <button id="street-view-btn" class="map-control-btn" title="{{ _('360° View') }}">
-                            <i class="fas fa-street-view"></i>
+                        <button id="hybrid-view-btn" class="map-control-btn" title="{{ _('Hybrid View') }}">
+                            <i class="fas fa-layer-group"></i>
                         </button>
                         <button id="fullscreen-btn" class="map-control-btn" title="{{ _('Fullscreen') }}">
                             <i class="fas fa-expand"></i>
@@ -694,28 +661,21 @@ document.addEventListener('DOMContentLoaded', function() {
         leaf.style.opacity = '1';
     }
 
-});
-</script>
-
-<script>
+    // --- Map Initialization ---
     function initMap() {
         const mapContainer = document.getElementById('map-container'); 
         const mapPreview = document.getElementById('map-preview');
         if (!mapContainer || !mapPreview) return;
 
-        // --- State Management ---
-        let isStreetViewMode = false;
-
         // --- Element Refs ---
-        const panoContainer = document.getElementById('pano-preview');
-        const panoCloseBtn = document.getElementById('pano-close-btn');
         const mapBtn = document.getElementById('map-view-btn');
         const satelliteBtn = document.getElementById('satellite-view-btn');
-        const streetViewBtn = document.getElementById('street-view-btn');
-        const fullscreenBtn = document.getElementById('fullscreen-btn'); // New fullscreen button
+        const hybridBtn = document.getElementById('hybrid-view-btn'); // New hybrid button
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
 
         // --- 1. OpenLayers Map Setup ---
         const osmLayer = new ol.layer.Tile({ source: new ol.source.OSM() });
+        
         const satelliteLayer = new ol.layer.Tile({
             source: new ol.source.XYZ({
                 url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -723,87 +683,58 @@ document.addEventListener('DOMContentLoaded', function() {
             }),
             visible: false
         });
+        
+        // New Hybrid (Labeled Satellite) Layer
+        const hybridLayer = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', // 'y' is for hybrid view
+                attributions: 'Map data &copy; Google'
+            }),
+            visible: false
+        });
 
         const map = new ol.Map({
             target: 'map-preview',
-            layers: [osmLayer, satelliteLayer],
+            layers: [osmLayer, satelliteLayer, hybridLayer], // Add the new layer to the map
             view: new ol.View({
-                // 👇 **CHANGED**: Center on India and adjust zoom
                 center: ol.proj.fromLonLat([78.9629, 20.5937]), // Center of India
                 zoom: 5
             })
         });
 
-        // --- 2. Google Street View Setup ---
-        const streetViewService = new google.maps.StreetViewService();
-        const panorama = new google.maps.StreetViewPanorama(panoContainer);
-
-        // --- 3. Event Listeners & Logic ---
+        // --- 2. Event Listeners & Logic ---
 
         // Helper to manage active button state
         const setActiveButton = (activeBtn) => {
-            [mapBtn, satelliteBtn, streetViewBtn].forEach(btn => btn.classList.remove('active'));
+            [mapBtn, satelliteBtn, hybridBtn].forEach(btn => btn.classList.remove('active'));
             if(activeBtn) activeBtn.classList.add('active');
         };
 
         // Switch to Map View
         mapBtn.addEventListener('click', () => {
-            isStreetViewMode = false;
             osmLayer.setVisible(true);
             satelliteLayer.setVisible(false);
-            mapPreview.classList.remove('street-view-active');
+            hybridLayer.setVisible(false);
             setActiveButton(mapBtn);
         });
 
         // Switch to Satellite View
         satelliteBtn.addEventListener('click', () => {
-            isStreetViewMode = false;
             osmLayer.setVisible(false);
             satelliteLayer.setVisible(true);
-            mapPreview.classList.remove('street-view-active');
+            hybridLayer.setVisible(false);
             setActiveButton(satelliteBtn);
         });
-
-        // Toggle 360° View Mode
-        streetViewBtn.addEventListener('click', () => {
-            isStreetViewMode = !isStreetViewMode;
-            if (isStreetViewMode) {
-                mapPreview.classList.add('street-view-active');
-                setActiveButton(streetViewBtn);
-                alert("360° View is active. Click on a road in the map to open the view.");
-            } else {
-                mapPreview.classList.remove('street-view-active');
-                setActiveButton(mapBtn); // Default back to map view button
-            }
-        });
-
-        // Handle clicks on the OpenLayers map
-        map.on('click', (event) => {
-            if (!isStreetViewMode) return;
-
-            const coords = ol.proj.toLonLat(event.coordinate);
-            const location = { lat: coords[1], lng: coords[0] };
-
-            streetViewService.getPanorama({ location: location, radius: 50 }, (data, status) => {
-                if (status === 'OK') {
-                    panorama.setPosition(data.location.latLng);
-                    panorama.setVisible(true);
-                    panoContainer.style.display = 'block';
-                } else {
-                    alert('No 360° view available for this location.');
-                }
-            });
+        
+        // Switch to Hybrid View
+        hybridBtn.addEventListener('click', () => {
+            osmLayer.setVisible(false);
+            satelliteLayer.setVisible(false);
+            hybridLayer.setVisible(true);
+            setActiveButton(hybridBtn);
         });
         
-        // Close the panorama view
-        panoCloseBtn.addEventListener('click', () => {
-            panoContainer.style.display = 'none';
-            isStreetViewMode = false;
-            mapPreview.classList.remove('street-view-active');
-            setActiveButton(mapBtn);
-        });
-
-        // 👇 **NEW**: Fullscreen logic
+        // Fullscreen logic
         fullscreenBtn.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 mapContainer.requestFullscreen().catch(err => {
@@ -816,7 +747,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // 👇 **NEW**: Update fullscreen icon on change
+        // Update fullscreen icon on change
         document.addEventListener('fullscreenchange', () => {
             const icon = fullscreenBtn.querySelector('i');
             if (document.fullscreenElement) {
@@ -830,6 +761,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Initialize the map once the DOM is ready
+    initMap();
+});
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+
 {% endblock %}
