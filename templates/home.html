@@ -433,6 +433,23 @@
         margin-bottom: 0.5rem;
     }
 
+    /* === FIXED: Professional Voice Image Animation === */
+    .voice-icon-animated {
+        animation: professional-pulse-effect 2.5s infinite ease-in-out;
+    }
+
+    @keyframes professional-pulse-effect {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.08);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
@@ -561,7 +578,7 @@
     <div class="content-wrapper">
         <div class="flex-container align-center">
             <div class="feature-column">
-                <img src="{{ url_for('static', filename='images/voice.png') }}" style="width: 80%; height: 80%;" alt="Voice Assistant">
+                <img src="{{ url_for('static', filename='images/voice.png') }}" class="voice-icon-animated" style="width: 80%; height: 80%;" alt="Voice Assistant">
             </div>
             <div class="feature-column">
                 <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">{{ _('Voice-Enabled Assistant') }}</h2>
