@@ -13,19 +13,36 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Float
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length
 from dotenv import load_dotenv
 from flask_babel import Babel, _, lazy_gettext as _l, format_date, format_datetime, format_time, format_timedelta
-from flask_session import Session
 from flask_mail import Mail, Message
 
 # --- 1. Configuration and Initialization ---
 
 load_dotenv()
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'a-default-secret-key')
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback_key_for_local_use')
-app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
+
+# --- VERCEL FIX 1: SECRET KEY ---
+# Ensures sessions don't break on Vercel restart
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback_key_for_local_use_only')
+app.config['GOOGLE_MAPS_API_KEY'] = os.environ.get('GOOGLE_MAPS_API_KEY')
+
+# --- VERCEL FIX 2: DATABASE CONNECTION (Neon Postgres) ---
 db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{db_path}')
+
+# Get the URL from environment (Vercel sets DATABASE_URL automatically for Neon)
+database_url = os.environ.get('DATABASE_URL') or os.environ.get('POSTGRES_URL')
+
+if database_url:
+    # Fix for SQLAlchemy: It expects 'postgresql://' but Neon sometimes returns 'postgres://'
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    # Fallback to SQLite (Only for local laptop testing)
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# --- I18N CONFIG ---
 app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 app.config['LANGUAGES'] = {
     'en': 'English',
@@ -33,19 +50,21 @@ app.config['LANGUAGES'] = {
     'kn': 'ಕನ್ನಡ', # Kannada
 }
 
-# CONFIGS FOR FLASK-SESSION
-# app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_FILE_DIR'] = './.flask_session'
+# --- VERCEL FIX 3: SESSIONS ---
+# We use standard Flask "Signed Cookies" for Vercel. 
+# Filesystem sessions (Flask-Session) crash on Vercel because the disk is read-only.
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
+app.config['SESSION_COOKIE_SECURE'] = True # Secure cookies for HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # MAIL CONFIGS
-app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
-app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True').lower() in ['true', '1', 't']
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER', app.config['MAIL_USERNAME'])
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'True').lower() in ['true', '1', 't']
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', app.config['MAIL_USERNAME'])
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -54,9 +73,6 @@ babel = Babel()
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = _('Please log in to access this page.')
-
-# sess = Session()
-# sess.init_app(app)
 mail = Mail(app)
 
 
@@ -406,7 +422,7 @@ app.jinja_env.filters['format_timedelta'] = format_timedelta
 @app.before_request
 def before_request():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=10) # Increased session lifetime
+    app.permanent_session_lifetime = timedelta(minutes=60) # Increased to 60 mins
     session.modified = True
     g.language = get_locale()
 
@@ -1217,18 +1233,20 @@ def inject_globals():
         'LANGUAGES': app.config['LANGUAGES']
     }
 
-def create_db_and_admin():
-    with app.app_context():
-        db.create_all()
-        if not User.query.filter_by(username='admin').first():
-            print("Creating default admin user...")
-            admin_password = os.getenv('ADMIN_PASSWORD', 'admin123')
-            admin = User(username='admin', email='admin@example.com', first_name='Admin', last_name='User', is_verified=True)
-            admin.set_password(admin_password)
-            db.session.add(admin); db.session.commit()
-            print(f"Admin user created with username 'admin'.")
-        else: print("Admin user already exists.")
+# --- VERCEL FIX: Create tables automatically when app loads ---
+# This ensures that when Vercel starts your "Serverless Function",
+# it checks if the database tables exist and creates them if they don't.
+with app.app_context():
+    db.create_all()
+
+    # Create admin user if it doesn't exist
+    if not User.query.filter_by(username='admin').first():
+        print("Creating default admin user...")
+        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+        admin = User(username='admin', email='admin@example.com', first_name='Admin', last_name='User', is_verified=True)
+        admin.set_password(admin_password)
+        db.session.add(admin)
+        db.session.commit()
 
 if __name__ == '__main__':
-    create_db_and_admin()
     app.run(debug=True)
