@@ -20,7 +20,8 @@ from flask_mail import Mail, Message
 
 load_dotenv()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'a-default-secret-key')
+# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'a-default-secret-key')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback_key_for_local_use')
 app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
 db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{db_path}')
@@ -33,7 +34,7 @@ app.config['LANGUAGES'] = {
 }
 
 # CONFIGS FOR FLASK-SESSION
-app.config['SESSION_TYPE'] = 'filesystem'
+# app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_FILE_DIR'] = './.flask_session'
@@ -54,8 +55,8 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = _('Please log in to access this page.')
 
-sess = Session()
-sess.init_app(app)
+# sess = Session()
+# sess.init_app(app)
 mail = Mail(app)
 
 
