@@ -1,5 +1,18 @@
 Voice Intent for Voice Assistant
 
+--Feedback from external in Project Expo--
+
+1. map area acuuracy
+2. water level of the area
+3. use voice assistant for naratting the advisories and also for chatbot for detailed information about the particular advisory
+4. Hosting
 
 #98cc50
 
+--Feedback from external in SEE--
+---Crop Yield Prediction
+1.Fertilizer type(e.g., liquid)-Company,etc.
+2.Likewise for Pesticides
+3.in result it should predict and show these in very details and clear for the better user experiences.
+---Dashboard
+3.Fertilizer and Pesticides prediction should include all about itself respectively.

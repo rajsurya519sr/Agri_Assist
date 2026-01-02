@@ -1208,7 +1208,6 @@ def process_voice_command():
 
 
 # --- 10. Context Processors and Main Execution ---
-
 @app.context_processor
 def inject_globals():
     return {
