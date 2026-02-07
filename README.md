@@ -1,7 +1,54 @@
 <div align="center">
 
 # 🌾 Agri Assist
-## AI-Powered Smart Farming Platform
+## AI-Powered Smart Farming Pla
+
+## 🌿 Overview
+Agri_Assist is an AI-driven platform designed to empower farmers with data-backed insights. By leveraging machine learning and real-time data, it helps optimize crop yields, monitor soil health, and provide actionable agricultural advice.
+
+## ✨ Key Features
+- **Crop Recommendation:** Predicts the best crops to grow based on soil and weather parameters.
+- **Disease Detection:** Identifies plant diseases using image processing/AI (if applicable).
+- **Market Insights:** Real-time price tracking for various commodities.
+- **Sustainability:** Focused on promoting eco-friendly farming practices.
+
+## 🛠 Tech Stack
+- **Backend:** Python (Flask)
+- **AI/ML:** OpenAI API, Scikit-learn
+- **Frontend:** HTML, CSS, JavaScript
+- **Database:** SQL / SQLite
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Python 3.9+
+- OpenAI API Key
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rajsurya519sr/Agri_Assist.git
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Set up environment variables:
+   - Create a `.env` file and add your `OPENAI_API_KEY`.
+
+4. Run the application:
+   ```bash
+   python app.py
+   ```
+
+## 📈 Future Enhancements
+- Integration with IoT sensors for live field monitoring.
+- Multilingual support for regional languages.
+- Mobile application for easier access.
+
+---
+<p align="center">Made with ❤️ for the Agriculture Community</p>
+tform
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.0+-red?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
