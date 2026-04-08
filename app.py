@@ -20,16 +20,25 @@ from flask_mail import Mail, Message
 load_dotenv()
 app = Flask(__name__)
 
+# --- Helper to clean environment variables ---
+def clean_env(key, default=None):
+    val = os.environ.get(key, default)
+    if val and isinstance(val, str):
+        # Remove literal quotes if they exist in the .env file
+        return val.strip("'").strip('"').strip()
+    return val
+
 # --- VERCEL FIX 1: SECRET KEY ---
 # Ensures sessions don't break on Vercel restart
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback_key_for_local_use_only')
-app.config['GOOGLE_MAPS_API_KEY'] = os.environ.get('GOOGLE_MAPS_API_KEY')
+app.config['SECRET_KEY'] = clean_env('SECRET_KEY', 'fallback_key_for_local_use_only')
+app.config['GOOGLE_MAPS_API_KEY'] = clean_env('GOOGLE_MAPS_API_KEY')
+
+# Detect Vercel environment
+IS_VERCEL = "VERCEL" in os.environ
 
 # --- VERCEL FIX 2: DATABASE CONNECTION (Neon Postgres) ---
-db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
-
 # Get the URL from environment (Vercel sets DATABASE_URL automatically for Neon)
-database_url = os.environ.get('DATABASE_URL') or os.environ.get('POSTGRES_URL')
+database_url = clean_env('DATABASE_URL') or clean_env('POSTGRES_URL')
 
 if database_url:
     # Fix for SQLAlchemy: It expects 'postgresql://' but Neon sometimes returns 'postgres://'
@@ -37,7 +46,13 @@ if database_url:
         database_url = database_url.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 else:
-    # Fallback to SQLite (Only for local laptop testing)
+    # Fallback to SQLite
+    if IS_VERCEL:
+        # Vercel filesystem is read-only, use /tmp for ephemeral testing if no DB is provided
+        db_path = "/tmp/app.db"
+    else:
+        db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
+    
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -55,16 +70,22 @@ app.config['LANGUAGES'] = {
 # Filesystem sessions (Flask-Session) crash on Vercel because the disk is read-only.
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
-app.config['SESSION_COOKIE_SECURE'] = True # Secure cookies for HTTPS
+# Secure cookies for HTTPS (only in production)
+app.config['SESSION_COOKIE_SECURE'] = not app.debug or IS_VERCEL
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 # MAIL CONFIGS
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'True').lower() in ['true', '1', 't']
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', app.config['MAIL_USERNAME'])
+app.config['MAIL_SERVER'] = clean_env('MAIL_SERVER', 'smtp.gmail.com')
+try:
+    app.config['MAIL_PORT'] = int(clean_env('MAIL_PORT', 587))
+except (ValueError, TypeError):
+    app.config['MAIL_PORT'] = 587
+
+app.config['MAIL_USE_TLS'] = str(clean_env('MAIL_USE_TLS', 'True')).lower() in ['true', '1', 't']
+app.config['MAIL_USERNAME'] = clean_env('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = clean_env('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = clean_env('MAIL_DEFAULT_SENDER', app.config['MAIL_USERNAME'])
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -74,6 +95,10 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = _('Please log in to access this page.')
 mail = Mail(app)
+
+# Ensure a valid default sender exists
+if not app.config.get('MAIL_DEFAULT_SENDER'):
+    app.config['MAIL_DEFAULT_SENDER'] = app.config.get('MAIL_USERNAME', 'noreply@agriassist.com')
 
 
 # --- 2. DATA LOADING AND PREPARATION (Rule-Based Model) ---
@@ -634,7 +659,9 @@ def send_otp_email(recipient, otp):
         mail.send(msg)
         return True
     except Exception as e:
-        print(f"Error sending email to {recipient}: {e}")
+        app.logger.error(f"Error sending email to {recipient}: {e}")
+        if app.debug:
+            flash(_('Mail Error: {error}').format(error=str(e)), 'info')
         return False
 
 def send_welcome_email(recipient, first_name):
@@ -703,7 +730,9 @@ def send_welcome_email(recipient, first_name):
         mail.send(msg)
         return True
     except Exception as e:
-        print(f"Error sending welcome email to {recipient}: {e}")
+        app.logger.error(f"Error sending welcome email to {recipient}: {e}")
+        if app.debug:
+            flash(_('Welcome Mail Error: {error}').format(error=str(e)), 'info')
         return False
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -739,29 +768,37 @@ def register():
         return redirect(url_for('dashboard'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        existing_unverified = User.query.filter_by(email=form.email.data, is_verified=False).first()
-        if existing_unverified:
-            db.session.delete(existing_unverified)
-            db.session.commit()
+        try:
+            existing_unverified = User.query.filter_by(email=form.email.data, is_verified=False).first()
+            if existing_unverified:
+                db.session.delete(existing_unverified)
+                db.session.commit()
 
-        otp = str(random.randint(100000, 999999))
-        if not send_otp_email(form.email.data, otp):
-            flash(_('Could not send verification email. Please try again later.'), 'danger')
+            otp = str(random.randint(100000, 999999))
+            if not send_otp_email(form.email.data, otp):
+                flash(_('Could not send verification email. Please try again later.'), 'danger')
+                return render_template('register.html', title=_('Register'), form=form)
+
+            session['registration_form'] = {
+                'username': form.username.data,
+                'email': form.email.data,
+                'first_name': form.first_name.data,
+                'last_name': form.last_name.data,
+                'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            }
+            session['otp_data'] = {
+                'otp_hash': bcrypt.generate_password_hash(otp).decode('utf-8'),
+                'expires': (datetime.utcnow() + timedelta(minutes=5)).isoformat()
+            }
+            
+            return redirect(url_for('verify_otp'))
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f"Registration error: {e}")
+            flash(_('An internal error occurred during registration. Please try again later.'), 'danger')
+            if app.debug:
+                flash(f"Debug Info: {str(e)}", 'info')
             return render_template('register.html', title=_('Register'), form=form)
-
-        session['registration_form'] = {
-            'username': form.username.data,
-            'email': form.email.data,
-            'first_name': form.first_name.data,
-            'last_name': form.last_name.data,
-            'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        }
-        session['otp_data'] = {
-            'otp_hash': bcrypt.generate_password_hash(otp).decode('utf-8'),
-            'expires': (datetime.utcnow() + timedelta(minutes=5)).isoformat()
-        }
-        
-        return redirect(url_for('verify_otp'))
         
     return render_template('register.html', title=_('Register'), form=form)
 
@@ -1129,11 +1166,12 @@ def api_predict_yield():
 
     return jsonify({'error': _('Invalid input data.'), 'details': form.errors}), 400
 
-@app.route('/api/session/ping', methods=['POST'])
+@app.route('/session-ping', methods=['POST'])
 @login_required
 def session_ping():
     """An endpoint for the client to hit to keep the session alive."""
-    return jsonify({'status': 'ok'})
+    session.modified = True
+    return jsonify({'status': 'success'}), 200
 
 
 # START ===== VOICE ASSISTANT BRAIN =====
@@ -1223,6 +1261,17 @@ def process_voice_command():
     return jsonify({'speak': response_text, 'action': action, 'transcript': transcript})
 # END ===== VOICE ASSISTANT BRAIN =====
 
+# --- 9. Global Error Handlers ---
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html', code=404, message=_("Page not found")), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    db.session.rollback()
+    return render_template('error.html', code=500, message=_("An internal server error occurred")), 500
+
 
 # --- 10. Context Processors and Main Execution ---
 @app.context_processor
@@ -1237,16 +1286,21 @@ def inject_globals():
 # This ensures that when Vercel starts your "Serverless Function",
 # it checks if the database tables exist and creates them if they don't.
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
 
-    # Create admin user if it doesn't exist
-    if not User.query.filter_by(username='admin').first():
-        print("Creating default admin user...")
-        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
-        admin = User(username='admin', email='admin@example.com', first_name='Admin', last_name='User', is_verified=True)
-        admin.set_password(admin_password)
-        db.session.add(admin)
-        db.session.commit()
+        # Create admin user if it doesn't exist
+        if not User.query.filter_by(username='admin').first():
+            print("Creating default admin user...")
+            admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+            admin = User(username='admin', email='admin@example.com', first_name='Admin', last_name='User', is_verified=True)
+            admin.set_password(admin_password)
+            db.session.add(admin)
+            db.session.commit()
+    except Exception as e:
+        app.logger.error(f"Error during startup database initialization: {e}")
+        # On Vercel, we don't want to crash the whole app if DB is briefly unavailable
+        # The app will try again on the next request context.
 
 if __name__ == '__main__':
     app.run(debug=True)
